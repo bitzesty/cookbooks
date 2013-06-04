@@ -46,11 +46,3 @@ end
 service "dbus" do
   action [:enable, :start]
 end
-
-template "/etc/dbus-1/system.d/Upstart.conf" do
-  source "Upstart.erb"
-  owner "root"
-  group "root"
-  mode  "644"
-  notifies :reload, "service[dbus]", :immediately
-end

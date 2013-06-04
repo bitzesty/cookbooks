@@ -9,4 +9,5 @@
 include_recipe "bz-app::setup"
 include_recipe "bz-app::packages"
 include_recipe "bz-app::user"
+include_recipe "bz-app::upstart"
 include_recipe "bz-app::rbenv"
