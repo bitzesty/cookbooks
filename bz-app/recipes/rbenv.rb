@@ -40,3 +40,23 @@ node['bz-app']['rbenv']['rubies'].each do |ruby|
     environment ({'HOME' => "/home/#{node['bz-app']['user']['name']}"})
   end
 end
+
+
+# add rbenv initializer to bashrc
+bashrc_content = %Q{
+if [ -d #{node['bz-app']['rbenv']['path']} ]; then
+  export PATH="#{File.join(node['bz-app']['rbenv']['path'], 'bin')}:$PATH"
+  eval "$(rbenv init -)"
+fi}
+
+execute "add rbenv to profile" do
+  user node['bz-app']['user']['name']
+  command "echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' >> /home/#{node['bz-app']['user']['name']}/.profile && echo 'eval \"$(rbenv init -)\"' >> /home/#{node['bz-app']['user']['name']}/.profile"
+  not_if "cat /home/#{node['bz-app']['user']['name']}/.profile | grep rbenv"
+end
+
+execute "add rbenv to bashrc" do
+  user node['bz-app']['user']['name']
+  command "echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' >> /home/#{node['bz-app']['user']['name']}/.bashrc && echo 'eval \"$(rbenv init -)\"' >> /home/#{node['bz-app']['user']['name']}/.bashrc"
+  not_if "cat /home/#{node['bz-app']['user']['name']}/.bashrc | grep rbenv"
+end
