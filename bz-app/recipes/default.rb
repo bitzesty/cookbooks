@@ -6,8 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 
-include_recipe "ubuntu"
-
 include_recipe "bz-app::setup"
 include_recipe "bz-app::packages"
 include_recipe "bz-app::user"
