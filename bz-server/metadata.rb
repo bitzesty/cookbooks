@@ -1,4 +1,4 @@
-name             'bz-app'
+name             'bz-server'
 maintainer       'Bit Zesty'
 maintainer_email 'info@bitzesty.com'
 license          'All rights reserved'

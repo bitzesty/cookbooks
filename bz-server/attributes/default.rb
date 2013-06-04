@@ -1,6 +1,6 @@
 # packages that go to any server
 # usually shouldnt be overriden
-default['bz-app']['_default_packages'] = %w{
+default['bz-server']['_default_packages'] = %w{
   git-core
   curl
   gcc
@@ -27,4 +27,4 @@ default['bz-app']['_default_packages'] = %w{
 }
 
 # overwrite me in client chef config if needed
-default['bz-app']['packages'] = []
+default['bz-server']['packages'] = []
