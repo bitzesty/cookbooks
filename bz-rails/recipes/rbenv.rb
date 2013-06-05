@@ -9,7 +9,7 @@ package "libreadline-dev"
 # install rbenv
 git "rbenv" do
   repository 'https://github.com/sstephenson/rbenv.git'
-  destination node['bz-server']['rbenv']['path']
+  destination node['bz-rails']['rbenv']['path']
   user node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
 end
@@ -20,21 +20,21 @@ directory File.join(node['bz-server']['rbenv']['path'], "plugins") do
   group node['bz-server']['user']['name']
 end
 
-node['bz-server']['rbenv']['plugins'].each do |repo|
+node['bz-rails']['rbenv']['plugins'].each do |repo|
   plugin = repo.match(/([^\/]+)\.git$/)[1]
   git plugin do
     repository repo
-    destination File.join(node['bz-server']['rbenv']['path'], "plugins", plugin)
+    destination File.join(node['bz-rails']['rbenv']['path'], "plugins", plugin)
     user node['bz-server']['user']['name']
     group node['bz-server']['user']['name']
   end
 end
 
 # install rubies
-node['bz-server']['rbenv']['rubies'].each do |ruby|
+node['bz-rails']['rbenv']['rubies'].each do |ruby|
   execute "rbenv install #{ruby}" do
-    command %Q{export PATH=#{node['bz-server']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && rbenv install #{ruby} && rbenv global #{ruby} && gem install bundler}
-    creates File.join(node['bz-server']['rbenv']['path'], "versions", ruby, "bin", "ruby")
+    command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && rbenv install #{ruby} && rbenv global #{ruby} && gem install bundler}
+    creates File.join(node['bz-rails']['rbenv']['path'], "versions", ruby, "bin", "ruby")
     user node['bz-server']['user']['name']
     group node['bz-server']['user']['name']
     environment ({'HOME' => "/home/#{node['bz-server']['user']['name']}"})
@@ -44,8 +44,8 @@ end
 
 # add rbenv initializer to bashrc
 bashrc_content = %Q{
-if [ -d #{node['bz-server']['rbenv']['path']} ]; then
-  export PATH="#{File.join(node['bz-server']['rbenv']['path'], 'bin')}:$PATH"
+if [ -d #{node['bz-rails']['rbenv']['path']} ]; then
+  export PATH="#{File.join(node['bz-rails']['rbenv']['path'], 'bin')}:$PATH"
   eval "$(rbenv init -)"
 fi}
 
