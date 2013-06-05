@@ -1,6 +1,7 @@
 # NOTE This probably has to be overriden per app
 default['bz-server']['user']['name'] = 'deploy'
 default['bz-server']['user']['comment'] = 'deploy'
+default['bz-server']['user']['home'] = "/home/#{node['bz-server']['user']['name']}"
 default['bz-server']['user']['shell'] = '/bin/bash'
 default['bz-server']['user']['ssh-keygen'] = true
 default['bz-server']['user']['_default_authorized_keys'] = {

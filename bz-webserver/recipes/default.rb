@@ -7,5 +7,3 @@
 # All rights reserved - Do Not Redistribute
 
 # noop, client apps should include the webserver recipe they need/use
-
-# see nginx-unicorn.rb

@@ -1,3 +1,5 @@
 site :opscode
 
 metadata
+
+cookbook 'bz-server', path: '/Users/saulius/repos/bitzesty/cookbooks/bz-server'
