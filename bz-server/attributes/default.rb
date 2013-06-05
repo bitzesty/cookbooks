@@ -25,6 +25,8 @@ default['bz-server']['_default_packages'] = %w{
   dbus
   nodejs
   sysv-rc-conf
+  language-pack-en-base
+  language-pack-en
 }
 
 # overwrite me in client chef config if needed
