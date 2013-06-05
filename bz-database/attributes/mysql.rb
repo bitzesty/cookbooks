@@ -4,6 +4,8 @@ default['bz-database']['mysql']['database_name'] = node['bz-server']['app']['nam
 default['bz-database']['mysql']['database_host'] = 'localhost'
 default['bz-database']['mysql']['database_username'] = node['bz-server']['app']['name']
 default['bz-database']['mysql']['database_password'] = 'thisissomerandompassword1'
+default['bz-database']['mysql']['privileges'] = [:all]
+default['bz-database']['mysql']['grant_host'] = 'localhost'
 
 # general info
 

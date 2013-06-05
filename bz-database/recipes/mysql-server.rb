@@ -10,7 +10,6 @@ node['mysql']['server_repl_password'] = node['bz-database']['mysql']['server_rep
 node['mysql']['server_debian_password'] = node['bz-database']['mysql']['server_debian_password'] # Set the debian-sys-maint user password
 
 include_recipe "mysql::server"
-include_recipe "mysql::client"
 
 mysql_connection_info = {
   :host => node['bz-database']['mysql']['database_host'],
@@ -30,4 +29,15 @@ mysql_database_user node['bz-database']['mysql']['database_username'] do
 
   password node['bz-database']['mysql']['database_password']
   action :create
+end
+
+
+mysql_database_user node['bz-database']['mysql']['database_username'] do
+  connection mysql_connection_info
+
+  database_name node['bz-database']['mysql']['database_name']
+  host node['bz-database']['mysql']['grant_host']
+
+  privileges node['bz-database']['mysql']['privileges']
+  action :grant
 end
