@@ -24,6 +24,7 @@ default['bz-server']['_default_packages'] = %w{
   tree
   dbus
   nodejs
+  sysv-rc-conf
 }
 
 # overwrite me in client chef config if needed

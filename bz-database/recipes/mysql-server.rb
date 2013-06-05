@@ -4,6 +4,7 @@ include_recipe "database::mysql"
 node['mysql']['remove_anonymous_users'] = true # Remove anonymous users
 node['mysql']['allow_remote_root'] = false # Root can only login from localhost
 node['mysql']['remove_test_database'] = true
+node['mysql']['use_upstart'] = true
 
 node['mysql']['server_root_password'] = node['bz-database']['mysql']['root_password'] # Set the server's root password
 node['mysql']['server_repl_password'] = node['bz-database']['mysql']['server_repl_password'] # Set the replication user 'repl' password
