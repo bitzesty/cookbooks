@@ -61,7 +61,7 @@ file "/home/#{node['bz-server']['user']['name']}/.ssh/authorized_keys" do
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   mode "600"
-  content node['bz-server']['user']['_default_authorized_keys'].merge(node['bz-server']['user']['authorized_keys']).values.join("\n")
+  content node['bz-server']['user']['_default_authorized_keys'].to_hash.merge(node['bz-server']['user']['authorized_keys'].to_hash).values.uniq.join("\n")
 end
 
 service "dbus" do

@@ -1,6 +1,5 @@
 # Setup for things that need to happen before server provision can occur
 
-
 include_recipe "ubuntu"
 include_recipe "locales" # set to en_US.UTF-8
 
@@ -38,4 +37,19 @@ end
 execute "apt-get-update" do
   user "root"
   command "apt-get update"
+end
+
+# Hosts file management
+if node['bz-server']['ip_address'] && node['bz-server']['domain']
+  hostsfile_entry node['bz-server']['ip_address'] do
+    hostname node['bz-server']['domain']
+    aliases node['bz-server']['aliases']
+    action :create_if_missing
+  end
+end
+
+hostsfile_entry '127.0.0.1' do
+  ip_address '127.0.0.1'
+  hostname 'localhost'
+  action :create_if_missing
 end

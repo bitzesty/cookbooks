@@ -31,3 +31,7 @@ default['bz-server']['_default_packages'] = %w{
 
 # overwrite me in client chef config if needed
 default['bz-server']['packages'] = []
+
+default['bz-server']['domain'] = 'example.com'
+default['bz-server']['aliases'] = []
+default['bz-server']['ip_address'] = '127.0.0.1'
