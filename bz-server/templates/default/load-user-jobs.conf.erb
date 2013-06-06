@@ -1,9 +1,4 @@
-author 'Bradley Ayers'
-description 'Enables user job "start on" stanzas to be honored at boot'
-
-task
-# initctl doesn't work before dbus starts
-start on started dbus
+start on (local-filesystems and net-device-up)
 
 script
 cat /etc/passwd | while read line
@@ -12,10 +7,7 @@ do
     home=`echo $line | cut -d: -f6`
     if [ -d "$home/.init" ]
         then
-        su $user -c "initctl status rc-sysinit"
+        su $user -c "start $user"
     fi
 done
-# dbus seems to start pretty late, so user jobs should listen on this
-# event rather thqn on net-device-up or anything.
-initctl emit user-jobs
 end script
