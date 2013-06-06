@@ -4,7 +4,7 @@ if node['bz-rails']['environment'] &&
     node['bz-rails']['database']['name'] &&
     node['bz-rails']['database']['username']
   case node['bz-rails']['database']['type']
-  when 'mysql', 'postgresql'
+  when 'mysql', 'mysql2', 'postgresql'
     template File.join(node['bz-rails']['shared_path'], 'config', 'database.yml') do
       source "database.yml.#{node['bz-rails']['database']['type']}.erb"
       owner node['bz-server']['user']['name']
