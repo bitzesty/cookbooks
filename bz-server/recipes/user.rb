@@ -6,31 +6,31 @@ user_account node['bz-server']['user']['name'] do
   home      "/home/#{node['bz-server']['user']['name']}"
 end
 
-# Write predefined private key if present
+# Write predefined public private key if present
 
-unless node['bz-server']['user']['private_key'].empty?
-  node['bz-server']['user']['private_key'].each { |key_file, key_file_name|
-    cookbook_file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
-      source key_file_name
-      owner node['bz-server']['user']['name']
-      group node['bz-server']['user']['name']
-      mode  "600"
+node['bz-server']['ssh_keys']['users'].each do |user, config|
+  if node['etc']['passwd'][user]
+    ssh_dir = "#{node['etc']['passwd'][user]['dir']}/.ssh"
+  else
+    ssh_dir = config['ssh_dir']
+  end
+
+  directory ssh_dir do
+    owner user
+    group user
+    recursive true
+  end
+
+  config.reject { |k,v| k == 'ssh_dir' }.each do |name, key|
+    file "#{ssh_dir}/#{name}" do
+      content key.join("\n")
+      owner user
+      group user
+      mode name.match(/\.pub$/) ? 00644 : 00600
     end
-  }
+  end
 end
 
-# Write predefined public key if present
-
-unless node['bz-server']['user']['public_key'].empty?
-  node['bz-server']['user']['public_key'].each { |key_file, key_file_name|
-    cookbook_file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
-      source key_file_name
-      owner node['bz-server']['user']['name']
-      group node['bz-server']['user']['name']
-      mode  "644"
-    end
-  }
-end
 
 # user specific templates
 %w{bashrc profile}.each do |f|
