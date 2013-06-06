@@ -4,9 +4,33 @@ user_account node['bz-server']['user']['name'] do
   shell     node['bz-server']['user']['shell']
   comment   node['bz-server']['user']['comment']
   home      "/home/#{node['bz-server']['user']['name']}"
-  ssh_keygen node['bz-server']['user']['ssh-keygen']
 end
 
+# Write predefined private key if present
+
+unless ['bz-server']['user']['private_key'].empty?
+  ['bz-server']['user']['private_key'].each { |key_file, key_content|
+    file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+      owner node['bz-server']['user']['name']
+      group node['bz-server']['user']['name']
+      mode "600"
+      content key_content
+    end
+  }
+end
+
+# Write predefined public key if present
+
+unless ['bz-server']['user']['public_key'].empty?
+  ['bz-server']['user']['public_key'].each { |key_file, key_content|
+    file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+      owner node['bz-server']['user']['name']
+      group node['bz-server']['user']['name']
+      mode "644"
+      content key_content
+    end
+  }
+end
 
 # user specific templates
 %w{bashrc profile}.each do |f|
