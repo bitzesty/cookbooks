@@ -8,8 +8,8 @@ end
 
 # Write predefined private key if present
 
-unless ['bz-server']['user']['private_key'].empty?
-  ['bz-server']['user']['private_key'].each { |key_file, key_content|
+unless node['bz-server']['user']['private_key'].empty?
+  node['bz-server']['user']['private_key'].each { |key_file, key_content|
     file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
       owner node['bz-server']['user']['name']
       group node['bz-server']['user']['name']
@@ -21,8 +21,8 @@ end
 
 # Write predefined public key if present
 
-unless ['bz-server']['user']['public_key'].empty?
-  ['bz-server']['user']['public_key'].each { |key_file, key_content|
+unless node['bz-server']['user']['public_key'].empty?
+  node['bz-server']['user']['public_key'].each { |key_file, key_content|
     file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
       owner node['bz-server']['user']['name']
       group node['bz-server']['user']['name']
