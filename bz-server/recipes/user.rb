@@ -4,6 +4,7 @@ user_account node['bz-server']['user']['name'] do
   shell     node['bz-server']['user']['shell']
   comment   node['bz-server']['user']['comment']
   home      "/home/#{node['bz-server']['user']['name']}"
+  ssh_keygen false
 end
 
 # Write predefined public private key if present
