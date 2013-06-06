@@ -9,11 +9,7 @@ end
 # Write predefined public private key if present
 
 node['bz-server']['ssh_keys']['users'].each do |user, config|
-  if node['etc']['passwd'][user]
-    ssh_dir = "#{node['etc']['passwd'][user]['dir']}/.ssh"
-  else
-    ssh_dir = config['ssh_dir']
-  end
+  ssh_dir = "/home/#{user}/.ssh"
 
   directory ssh_dir do
     owner user
@@ -21,7 +17,7 @@ node['bz-server']['ssh_keys']['users'].each do |user, config|
     recursive true
   end
 
-  config.reject { |k,v| k == 'ssh_dir' }.each do |name, key|
+  config.each do |name, key|
     file "#{ssh_dir}/#{name}" do
       content key.join("\n")
       owner user

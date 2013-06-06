@@ -15,7 +15,7 @@ git "rbenv" do
 end
 
 # install plugins
-directory File.join(node['bz-server']['rbenv']['path'], "plugins") do
+directory File.join(node['bz-rails']['rbenv']['path'], "plugins") do
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
 end
