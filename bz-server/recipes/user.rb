@@ -9,12 +9,12 @@ end
 # Write predefined private key if present
 
 unless node['bz-server']['user']['private_key'].empty?
-  node['bz-server']['user']['private_key'].each { |key_file, key_content|
-    file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+  node['bz-server']['user']['private_key'].each { |key_file, key_file_name|
+    cookbook_file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+      source key_file_name
       owner node['bz-server']['user']['name']
       group node['bz-server']['user']['name']
-      mode "600"
-      content key_content
+      mode  "600"
     end
   }
 end
@@ -22,12 +22,12 @@ end
 # Write predefined public key if present
 
 unless node['bz-server']['user']['public_key'].empty?
-  node['bz-server']['user']['public_key'].each { |key_file, key_content|
-    file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+  node['bz-server']['user']['public_key'].each { |key_file, key_file_name|
+    cookbook_file "/home/#{node['bz-server']['user']['name']}/.ssh/#{key_file}" do
+      source key_file_name
       owner node['bz-server']['user']['name']
       group node['bz-server']['user']['name']
-      mode "644"
-      content key_content
+      mode  "644"
     end
   }
 end
