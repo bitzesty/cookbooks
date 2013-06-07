@@ -33,12 +33,6 @@ end
   end
 end
 
-# Update repositories the system
-execute "apt-get-update" do
-  user "root"
-  command "apt-get update"
-end
-
 # Hosts file management
 if node['bz-server']['ip_address'] && node['bz-server']['domain']
   hostsfile_entry node['bz-server']['ip_address'] do
