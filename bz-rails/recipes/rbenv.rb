@@ -33,7 +33,7 @@ end
 # install rubies
 node['bz-rails']['rbenv']['rubies'].each do |ruby|
   execute "rbenv install #{ruby}" do
-    command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && rbenv install #{ruby} && rbenv global #{ruby} && gem install bundler}
+    command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && rbenv install #{ruby} && rbenv global #{ruby} && gem install bundler && rbenv rehash}
     creates File.join(node['bz-rails']['rbenv']['path'], "versions", ruby, "bin", "ruby")
     user node['bz-server']['user']['name']
     group node['bz-server']['user']['name']
@@ -59,9 +59,4 @@ execute "add rbenv to bashrc" do
   user node['bz-server']['user']['name']
   command "echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' >> /home/#{node['bz-server']['user']['name']}/.bashrc && echo 'eval \"$(rbenv init -)\"' >> /home/#{node['bz-server']['user']['name']}/.bashrc"
   not_if "cat /home/#{node['bz-server']['user']['name']}/.bashrc | grep rbenv"
-end
-
-execute "rehash rbenv" do
-  user node['bz-server']['user']['name']
-  command "export PATH=#{File.join(node['bz-rails']['rbenv']['path'], 'bin')}:$PATH; rbenv rehash"
 end
