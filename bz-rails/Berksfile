@@ -2,4 +2,4 @@ site :opscode
 
 metadata
 
-cookbook 'bz-server', path: '/Users/saulius/repos/bitzesty/cookbooks/bz-server'
+cookbook 'bz-server', git: "https://github.com/bitzesty/cookbooks.git", rel: "bz-server"
