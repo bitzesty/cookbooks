@@ -3,6 +3,7 @@
 dirs_to_create = [
   "#{node['bz-server']['user']['home']}/.init",
   node['bz-server']['app']['path'],
+  node['bz-rails']['current_path'],
   node['bz-rails']['shared_path'],
   node['bz-rails']['releases_path']]
 
