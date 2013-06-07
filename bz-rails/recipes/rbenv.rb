@@ -60,3 +60,8 @@ execute "add rbenv to bashrc" do
   command "echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' >> /home/#{node['bz-server']['user']['name']}/.bashrc && echo 'eval \"$(rbenv init -)\"' >> /home/#{node['bz-server']['user']['name']}/.bashrc"
   not_if "cat /home/#{node['bz-server']['user']['name']}/.bashrc | grep rbenv"
 end
+
+execute "rehash rbenv" do
+  user node['bz-server']['user']['name']
+  command "export PATH=#{File.join(node['bz-rails']['rbenv']['path'], 'bin')}:$PATH; rbenv rehash"
+end
