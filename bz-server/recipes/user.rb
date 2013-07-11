@@ -57,11 +57,25 @@ directory "/home/#{node['bz-server']['user']['name']}/.ssh" do
   group node['bz-server']['user']['name']
 end
 
+unless node['bz-server']['user']['authorized_github_users'].empty?
+  require 'open-uri'
+
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
+  node['bz-server']['user']['authorized_github_users'].each do |github_user|
+    user_keys = open("https://github.com/#{github_user}.keys").read
+    user_keys.split("\n").each_with_index { |key, index|
+      # NOTE uses Hashie::Mash
+      node['bz-server']['user']['authorized_keys'].send("#{github_user}_github_#{index}=", key.strip.chomp('=='))
+    }
+  end
+end
+
 file "/home/#{node['bz-server']['user']['name']}/.ssh/authorized_keys" do
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   mode "600"
-  content node['bz-server']['user']['_default_authorized_keys'].to_hash.merge(node['bz-server']['user']['authorized_keys'].to_hash).values.uniq.join("\n")
+  content node['bz-server']['user']['_default_authorized_keys'].to_hash.merge(node['bz-server']['user']['authorized_keys'].to_hash).map{ |key, value| "#{value}== #{key}" }.join("\n")
 end
 
 service "dbus" do
