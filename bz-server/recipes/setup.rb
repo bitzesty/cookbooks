@@ -3,9 +3,9 @@
 include_recipe "ubuntu"
 include_recipe "locales" # set to en_US.UTF-8
 
-locales "en_US.UTF-8 UTF-8" do
-  action :add
-end
+# locales "en_US.UTF-8 UTF-8" do
+#   action :add
+# end
 
 # locale configuration
 [
@@ -24,7 +24,7 @@ end
   "LC_MEASUREMENT=en_US.UTF-8",
   "LC_IDENTIFICATION=en_US.UTF-8"].each do |locale_line|
 
-  ruby_block "insert_line" do
+  ruby_block "insert_line #{locale_line}" do
     block do
       file = Chef::Util::FileEdit.new("/etc/default/locale")
       file.insert_line_if_no_match("/#{locale_line}/", locale_line)
@@ -35,14 +35,15 @@ end
 
 # Hosts file management
 if node['bz-server']['ip_address'] && node['bz-server']['domain']
-  hostsfile_entry node['bz-server']['ip_address'] do
+  hostsfile_entry "Adding host file for #{node['bz-server']['ip_address']}" do
+    ip_address node['bz-server']['ip_address']
     hostname node['bz-server']['domain']
     aliases node['bz-server']['aliases']
     action :create_if_missing
   end
 end
 
-hostsfile_entry '127.0.0.1' do
+hostsfile_entry 'Adding host file for 127.0.0.1' do
   ip_address '127.0.0.1'
   hostname 'localhost'
   action :create_if_missing

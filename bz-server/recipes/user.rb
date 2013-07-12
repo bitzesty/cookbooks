@@ -13,6 +13,7 @@ node['bz-server']['ssh_keys']['users'].each do |user, config|
   ssh_dir = "/home/#{user}/.ssh"
 
   directory ssh_dir do
+    mode "700"
     owner user
     group user
     recursive true
@@ -50,13 +51,6 @@ directory "/home/#{node['bz-server']['user']['name']}/.bundle" do
   group node['bz-server']['user']['name']
 end
 
-# for security..
-directory "/home/#{node['bz-server']['user']['name']}/.ssh" do
-  mode "700"
-  owner node['bz-server']['user']['name']
-  group node['bz-server']['user']['name']
-end
-
 unless node['bz-server']['user']['authorized_github_users'].empty?
   require 'open-uri'
 
@@ -66,7 +60,7 @@ unless node['bz-server']['user']['authorized_github_users'].empty?
     user_keys = open("https://github.com/#{github_user}.keys").read
     user_keys.split("\n").each_with_index { |key, index|
       # NOTE uses Hashie::Mash
-      node['bz-server']['user']['authorized_keys'].send("#{github_user}_github_#{index}=", key.strip)
+      node.default['bz-server']['user']['authorized_keys'].send("#{github_user}_github_#{index}=", key.strip)
     }
   end
 end
