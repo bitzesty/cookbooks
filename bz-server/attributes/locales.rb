@@ -1,0 +1,14 @@
+default[:locale][:lang] = "en_US.UTF-8"
+default[:locale][:language] = "en_US.en"
+default[:locale][:lc_ctype] =  node[:locale][:lang]
+default[:locale][:lc_numeric] = node[:locale][:lang]
+default[:locale][:lc_time] = node[:locale][:lang]
+default[:locale][:lc_collate] = node[:locale][:lang]
+default[:locale][:lc_monetary] = node[:locale][:lang]
+default[:locale][:lc_messages] = node[:locale][:lang]
+default[:locale][:lc_paper] = node[:locale][:lang]
+default[:locale][:lc_name] = node[:locale][:lang]
+default[:locale][:lc_address] = node[:locale][:lang]
+default[:locale][:lc_telephone] = node[:locale][:lang]
+default[:locale][:lc_measurement] = node[:locale][:lang]
+default[:locale][:lc_identification] = node[:locale][:lang]

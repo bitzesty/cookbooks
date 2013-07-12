@@ -8,6 +8,7 @@
 
 include_recipe "bz-server::packages"
 include_recipe "bz-server::setup"
+include_recipe "bz-server::locales"
 include_recipe "bz-server::user"
 include_recipe "bz-server::upstart"
 include_recipe "bz-server::openssh"
