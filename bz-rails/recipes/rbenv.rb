@@ -37,6 +37,7 @@ node['bz-rails']['rbenv']['rubies'].each do |ruby|
     creates File.join(node['bz-rails']['rbenv']['path'], "versions", ruby, "bin", "ruby")
     user node['bz-server']['user']['name']
     group node['bz-server']['user']['name']
+    not_if { ::File.exists?("#{node['bz-rails']['rbenv']['path']}/versions/#{ruby}")   }
     environment ({'HOME' => "/home/#{node['bz-server']['user']['name']}"})
   end
 end

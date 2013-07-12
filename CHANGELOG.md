@@ -1,5 +1,9 @@
 # Changelog
 
+## Master
+
+* Fix rbenv ruby installations with proper check of existence (sauliusg)
+
 ## 0.1.2
 
 * Added Chef 11 compatibility (tested with 11.4.2) (sauliusg)
