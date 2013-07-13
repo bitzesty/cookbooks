@@ -13,7 +13,6 @@ default['bz-server']['_default_packages'] =
       readline-devel
       zlib
       zlib-devel
-      libyaml-devel
       libffi-devel
       openssl-devel
       bzip2
