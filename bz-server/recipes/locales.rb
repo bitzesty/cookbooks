@@ -38,6 +38,6 @@ end
 
 if platform?("redhat", "centos", "fedora")
   execute "Update locale" do
-    command "locale -a | grep ^#{node[:locale][:lang]}$ && sed -i 's|LANG=.*|LANG=#{node[:locale][:lang]}|' /etc/sysconfig/i18n"
+    command "sed -i 's|LANG=.*|LANG=#{node[:locale][:lang]}|' /etc/sysconfig/i18n"
   end
 end
