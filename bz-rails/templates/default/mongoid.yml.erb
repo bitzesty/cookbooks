@@ -1,0 +1,16 @@
+<%= @environment %>:
+  sessions:
+    default:
+      database: <%= @database %>
+      hosts:
+        <%- @hosts.each do |host| %>
+          <%= "- #{host}" %>
+        <%- end %>
+      options:
+        consistency: <%= @consistency %>
+
+  options:
+    allow_dynamic_fields: <%= @allow_dynamic_fields %>
+    preload_models: <%= @preload_models %>
+    scope_overwrite_exception: <%= @scope_overwrite_exception %>
+    use_utc: <%= @use_utc %>

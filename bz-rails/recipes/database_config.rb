@@ -20,6 +20,21 @@ if node['bz-rails']['environment'] &&
       })
     end
   when 'mongodb'
-    # implement it for mongodb
+    template File.join(node['bz-rails']['shared_path'], 'config', 'mongoid.yml') do
+      source "mongoid.yml.erb"
+      owner node['bz-server']['user']['name']
+      group node['bz-server']['user']['name']
+      mode 0644
+      variables({
+        :environment => node['bz-rails']['environment'],
+        :database => node['bz-rails']['database']['name'],
+        :hosts => node['bz-rails']['database']['hosts'],
+        :consistency => node['bz-rails']['database']['consistency'],
+        :allow_dynamic_fields => node['bz-rails']['database']['options']['allow_dynamic_fields'],
+        :preload_models => node['bz-rails']['database']['options']['preload_models'],
+        :scope_overwrite_exception => node['bz-rails']['database']['options']['scope_overwrite_exception'],
+        :use_utc => node['bz-rails']['database']['options']['use_utc']
+      })
+    end
   end
 end

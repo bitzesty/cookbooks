@@ -1,10 +1,12 @@
 # rbenv!
 
 # install prequisites
-package "build-essential"
-package "openssl"
-package "libssl-dev"
-package "libreadline-dev"
+if platform_family? "debian"
+  package "build-essential"
+  package "openssl"
+  package "libssl-dev"
+  package "libreadline-dev"
+end
 
 # install rbenv
 git "rbenv" do
