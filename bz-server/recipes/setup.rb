@@ -1,6 +1,8 @@
 # Setup for things that need to happen before server provision can occur
 
-include_recipe "ubuntu"
+if platform? "ubuntu"
+  include_recipe "ubuntu"
+end
 
 # Hosts file management
 if node['bz-server']['ip_address'] && node['bz-server']['domain']

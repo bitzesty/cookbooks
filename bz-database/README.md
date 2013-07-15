@@ -51,6 +51,15 @@ Just include `bz-database` in your node's `run_list`:
 }
 ```
 
+Mongoid configuration example
+
+```json
+"bz-database": {
+  "mongoid": {
+  }
+}
+```
+
 Contributing
 ------------
 TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.

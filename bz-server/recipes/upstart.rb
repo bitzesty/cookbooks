@@ -4,12 +4,18 @@
 # These modifications support Upstart style jobs for each user
 # and allow one to utilize Ubuntu's upstart to manage jobs
 
+dbus_service = if platform_family? "rhel"
+                 "messagebus"
+               else
+                 "dbus"
+               end
+
 template "/etc/dbus-1/system.d/Upstart.conf" do
-  source "Upstart.erb"
+  source "Upstart.conf.erb"
   owner "root"
   group "root"
   mode  "644"
-  notifies :reload, "service[dbus]", :immediately
+  notifies :reload, "service[#{dbus_service}]", :immediately
 end
 
 template "/etc/init/load-user-jobs.conf" do

@@ -53,7 +53,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     vagrant plugin install vagrant-berkshelf
     ````
-    
+
 4. Create a Gemfile, we will be using local ruby gems to manage Chef project:
 
     ````
@@ -69,7 +69,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     bundle install
     ````
-    
+
 6. Initialize an empty knife solo project:
 
     ````
@@ -81,7 +81,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````ruby
     site :opscode
 
-    STACK_VERSION = '0.1.2'
+    STACK_VERSION = '0.1.3'
 
     %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
     cookbook cookbook, "~> #{STACK_VERSION}",
@@ -94,11 +94,12 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     cookbook 'ufw'
     cookbook 'ohai'
     cookbook 'nginx'
+    cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
     ````
-    
+
     **NOTE** The last should come project-specific cookbook from site-cookbooks.
-    
+
 8. Add Vagrantfile to your project for developing the stack:
 
     ````ruby
@@ -125,7 +126,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       end
     end
     ````
-    
+
 9. Create 'nodes/vagrant-node.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
 
 ### To provision a Vagrant node
@@ -135,9 +136,9 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     vagrant up
     ````
-    
+
     This will create a virtual machine and start provisioning process.
-    
+
 2. If you come on an error during provisioning you can fix it and start right were you left off with:
 
     ````
@@ -149,7 +150,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     vagrant destroy
     ````
-    
+
 ### To provision a real server
 
 1. Create `node.json` file similar to the `vagrant-node.json` just with the real/production values.
@@ -158,17 +159,17 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.4.2
     ````
-   
+
    NOTE: vagrant Chef version and real Chef version should match.
-   
+
    NOTE: the <username> must have sudo permissions inside the server.
-   
+
 3. Start cooking the server with:
 
    ````
    bundle exec knife solo cook <hostname> -x <username>
    ````
-   
+
 ### Upstart and Rails job control
 
 The project should use foreman for its process management, refer to [TSS](https://github.com/bitzesty/ihealth/tree/master/config) for example Capistrano scripts and foreman templates.
