@@ -51,6 +51,31 @@ Just include `bz-rails` in your node's `run_list`:
 }
 ```
 
+Mongoid configuration example
+
+```json
+"bz-rails": {
+  "environment": "production",
+  "rbenv": {
+    "rubies": ["1.9.3-p429"]
+  },
+  "database": {
+    "type": "mongodb",
+    "name": "qavs_production",
+    "hosts": [
+      "localhost:27017"
+    ],
+    "consistency": ":strong",
+    "options": {
+      "allow_dynamic_fields": false,
+      "preload_models": true,
+      "scope_overwrite_exception": true,
+      "use_utc": true
+    }
+  }
+}
+```
+
 Contributing
 ------------
 TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
