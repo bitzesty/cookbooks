@@ -7,7 +7,7 @@
 * **all** Added support for mongodb (astrauka)
 * **all** Added support for CentOS (astrauka)
 
-## FIXES
+### fixes
 
 * **bz-rails** Fix rbenv ruby installations with proper check of existence (sauliusg)
 * Added README
