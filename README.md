@@ -29,7 +29,7 @@
 * Supports Chef Solo 10 and Chef Solo 11.
 * Uses [Berkshelf](http://berkshelf.com) to manage cookbooks.
 * Uses [knife-solo](https://github.com/matschaffer/knife-solo) to perform deployments to physical/virtual (non-Vagrant) servers.
-* Uses [Vagrant](http://www.vagrantup.com) to develop installation for a project (Vagrant version `> 1.2`).
+* Uses [Vagrant](http://www.vagrantup.com) to develop installation for a project (Vagrant version `>= 1.2`).
 * Uses local to deploy user [rbenv](https://github.com/sstephenson/rbenv) to manage Ruby versions
 * Uses [upstart's](http://upstart.ubuntu.com/) [user jobs](http://bradleyayers.blogspot.com/2011/10/upstart-user-jobs-on-ubuntu-1110.html) + [foreman](https://github.com/ddollar/foreman) to manage application startup.
 * Uses nginx as default web server
