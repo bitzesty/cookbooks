@@ -21,6 +21,7 @@ default['bz-server']['_default_packages'] =
       libtool
       bison
       glibc
+      dbus
     }
   when "debian"
     %w{

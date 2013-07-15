@@ -72,8 +72,12 @@ file "/home/#{node['bz-server']['user']['name']}/.ssh/authorized_keys" do
   content node['bz-server']['user']['_default_authorized_keys'].to_hash.merge(node['bz-server']['user']['authorized_keys'].to_hash).map{ |comment, key| "#{key} #{comment}" }.join("\n")
 end
 
-if platform_family? "debian"
-  service "dbus" do
-    action [:enable, :start]
-  end
+dbus_service = if platform_family? "rhel"
+                 "messagebus"
+               else
+                 "dbus"
+               end
+
+service "#{dbus_service}" do
+  action [:enable, :start]
 end
