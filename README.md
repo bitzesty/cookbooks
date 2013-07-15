@@ -90,7 +90,6 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       tag: STACK_VERSION
     end
 
-    cookbook 'chef-princexml', github: 'mp-jwolkerstorfer/chef-princexml'
     cookbook 'apt', '~> 2.0'
     cookbook 'ufw'
     cookbook 'ohai'
