@@ -170,6 +170,10 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
    bundle exec knife solo cook <hostname> -x <username>
    ````
    
+### Upstart and Rails job control
+
+The project should use foreman for its process management, refer to [TSS](https://github.com/bitzesty/ihealth/tree/master/config) for example Capistrano scripts and foreman templates.
+
 ### NOTES
 
 * If you want to use different Chef version, here are the links to modify it for Vagrant and the real server:
