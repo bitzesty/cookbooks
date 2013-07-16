@@ -1,8 +1,7 @@
 # create new database.yml
 if node['bz-rails']['environment'] &&
     node['bz-rails']['database']['type'] &&
-    node['bz-rails']['database']['name'] &&
-    node['bz-rails']['database']['username']
+    node['bz-rails']['database']['name']
   case node['bz-rails']['database']['type']
   when 'mysql', 'mysql2', 'postgresql'
     template File.join(node['bz-rails']['shared_path'], 'config', 'database.yml') do

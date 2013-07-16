@@ -2,6 +2,11 @@
 
 ## Master
 
+### fixes
+
+* **bz-database** rename mondodb recipe to mongo
+* **bz-rails** do not require username to be defined to build database config
+
 ## 0.1.3
 
 * **all** Added support for mongodb (astrauka)
