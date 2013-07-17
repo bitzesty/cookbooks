@@ -2,6 +2,13 @@
 
 ## Master
 
+## 0.1.4 configuration for CentOs (astrauka)
+
+* **bz-database** start mongod on system startup
+* **bz-webserver** open firewall port 80 for http
+* **bz-server** use system jobs for application server management, allow the user to start/stop app with sudo start app / sudo stop app
+* **bz-server** restore ssh configuration to include authorized keys
+
 ### fixes
 
 * **bz-database** rename mondodb recipe to mongo

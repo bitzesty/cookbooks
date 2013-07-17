@@ -17,7 +17,13 @@ node.default['openssh']['server']['use_privilege_separation'] = "yes"
 node.default['openssh']['server']['authorized_keys_file'] = "%h/.ssh/authorized_keys"
 node.default['openssh']['server']['challenge_response_authentication'] = "no"
 node.default['openssh']['server']['use_p_a_m'] = "yes"
-node.default['openssh']['server']['subsystem'] =	"sftp	/usr/lib/openssh/sftp-server"
+
+open_ssh_subsystem = if platform_family? "rhel"
+                       "sftp /usr/libexec/openssh/sftp-server"
+                     else
+                       "sftp /usr/lib/openssh/sftp-server"
+                     end
+node.default['openssh']['server']['subsystem'] = open_ssh_subsystem
 
 include_recipe "openssh"
 

@@ -72,6 +72,12 @@ file "/home/#{node['bz-server']['user']['name']}/.ssh/authorized_keys" do
   content node['bz-server']['user']['_default_authorized_keys'].to_hash.merge(node['bz-server']['user']['authorized_keys'].to_hash).map{ |comment, key| "#{key} #{comment}" }.join("\n")
 end
 
+if platform_family? "rhel"
+  execute "restore ssh conf to include authorized keys" do
+    command "restorecon -R -v /home/#{node['bz-server']['user']['name']}/.ssh"
+  end
+end
+
 dbus_service = if platform_family? "rhel"
                  "messagebus"
                else

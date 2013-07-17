@@ -4,4 +4,4 @@ maintainer_email 'info@bitzesty.com'
 license          'All rights reserved'
 description      'Rails app setup and maintenance related recipes'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.3'
+version          '0.1.4'

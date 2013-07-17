@@ -4,7 +4,7 @@ upstream upstream_server_<%= node['bz-server']['app']['name'] %> {
   # This is the socket we configured in unicorn.rb
   server unix:<%= node['bz-server']['app']['path'] %>/shared/sockets/unicorn.sock
   fail_timeout=0;
-  }
+}
 <% end %>
 
 server {

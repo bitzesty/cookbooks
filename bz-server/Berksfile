@@ -3,3 +3,4 @@ site :opscode
 metadata
 
 cookbook 'ubuntu', github: 'opscode-cookbooks/ubuntu'
+cookbook 'line', '0.4.2', github: 'opscode-cookbooks/line'
