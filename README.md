@@ -59,7 +59,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     source "https://rubygems.org"
 
-    gem "knife-solo", github: "matschaffer/knife-solo", tag: "v0.3.0.pre5"
+    gem "knife-solo", '0.3.0'
     gem "knife-solo_data_bag"
     gem "berkshelf
     ````
