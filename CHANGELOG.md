@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.5 add postgres database
+* **bz-database** add postgres database
+
 ## 0.1.4 configuration for CentOs (astrauka)
 
 * **bz-database** start mongod on system startup

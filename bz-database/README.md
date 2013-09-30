@@ -1,9 +1,7 @@
 bz-database Cookbook
 ===============
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+This cookbook wraps database receipes to easily setup database and user
+for rails database.
 
 Requirements
 ------------
@@ -58,6 +56,24 @@ Mongoid configuration example
   "mongoid": {
   }
 }
+
+"run_list": [
+  "recipe[bz-database::mongo]"
+]
+```
+
+Postgres configuration example
+
+```json
+"bz-database": {
+  "postgres": {
+    "password": "generate a password SecureRandom.base64"
+  }
+}
+
+"run_list": [
+  "recipe[bz-database::postgres]"
+]
 ```
 
 Contributing

@@ -6,6 +6,11 @@
 #
 # All rights reserved - Do Not Redistribute
 
+# ensure apt sources are updated
+if platform_family? "debian"
+  include_recipe "apt"
+end
+
 include_recipe "bz-server::packages"
 include_recipe "bz-server::setup"
 include_recipe "bz-server::locales"
