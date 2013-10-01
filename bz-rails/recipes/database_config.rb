@@ -15,7 +15,10 @@ if node['bz-rails']['environment'] &&
         :database => node['bz-rails']['database']['name'],
         :username => node['bz-rails']['database']['username'],
         :password => node['bz-rails']['database']['password'],
-        :host => node['bz-rails']['database']['host']
+        :host => node['bz-rails']['database']['host'],
+        :port => node['bz-rails']['database']['port'],
+        :pool => node['bz-rails']['database']['pool'],
+        :encoding => node['bz-rails']['database']['encoding'],
       })
     end
   when 'mongodb'

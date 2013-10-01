@@ -4,7 +4,15 @@
   username:  <%= @username %>
   password:  <%= @password %>
   host:      <%= @host %>
-  <%= "reconnect: true" if @adapter.match("^mysql") %>
-  <%= "port:   #{@port}" if @port %>
-  <%= "pool:   #{@pool}" if @pool %>
-  <%= "encoding: #{@encoding}" if @encoding %>
+<%- if @adapter.match("^mysql") %>
+  reconnect: true
+<%- end %>
+<%- if @port %>
+  port:      <%= @port %>
+<%- end %>
+<%- if @pool %>
+  pool:      <%= @pool %>
+<%- end %>
+<%- if @encoding %>
+  encoding:  <%= @encoding %>
+<%- end %>
