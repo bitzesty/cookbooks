@@ -2,8 +2,10 @@
 
 ## Master
 
-## 0.1.5 add postgres database
+## 0.1.5 add postgres database and update rbenv installation
 * **bz-database** add postgres database
+* **bz-rails** use community cookbook for ruby and rbenv installation
+
 
 ## 0.1.4 configuration for CentOs (astrauka)
 

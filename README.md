@@ -54,7 +54,13 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     vagrant plugin install vagrant-berkshelf
     ````
 
-4. Create a Gemfile, we will be using local ruby gems to manage Chef project:
+4. Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus) if you do not have it.
+
+    ````
+    vagrant plugin install vagrant-omnibus
+    ````
+
+5. Create a Gemfile, we will be using local ruby gems to manage Chef project:
 
     ````
     source "https://rubygems.org"
@@ -64,19 +70,19 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     gem "berkshelf
     ````
 
-5. Bundle install
+6. Bundle install
 
     ````
     bundle install
     ````
 
-6. Initialize an empty knife solo project:
+7. Initialize an empty knife solo project:
 
     ````
     bundle exec knife solo init .
     ````
 
-7. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
+8. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
     ````ruby
     site :opscode
@@ -95,12 +101,13 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     cookbook 'ohai'
     cookbook 'nginx'
     cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
+    cookbook 'rbenv', '0.7.3', git: 'https://github.com/fnichol/chef-rbenv.git'
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
     ````
 
     **NOTE** The last should come project-specific cookbook from site-cookbooks.
 
-8. Add Vagrantfile to your project for developing the stack:
+9. Add Vagrantfile to your project for developing the stack:
 
     ````ruby
     require 'json'
@@ -113,7 +120,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       config.vm.box = "precise64"
       config.vm.box_url = "http://files.vagrantup.com/precise64.box"
       config.berkshelf.enabled = true
-      config.vm.provision :shell, inline: "gem install chef --version 11.4.2 --no-rdoc --no-ri --conservative"
+      config.omnibus.chef_version = "11.4.2"
       config.vm.provision :chef_solo do |chef|
         chef.cookbooks_path = ["site-cookbooks"]
         chef.roles_path = "roles"
@@ -127,7 +134,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     end
     ````
 
-9. Create 'nodes/vagrant-node.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
+10. Create 'nodes/vagrant-node.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
 
 ### To provision a Vagrant node
 
