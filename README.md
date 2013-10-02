@@ -54,6 +54,12 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     vagrant plugin install vagrant-berkshelf
     ````
 
+3a. Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you host the server on rackspace
+
+    ````
+    vagrant plugin install vagrant-rackspace
+    ````
+
 4. Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus) if you do not have it.
 
     ````
@@ -113,7 +119,12 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     require 'json'
 
     Vagrant.configure("2") do |config|
-      config.vm.define :<project_name> do |config|
+      Vagrant.require_plugin "vagrant-rackspace"
+
+      # define server name
+      config.vm.define :<project_name> do |server|
+      end
+
       SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant-node.json').read)
 
       config.vm.network :private_network, ip: "10.0.100.10"
@@ -121,6 +132,15 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       config.vm.box_url = "http://files.vagrantup.com/precise64.box"
       config.berkshelf.enabled = true
       config.omnibus.chef_version = "11.4.2"
+
+      config.vm.provider :rackspace do |rs|
+        rs.username = "API.user"
+        rs.api_key  = "1b6182d059a454a8aaf4890c914e8ba"
+        rs.flavor   = /512MB/
+        rs.image    = "Ubuntu 12.04 LTS (Precise Pangolin)"
+        rs.rackspace_region = :lon
+      end
+
       config.vm.provision :chef_solo do |chef|
         chef.cookbooks_path = ["site-cookbooks"]
         chef.roles_path = "roles"
@@ -144,7 +164,16 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     vagrant up
     ````
 
-    This will create a virtual machine and start provisioning process.
+    This will create a virtual machine at local and start provisioning process.
+
+    ````
+    vagrant up --provider=rackspace
+    ````
+
+    This will create a virtual machine on rackspace and start provisioning process.
+    Keep in mind that this step does a lot of work in the background
+    (talks to Rackspace Cloud Servers API, synchronizes Chef cookbooks, etc.)
+    so it might take a while to complete.
 
 2. If you come on an error during provisioning you can fix it and start right were you left off with:
 

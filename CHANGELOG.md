@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.6 add rackspace support
+* **all** add rackspace support
+
 ## 0.1.5 add postgres database and update rbenv installation
 * **bz-database** add postgres database
 * **bz-rails** use community cookbook for ruby and rbenv installation
