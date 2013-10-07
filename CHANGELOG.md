@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.7 add redis installation cookbook
+* **bz-server** add redis
+
 ## 0.1.6 add rackspace support
 * **all** add rackspace support
 
