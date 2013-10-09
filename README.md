@@ -93,7 +93,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````ruby
     site :opscode
 
-    STACK_VERSION = '0.1.3'
+    STACK_VERSION = '0.1.3' # USE THE LATEST AVAILABLE
 
     %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
     cookbook cookbook, "~> #{STACK_VERSION}",
@@ -102,10 +102,8 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       tag: STACK_VERSION
     end
 
-    cookbook 'apt', '~> 2.0'
     cookbook 'ufw'
     cookbook 'ohai'
-    cookbook 'nginx'
     cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
     cookbook 'rbenv', '0.7.3', git: 'https://github.com/fnichol/chef-rbenv.git'
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
