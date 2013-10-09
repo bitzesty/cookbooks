@@ -2,14 +2,13 @@
 
 ## Master
 
-## unreleased
+## 0.1.8
 
 * redis is now part of `bz-database`, include `bz-database::redis` to
   have it present in the server
 * redis is not installed by default
 * port 80 is opened in firewall whenever webserver is installed, see
   `bz-webserver::common` (support for ubuntu and rhel for now)
-
 
 ## 0.1.7 add redis installation cookbook
 * **bz-server** add redis
