@@ -48,52 +48,54 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 1. Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
 2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version 1.2.x` and not the version from Rubygems.
-3. Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf) if you do not have it.
+3. Install Vagrant plugins:
+  
+    3.1 (necessary) [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
 
-    ````
+    ````shell
     vagrant plugin install vagrant-berkshelf
     ````
 
-3a. Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you host the server on rackspace
+    3.2 (necessary) Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
+
+    ````
+    vagrant plugin install vagrant-omnibus
+    ````
+        
+    3.3 (optional) Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
 
     ````
     vagrant plugin install vagrant-rackspace
     ````
 
-4. Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus) if you do not have it.
-
-    ````
-    vagrant plugin install vagrant-omnibus
-    ````
-
-5. Create a Gemfile, we will be using local ruby gems to manage Chef project:
+4. Create a Gemfile, we will be using local ruby gems to manage Chef project:
 
     ````
     source "https://rubygems.org"
 
-    gem "knife-solo", '0.3.0'
+    gem "knife-solo", '0.3.0' # try to use latest available
     gem "knife-solo_data_bag"
     gem "berkshelf
     ````
 
-6. Bundle install
+5. Bundle install
 
     ````
     bundle install
     ````
 
-7. Initialize an empty knife solo project:
+6. Initialize an empty knife solo project:
 
     ````
     bundle exec knife solo init .
     ````
 
-8. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
+7. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
     ````ruby
     site :opscode
 
-    STACK_VERSION = '0.1.3'
+    STACK_VERSION = '0.1.3' # USE THE LATEST AVAILABLE
 
     %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
     cookbook cookbook, "~> #{STACK_VERSION}",
@@ -102,10 +104,8 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       tag: STACK_VERSION
     end
 
-    cookbook 'apt', '~> 2.0'
     cookbook 'ufw'
     cookbook 'ohai'
-    cookbook 'nginx'
     cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
     cookbook 'rbenv', '0.7.3', git: 'https://github.com/fnichol/chef-rbenv.git'
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
@@ -113,48 +113,48 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
     **NOTE** The last should come project-specific cookbook from site-cookbooks.
 
-9. Add Vagrantfile to your project for developing the stack:
+8. Add Vagrantfile to your project for developing the stack:
 
     ````ruby
     require 'json'
 
     Vagrant.configure("2") do |config|
+      # If you provisioning on Rackspace
       Vagrant.require_plugin "vagrant-rackspace"
 
       # define server name
       config.vm.define :<project_name> do |server|
-      end
+        SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant.json').read)
 
-      SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant-node.json').read)
+        config.vm.network :private_network, ip: "10.0.100.10"
+        config.vm.box = "precise64"
+        config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+        config.berkshelf.enabled = true
+        config.omnibus.chef_version = "11.4.2"
 
-      config.vm.network :private_network, ip: "10.0.100.10"
-      config.vm.box = "precise64"
-      config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-      config.berkshelf.enabled = true
-      config.omnibus.chef_version = "11.4.2"
+        # Only if you are provisioning on Rackspace
+        config.vm.provider :rackspace do |rs|
+          rs.username = "API.user"
+          rs.api_key  = "1b6182d059a454a8aaf4890c914e8ba"
+          rs.flavor   = /512MB/
+          rs.image    = "Ubuntu 12.04 LTS (Precise Pangolin)"
+          rs.rackspace_region = :lon
+        end
 
-      config.vm.provider :rackspace do |rs|
-        rs.username = "API.user"
-        rs.api_key  = "1b6182d059a454a8aaf4890c914e8ba"
-        rs.flavor   = /512MB/
-        rs.image    = "Ubuntu 12.04 LTS (Precise Pangolin)"
-        rs.rackspace_region = :lon
-      end
+        config.vm.provision :chef_solo do |chef|
+          chef.cookbooks_path = ["site-cookbooks"]
+          chef.roles_path = "roles"
+          chef.data_bags_path = "data_bags"
 
-      config.vm.provision :chef_solo do |chef|
-        chef.cookbooks_path = ["site-cookbooks"]
-        chef.roles_path = "roles"
-        chef.data_bags_path = "data_bags"
-
-        # You may also specify custom JSON attributes:
-        chef.json = SETTINGS
-          chef.add_role("frontend")
+          # You may also specify custom JSON attributes:
+          chef.json = SETTINGS
+          chef.add_role("frontend") # if you defined a role in roles/
         end
       end
     end
     ````
 
-10. Create 'nodes/vagrant-node.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
+9. Create 'nodes/vagrant.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
 
 ### To provision a Vagrant node
 
@@ -189,7 +189,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ### To provision a real server
 
-1. Create `node.json` file similar to the `vagrant-node.json` just with the real/production values.
+1. Create `node.json` file similar to the `vagrant.json` just with the real/production values.
 2. Bootstrap Chef inside this server:
 
     ````
