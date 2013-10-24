@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.9
+
+* **bz-server** added imagemagick to be installed by default
+
 ## 0.1.8
 
 * redis is now part of `bz-database`, include `bz-database::redis` to
