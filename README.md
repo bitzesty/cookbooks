@@ -190,6 +190,12 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 ### To provision a real server
 
 1. Create `node.json` file similar to the `vagrant.json` just with the real/production values.
+2. Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
+
+   ````
+   ssh-copy-id <username>@<hostname>
+   ````
+
 2. Bootstrap Chef inside this server:
 
     ````
@@ -200,7 +206,13 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
    NOTE: the <username> must have sudo permissions inside the server.
 
-3. Start cooking the server with:
+3. Check what will happen after your cook with `--why-run` flag.
+
+   ````
+   bundle exec knife solo cook <hostname> -x <username> --why-run
+   ````
+   
+4. If changes to be made look reasonable, start actually cooking the server with:
 
    ````
    bundle exec knife solo cook <hostname> -x <username>
