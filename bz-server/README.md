@@ -5,6 +5,7 @@ Cookbook for provisioning the server to host the app
 Requirements
 ------------
 Designed for debian and rhel platform families
+Please use cookbook versions as per: https://github.com/bitzesty/cookbooks/blob/master/bz-server/metadata.rb
 
 Usage
 -----
@@ -44,9 +45,9 @@ To add elastic search please include:
 ##### into berksfile
 
 ```
-cookbook 'java', '<version>' # http://community.opscode.com/cookbooks/java
-cookbook 'elasticsearch', '<version>' # http://community.opscode.com/cookbooks/elasticsearch
-cookbook 'monit', '<version>' # http://community.opscode.com/cookbooks/monit
+cookbook 'java', '<version>'
+cookbook 'elasticsearch', '<version>'
+cookbook 'monit', '<version>'
 ```
 
 Attributes
