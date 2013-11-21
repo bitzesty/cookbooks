@@ -1,17 +1,54 @@
 bz-server Cookbook
 ===============
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+Cookbook for provisioning the server to host the app
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
+Designed for debian and rhel platform families
+Please use cookbook versions as per: https://github.com/bitzesty/cookbooks/blob/master/bz-server/metadata.rb
 
-e.g.
-#### packages
-- `toaster` - bz-server needs toaster to brown your bagel.
+Usage
+-----
+#### bz-server::default
+
+Include `bz-server` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[bz-server]"
+  ]
+}
+```
+#### Elastic Search
+To add elastic search please include:
+
+##### into run list
+
+```json
+"recipe[bz-server::elasticsearch]"
+```
+
+##### into node configuration
+```json
+"java": {
+  "install_flavor": "openjdk",
+  "jdk_version": "7"
+},
+
+"elasticsearch": {
+  "cluster_name" : "<cluster_name>",
+  "bootstrap.mlockall" : false
+}
+```
+
+##### into berksfile
+
+```
+cookbook 'java', '<version>'
+cookbook 'elasticsearch', '<version>'
+cookbook 'monit', '<version>'
+```
 
 Attributes
 ----------

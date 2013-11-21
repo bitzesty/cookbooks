@@ -3,6 +3,53 @@ bz-database Cookbook
 This cookbook wraps database receipes to easily setup database and user
 for rails database.
 
+Usage
+-----
+#### bz-database
+
+Currently supported databases: mysql, mongo, postgres
+
+##### Mongoid configuration example
+
+```json
+"bz-database": {
+  "mongoid": {
+  }
+}
+
+"run_list": [
+  "recipe[bz-database::mongo]"
+]
+```
+
+##### Postgres configuration example
+
+```json
+"bz-database": {
+  "postgres": {
+    "password": "generate a password SecureRandom.base64"
+  }
+}
+
+"run_list": [
+  "recipe[bz-database::postgres]"
+]
+```
+
+#### Redis
+
+##### into run list
+
+```json
+"recipe[bz-database::redis]"
+```
+
+##### into berksfile
+
+```
+cookbook 'redisio', github: 'brianbianco/redisio'
+```
+
 Requirements
 ------------
 TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
@@ -31,50 +78,6 @@ e.g.
     <td><tt>true</tt></td>
   </tr>
 </table>
-
-Usage
------
-#### bz-database::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `bz-database` in your node's `run_list`:
-
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[bz-database]"
-  ]
-}
-```
-
-Mongoid configuration example
-
-```json
-"bz-database": {
-  "mongoid": {
-  }
-}
-
-"run_list": [
-  "recipe[bz-database::mongo]"
-]
-```
-
-Postgres configuration example
-
-```json
-"bz-database": {
-  "postgres": {
-    "password": "generate a password SecureRandom.base64"
-  }
-}
-
-"run_list": [
-  "recipe[bz-database::postgres]"
-]
-```
 
 Contributing
 ------------

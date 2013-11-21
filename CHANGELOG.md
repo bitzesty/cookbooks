@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.10
+
+* **bz-server** added elasticsearch recipe, not installed by default
+
 ## 0.1.9
 
 * **bz-server** added imagemagick to be installed by default
