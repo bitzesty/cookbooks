@@ -73,9 +73,9 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     source "https://rubygems.org"
 
-    gem "knife-solo", '0.3.0' # try to use latest available
+    gem "knife-solo", '0.4.0' # try to use latest available
     gem "knife-solo_data_bag"
-    gem "berkshelf
+    gem "berkshelf"
     ````
 
 5. Bundle install
