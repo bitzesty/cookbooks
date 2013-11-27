@@ -154,7 +154,11 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     end
     ````
 
-9. Create 'nodes/vagrant.json' file. Check existing projects like [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json) for example. Most keys are self-explanatory. NOTE: these keys may change, review the changelog and recipies for more info.
+9. Create 'nodes/vagrant.json' file. Check existing projects like 
+  * [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json)
+  * [Casper](https://github.com/bitzesty/casper/blob/master/chef/nodes/vagrant.json)
+   
+  **NOTE** these keys may change, review the changelog and recipies for more info.
 
 ### To provision a Vagrant node
 
