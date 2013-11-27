@@ -95,7 +95,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````ruby
     site :opscode
 
-    STACK_VERSION = '0.1.3' # USE THE LATEST AVAILABLE
+    STACK_VERSION = '0.1.10' # USE THE LATEST AVAILABLE
 
     %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
     cookbook cookbook, "~> #{STACK_VERSION}",
