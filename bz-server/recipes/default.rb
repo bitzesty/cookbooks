@@ -13,4 +13,4 @@ include_recipe "bz-server::user"
 include_recipe "bz-server::upstart"
 include_recipe "bz-server::openssh"
 include_recipe "imagemagick"
-include_recipe "unattended_upgrades"
+include_recipe "unattended_upgrades" if platform_family?("debian")
