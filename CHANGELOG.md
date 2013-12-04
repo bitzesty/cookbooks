@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.11
+
+* **bz-server** added unattended_upgrades recipe, installed by default for debian machines
+
 ## 0.1.10
 
 * **bz-server** added elasticsearch recipe, not installed by default
