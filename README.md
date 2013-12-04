@@ -49,7 +49,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 1. Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
 2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version 1.2.x` and not the version from Rubygems.
 3. Install Vagrant plugins:
-  
+
     3.1 (necessary) [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
 
     ````shell
@@ -61,7 +61,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     vagrant plugin install vagrant-omnibus
     ````
-        
+
     3.3 (optional) Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
 
     ````
@@ -108,6 +108,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     cookbook 'ohai'
     cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
     cookbook 'rbenv', '0.7.3', git: 'https://github.com/fnichol/chef-rbenv.git'
+    cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades" # ubuntu upgrades
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
     ````
 
@@ -154,10 +155,10 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     end
     ````
 
-9. Create 'nodes/vagrant.json' file. Check existing projects like 
+9. Create 'nodes/vagrant.json' file. Check existing projects like
   * [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json)
   * [Casper](https://github.com/bitzesty/casper/blob/master/chef/nodes/vagrant.json)
-   
+
   **NOTE** these keys may change, review the changelog and recipies for more info.
 
 ### To provision a Vagrant node
@@ -215,7 +216,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
    ````
    bundle exec knife solo cook <hostname> -x <username> --why-run
    ````
-   
+
 4. If changes to be made look reasonable, start actually cooking the server with:
 
    ````
