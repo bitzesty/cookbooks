@@ -2,13 +2,13 @@
 
 ## Master
 
-## 0.1.13
-
-* **bz-database** added database backup
-
 ## 0.1.12
 
+<<<<<<< HEAD
 * **bz-rails** add more attrbiutes to mongoid configuration
+=======
+* **bz-database** added database backup
+>>>>>>> db backup initial recipe
 
 ## 0.1.11
 

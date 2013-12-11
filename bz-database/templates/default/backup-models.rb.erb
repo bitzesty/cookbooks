@@ -1,0 +1,104 @@
+# encoding: utf-8
+
+##
+# Backup Generated
+# Once configured, you can run the backup with the following command:
+# $ backup perform -t bz-database [-c <path_to_configuration_file>]
+
+Backup::Model.new(:bz-database, "Backup <%= node['bz-server']['app']['name'] %>") do
+  # Split the backup file in to chunks of 250 megabytes
+  # if the backup file size exceeds 250 megabytes
+  <% if node['bz-database']['backup']['split_into_chunks'] %>
+     split_into_chunks_of <%= node['bz-database']['backup']['chunk_size'] %>
+  <% end %>
+
+  <% case node['bz-database']['backup']['datastore'] %>
+  <% when 'mysql', 'mysql2' %>
+  # MySQL [Database]
+  database MySQL do |db|
+    # To dump all databases, set `db.name = :all` (or leave blank)
+    db.name               = "<%= node['bz-database']['backup']['datastore_config']['mysql']['database'] %>"
+    db.username           = "<%= node['bz-database']['backup']['datastore_config']['mysql']['username'] %>"
+    db.password           = "<%= node['bz-database']['backup']['datastore_config']['mysql']['password'] %>"
+    db.host               = "<%= node['bz-database']['backup']['datastore_config']['mysql']['host'] %>"
+    db.port               = "<%= node['bz-database']['backup']['datastore_config']['mysql']['port'] %>"
+    # db.socket             = "/tmp/mysql.sock"
+    # Note: when using `skip_tables` with the `db.name = :all` option,
+    # table names should be prefixed with a database name.
+    # e.g. ["db_name.table_to_skip", ...]
+    #db.skip_tables        = ["skip", "these", "tables"]
+    #db.only_tables        = ["only", "these" "tables"]
+    db.additional_options = [<%= node['bz-database']['backup']['datastore_config']['mysql']['command_options'].map(&:inspect).join(",") %>]
+    # Optional: Use to set the location of this utility
+    #   if it cannot be found by name in your $PATH
+    # db.mysqldump_utility = "/opt/local/bin/mysqldump"
+  end
+
+  # MongoDB [Database]
+  database MongoDB do |db|
+    db.name               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['name'] %>"
+    db.username           = "<%= node['bz-database']['backup']['datastore_config']['mongo']['username'] %>"
+    db.password           = "<%= node['bz-database']['backup']['datastore_config']['mongo']['password'] %>"
+    db.host               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['host'] %>"
+    db.port               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['port'] %>"
+    db.ipv6               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['ipv6'] %>"
+    db.only_collections   = "<%= node['bz-database']['backup']['datastore_config']['mongo']['only_collections'] %>"
+    db.additional_options = "<%= node['bz-database']['backup']['datastore_config']['mongo']['additional_options'] %>"
+    db.lock               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['lock'] %>"
+    db.oplog              = "<%= node['bz-database']['backup']['datastore_config']['mongo']['oplog'] %>"
+  end
+
+  # PostgreSQL [Database]
+  database PostgreSQL do |db|
+    db.name               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['name'] %>"
+    db.username           = "<%= node['bz-database']['backup']['datastore_config']['postgres']['username'] %>"
+    db.password           = "<%= node['bz-database']['backup']['datastore_config']['postgres']['password'] %>"
+    db.host               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['host'] %>"
+    db.port               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['port'] %>"
+    db.socket             = "<%= node['bz-database']['backup']['datastore_config']['postgres']['socket'] %>""/tmp/pg.sock"
+    db.skip_tables        = "<%= node['bz-database']['backup']['datastore_config']['postgres']['skip_tables'] %>"["skip", "these", "tables"]
+    db.only_tables        = "<%= node['bz-database']['backup']['datastore_config']['postgres']['only_tables'] %>"["only", "these", "tables"]
+    db.additional_options = "<%= node['bz-database']['backup']['datastore_config']['postgres']['additional_options'] %>"["-xc", "-E=utf8"]
+  <% end %>
+
+  # Storage
+  <% case node['bz-database']['backup']['storage'] %>
+  # local
+  <% when 'local' %>
+  store_with Local do |local|
+    local.path = "<%= node['bz-database']['backup']['storage_config']['local']['path'] %>"
+    local.keep = "<%= node['bz-database']['backup']['storage_config']['local']['keep'] %>"
+  end
+  # rackspace
+  <% when 'rackspace' %>
+  store_with CloudFiles do |cf|
+    cf.api_key   = "<%= node['bz-database']['backup']['storage_config']['rackspace']['api_key'] %>"
+    cf.username  = "<%= node['bz-database']['backup']['storage_config']['rackspace']['username'] %>"
+    cf.container = "<%= node['bz-database']['backup']['storage_config']['rackspace']['container'] %>"
+    cf.path      = "<%= node['bz-database']['backup']['storage_config']['rackspace']['path'] %>"
+    cf.keep      = "<%= node['bz-database']['backup']['storage_config']['rackspace']['keep'] %>"
+    cf.auth_url  = "<%= node['bz-database']['backup']['storage_config']['rackspace']['auth_url'] %>"
+  end
+  <% end %>
+
+  # Compression
+  <% case node['bz-database']['backup']['compress'] %>
+  <% when 'gzip' %>
+  # Gzip [Compressor]
+  compress_with Gzip
+  <% end %>
+
+  # Notifications
+  notify_by Hipchat do |hipchat|
+    hipchat.on_success = false
+    hipchat.on_warning = false
+    hipchat.on_failure = true
+
+    hipchat.token          = node['bz-database']['backup']['hipchat']['token']
+    hipchat.from           = "<%= 'DB Backup of ' + node['bz-rails']['environment'] %>"
+    hipchat.rooms_notified = node['bz-database']['backup']['hipchat']['rooms_notified']
+    hipchat.success_color  = "green"
+    hipchat.warning_color  = "yellow"
+    hipchat.failure_color  = "red"
+  end
+end
