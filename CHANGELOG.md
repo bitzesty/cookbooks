@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.12
+
+* **bz-rails** add more attrbiutes to mongoid configuration
+
 ## 0.1.11
 
 * **bz-server** added unattended_upgrades recipe, installed by default for debian machines
