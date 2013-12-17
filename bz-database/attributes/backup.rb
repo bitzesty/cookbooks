@@ -28,10 +28,10 @@ config['password'] = node['bz-rails']['database']['password']
 config['host'] = node['bz-rails']['database']['host']
 config['port'] = node['bz-rails']['database']['host']
 config['ipv6'] = node['bz-rails']['database']['ipv6'] || false
-config['only_collections'] = node['bz-rails']['database']['only_collections']
-config['additional_options'] = node['bz-rails']['database']['additional_options'] || []
-config['lock'] = node['bz-rails']['database']['lock'] || false
-config['oplog'] = node['bz-rails']['database']['oplog'] || false
+config['only_collections'] = []
+config['additional_options'] = []
+config['lock'] = false
+config['oplog'] = false
 # postgres
 config = node['bz-database']['backup']['datastore_config']['postgres']
 config['name'] = node['bz-rails']['database']['name']
@@ -40,22 +40,25 @@ config['password'] = node['bz-rails']['database']['password']
 config['host'] = node['bz-rails']['database']['host']
 config['port'] = node['bz-rails']['database']['port']
 config['socket'] = node['bz-rails']['database']['socket'] || "/tmp/pg.sock"
-config['skip_tables'] = node['bz-rails']['database']['skip_tables'] # ['skip', 'tables']
-config['only_tables'] = node['bz-rails']['database']['only_tables'] # ["only", "these", "tables"]
-config['additional_options'] = node['bz-rails']['database']['additional_options'] || ["-xc", "-E=utf8"]
+config['skip_tables'] = []
+config['only_tables'] = []
+config['additional_options'] = ["-xc", "-E=utf8"]
 
 # backup destination config
 # local
-default['bz-database']['backup']['storage_config']['local']['path'] = '~/backups'
-default['bz-database']['backup']['storage_config']['local']['keep'] = 10
+config = default['bz-database']['backup']['storage_config']['local']
+config['path'] = '~/backups'
+config['keep'] = 10
 # rackspace
-default['bz-database']['backup']['storage_config']['rackspace']['api_key'] = ''
-default['bz-database']['backup']['storage_config']['rackspace']['username'] = ''
-default['bz-database']['backup']['storage_config']['rackspace']['containeer'] = ''
-default['bz-database']['backup']['storage_config']['rackspace']['path'] = ''
-default['bz-database']['backup']['storage_config']['rackspace']['keep'] = 10
-default['bz-database']['backup']['storage_config']['rackspace']['auth_url'] = ''
+config = default['bz-database']['backup']['storage_config']['rackspace']
+config['api_key'] = ''
+config['username'] = ''
+config['containeer'] = ''
+config['path'] = ''
+config['keep'] = 10
+config['auth_url'] = ''
 
 # Notifications
-node['bz-database']['backup']['hipchat']['token']
-node['bz-database']['backup']['hipchat']['rooms_notified']
+config = node['bz-database']['backup']['hipchat']
+config['token'] = ""
+config['rooms_notified'] = []
