@@ -3,14 +3,14 @@
     default:
       database: <%= @database %>
       hosts:
-        <%- @hosts.each do |host| %>
-          <%= "- #{host}" %>
-        <%- end %>
+      <%- @hosts.each do |host| %>
+        <%= "- #{host}" %>
+      <%- end %>
       options:
         consistency: <%= @consistency %>
-        <%- if @pool_size %>
-          pool_size: <%= @pool_size %>
-        <%- end %>
+      <%- if @pool_size %>
+        pool_size: <%= @pool_size %>
+      <%- end %>
 
   options:
     <%- if @allow_dynamic_fields %>
