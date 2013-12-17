@@ -8,9 +8,14 @@
         <%- end %>
       options:
         consistency: <%= @consistency %>
+        <%- if @pool_size %>
+          pool_size: <%= @pool_size %>
+        <%- end %>
 
   options:
-    allow_dynamic_fields: <%= @allow_dynamic_fields %>
+    <%- if @allow_dynamic_fields %>
+      allow_dynamic_fields: <%= @allow_dynamic_fields %>
+    <%- end %>
     preload_models: <%= @preload_models %>
     scope_overwrite_exception: <%= @scope_overwrite_exception %>
     use_utc: <%= @use_utc %>

@@ -32,6 +32,7 @@ if node['bz-rails']['environment'] &&
         :database => node['bz-rails']['database']['name'],
         :hosts => node['bz-rails']['database']['hosts'],
         :consistency => node['bz-rails']['database']['consistency'],
+        :pool_size => node['bz-rails']['database']['pool_size'],
         :allow_dynamic_fields => node['bz-rails']['database']['options']['allow_dynamic_fields'],
         :preload_models => node['bz-rails']['database']['options']['preload_models'],
         :scope_overwrite_exception => node['bz-rails']['database']['options']['scope_overwrite_exception'],
