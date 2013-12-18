@@ -8,7 +8,7 @@ default['bz-database']['backup']['encryptor_config']['openssl']['base64'] = true
 default['bz-database']['backup']['encryptor_config']['openssl']['salt'] = true
 
 default['bz-database']['backup']['storage'] = 'local'
-default['bz-database']['backup']['datastore'] = ''
+default['bz-database']['backup']['datastore'] = node['bz-rails']['database']['type']
 default['bz-database']['backup']['compress'] = 'gzip'
 
 # datastore configuration
@@ -33,13 +33,13 @@ config['additional_options'] = []
 config['lock'] = false
 config['oplog'] = false
 # postgres
-config = node['bz-database']['backup']['datastore_config']['postgres']
+config = default['bz-database']['backup']['datastore_config']['postgres']
 config['name'] = node['bz-rails']['database']['name']
 config['username'] = node['bz-rails']['database']['username']
 config['password'] = node['bz-rails']['database']['password']
 config['host'] = node['bz-rails']['database']['host']
 config['port'] = node['bz-rails']['database']['port']
-config['socket'] = node['bz-rails']['database']['socket'] || "/tmp/pg.sock"
+config['socket'] = node['bz-rails']['database']['socket']
 config['skip_tables'] = []
 config['only_tables'] = []
 config['additional_options'] = ["-xc", "-E=utf8"]
@@ -59,6 +59,6 @@ config['keep'] = 10
 config['auth_url'] = ''
 
 # Notifications
-config = node['bz-database']['backup']['hipchat']
+config = default['bz-database']['backup']['hipchat']
 config['token'] = ""
 config['rooms_notified'] = []

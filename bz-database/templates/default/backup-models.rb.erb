@@ -5,7 +5,7 @@
 # Once configured, you can run the backup with the following command:
 # $ backup perform -t bz-database [-c <path_to_configuration_file>]
 
-Backup::Model.new(:bz-database, "Backup <%= node['bz-server']['app']['name'] %>") do
+Backup::Model.new(:<%= node['bz-server']['app']['name'] %>, "Backup <%= node['bz-server']['app']['name'] %>") do
   # Split the backup file in to chunks of 250 megabytes
   # if the backup file size exceeds 250 megabytes
   <% if node['bz-database']['backup']['split_into_chunks'] %>
@@ -34,51 +34,56 @@ Backup::Model.new(:bz-database, "Backup <%= node['bz-server']['app']['name'] %>"
     # db.mysqldump_utility = "/opt/local/bin/mysqldump"
   end
 
+  <% when 'mongodb' %>
   # MongoDB [Database]
   database MongoDB do |db|
     db.name               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['name'] %>"
     db.username           = "<%= node['bz-database']['backup']['datastore_config']['mongo']['username'] %>"
     db.password           = "<%= node['bz-database']['backup']['datastore_config']['mongo']['password'] %>"
     db.host               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['host'] %>"
-    db.port               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['port'] %>"
-    db.ipv6               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['ipv6'] %>"
-    db.only_collections   = "<%= node['bz-database']['backup']['datastore_config']['mongo']['only_collections'] %>"
-    db.additional_options = "<%= node['bz-database']['backup']['datastore_config']['mongo']['additional_options'] %>"
-    db.lock               = "<%= node['bz-database']['backup']['datastore_config']['mongo']['lock'] %>"
-    db.oplog              = "<%= node['bz-database']['backup']['datastore_config']['mongo']['oplog'] %>"
+    db.port               = <%= node['bz-database']['backup']['datastore_config']['mongo']['port'] %>
+    db.ipv6               = <%= node['bz-database']['backup']['datastore_config']['mongo']['ipv6'] %>
+    db.only_collections   = [<%= node['bz-database']['backup']['datastore_config']['mongo']['only_collections'].map(&:inspect).join(",") %>]
+    db.additional_options = [<%= node['bz-database']['backup']['datastore_config']['mongo']['additional_options'].map(&:inspect).join(",") %>]
+    db.lock               = <%= node['bz-database']['backup']['datastore_config']['mongo']['lock'] %>
+    db.oplog              = <%= node['bz-database']['backup']['datastore_config']['mongo']['oplog'] %>
   end
 
+  <% when 'postgresql' %>
   # PostgreSQL [Database]
   database PostgreSQL do |db|
     db.name               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['name'] %>"
     db.username           = "<%= node['bz-database']['backup']['datastore_config']['postgres']['username'] %>"
     db.password           = "<%= node['bz-database']['backup']['datastore_config']['postgres']['password'] %>"
     db.host               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['host'] %>"
-    db.port               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['port'] %>"
+    db.port               = <%= node['bz-database']['backup']['datastore_config']['postgres']['port'] %>
     db.socket             = "<%= node['bz-database']['backup']['datastore_config']['postgres']['socket'] %>"
-    db.skip_tables        = "<%= node['bz-database']['backup']['datastore_config']['postgres']['skip_tables'] %>"
-    db.only_tables        = "<%= node['bz-database']['backup']['datastore_config']['postgres']['only_tables'] %>"
-    db.additional_options = "<%= node['bz-database']['backup']['datastore_config']['postgres']['additional_options'] %>"
+    db.skip_tables        = [<%= node['bz-database']['backup']['datastore_config']['postgres']['skip_tables'].map(&:inspect).join(",") %>]
+    db.only_tables        = [<%= node['bz-database']['backup']['datastore_config']['postgres']['only_tables'].map(&:inspect).join(",") %>]
+    db.additional_options = [<%= node['bz-database']['backup']['datastore_config']['postgres']['additional_options'].map(&:inspect).join(",") %>]
+  end
+
   <% end %>
 
   # Storage
   <% case node['bz-database']['backup']['storage'] %>
-  # local
   <% when 'local' %>
+  # local
   store_with Local do |local|
     local.path = "<%= node['bz-database']['backup']['storage_config']['local']['path'] %>"
-    local.keep = "<%= node['bz-database']['backup']['storage_config']['local']['keep'] %>"
+    local.keep = <%= node['bz-database']['backup']['storage_config']['local']['keep'] %>
   end
-  # rackspace
   <% when 'rackspace' %>
+  # rackspace
   store_with CloudFiles do |cf|
     cf.api_key   = "<%= node['bz-database']['backup']['storage_config']['rackspace']['api_key'] %>"
     cf.username  = "<%= node['bz-database']['backup']['storage_config']['rackspace']['username'] %>"
     cf.container = "<%= node['bz-database']['backup']['storage_config']['rackspace']['container'] %>"
     cf.path      = "<%= node['bz-database']['backup']['storage_config']['rackspace']['path'] %>"
-    cf.keep      = "<%= node['bz-database']['backup']['storage_config']['rackspace']['keep'] %>"
+    cf.keep      = <%= node['bz-database']['backup']['storage_config']['rackspace']['keep'] %>
     cf.auth_url  = "<%= node['bz-database']['backup']['storage_config']['rackspace']['auth_url'] %>"
   end
+
   <% end %>
 
   # Compression
@@ -90,13 +95,13 @@ Backup::Model.new(:bz-database, "Backup <%= node['bz-server']['app']['name'] %>"
 
   # Notifications
   notify_by Hipchat do |hipchat|
-    hipchat.on_success = false
-    hipchat.on_warning = false
+    hipchat.on_success = true
+    hipchat.on_warning = true
     hipchat.on_failure = true
 
-    hipchat.token          = node['bz-database']['backup']['hipchat']['token']
-    hipchat.from           = "<%= 'DB Backup of ' + node['bz-rails']['environment'] %>"
-    hipchat.rooms_notified = node['bz-database']['backup']['hipchat']['rooms_notified']
+    hipchat.token          = "<%= node['bz-database']['backup']['hipchat']['token'] %>"
+    hipchat.from           = "<%= node['bz-rails']['environment'][0..14] %>"
+    hipchat.rooms_notified = [<%= node['bz-database']['backup']['hipchat']['rooms_notified'].map(&:inspect).join(",") %>]
     hipchat.success_color  = "green"
     hipchat.warning_color  = "yellow"
     hipchat.failure_color  = "red"
