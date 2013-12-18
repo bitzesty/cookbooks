@@ -47,7 +47,8 @@ To add elastic search please include:
 ```
 cookbook 'java', '<version>'
 cookbook 'elasticsearch', '<version>'
-cookbook 'monit', '<version>'
+# does not notify via emails
+cookbook 'monit', "~>0.7.1", github: "OGIS-RI-EOS/monit", tag: "ogis-v0.1"
 ```
 
 Attributes

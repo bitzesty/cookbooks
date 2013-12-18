@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.13
+
+* **bz-database** added database backup
+
 ## 0.1.12
 
 * **bz-rails** add more attrbiutes to mongoid configuration

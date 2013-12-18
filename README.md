@@ -15,6 +15,7 @@
 ### bz-database
 
 * Responsible for installing and cofiguring various databases
+* Supports database backup
 
 ### bz-webserver
 
