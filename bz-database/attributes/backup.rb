@@ -53,10 +53,10 @@ config['keep'] = 10
 config = default['bz-database']['backup']['storage_config']['rackspace']
 config['api_key'] = ''
 config['username'] = ''
-config['containeer'] = ''
-config['path'] = ''
+config['container'] = 'database'
+config['path'] = 'backups'
 config['keep'] = 10
-config['auth_url'] = ''
+config['auth_url'] = 'https://lon.identity.api.rackspacecloud.com/v2.0'
 
 # Notifications
 config = default['bz-database']['backup']['hipchat']

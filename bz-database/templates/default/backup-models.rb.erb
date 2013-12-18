@@ -82,6 +82,9 @@ Backup::Model.new(:<%= node['bz-server']['app']['name'] %>, "Backup <%= node['bz
     cf.path      = "<%= node['bz-database']['backup']['storage_config']['rackspace']['path'] %>"
     cf.keep      = <%= node['bz-database']['backup']['storage_config']['rackspace']['keep'] %>
     cf.auth_url  = "<%= node['bz-database']['backup']['storage_config']['rackspace']['auth_url'] %>"
+    cf.region    = :lon
+    cf.max_retries = 3
+    cf.retry_waitsec = 10
   end
 
   <% end %>

@@ -52,6 +52,12 @@ cookbook 'redisio', github: 'brianbianco/redisio'
 
 #### Backup
 
+For rackspace storage create the following containers in rackspace cloud:
+
+```
+database
+```
+
 ##### into run list
 
 ```json
@@ -88,14 +94,16 @@ Storage
 ```json
 "bz-database": {
   "backup": {
+    "storage": "rackspace",
     "storage_config": {
       "rackspace": {
-        "api_key": "key",
         "username": "user",
-        "container": "<app_name>-backup",
-        "path": "backups",
-        "keep": "10",
-        "auth_url": "lon.auth.api.rackspacecloud.com"
+        "api_key": "key",
+        "container": "database", # default
+        "segments_container": "database_segments", # default
+        "path": "backups", # default
+        "keep": "10", # default
+        "auth_url": "https://lon.identity.api.rackspacecloud.com/v2.0" # default
       }
     }
   }
