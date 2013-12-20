@@ -2,6 +2,11 @@
 
 ## Master
 
+## 0.1.14
+
+* **bz-rails** support for passing ENVironment variables to server
+  processes based on foreman/dotenv
+
 ## 0.1.13
 
 * **bz-database** added database backup
