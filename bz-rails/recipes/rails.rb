@@ -23,5 +23,6 @@ dirs_to_create.flatten.compact.each do |directory_name|
 end
 
 include_recipe "bz-rails::database_config"
+include_recipe "bz-rails::dotenv"
 
 # TODO setup log rotate etc
