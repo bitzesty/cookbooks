@@ -195,6 +195,8 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ### To provision a real server
 
+If server is not created check out the [Create servers via knife rackspace api](https://github.com/bitzesty/cookbooks/wiki/Create-servers-via-knife-rackspace-api)
+
 1. Create `node.json` file similar to the `vagrant.json` just with the real/production values.
 2. Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
 
