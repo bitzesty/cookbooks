@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.15
+
+* **bz-rails** make dotenv support more Capistrano 3 compatible
+
 ## 0.1.14
 
 * **bz-rails** support for passing ENVironment variables to server
