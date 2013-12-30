@@ -5,7 +5,7 @@
 # require 'dotenv/capistrano'
 # to deploy.rb so that .env file would be symlinked from shared directory
 
-file File.join(node['bz-rails']['shared_path'],'config', '.env') do
+file File.join(node['bz-rails']['shared_path'], '.env') do
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   mode "600"
