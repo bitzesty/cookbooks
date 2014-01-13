@@ -186,8 +186,13 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ````
     vagrant provision
     ````
+3. To shutdown the vm
 
-3. To shutdown and remove the vagrant node, execute:
+    ```
+    vagrant halt
+    ```
+    
+4. To shutdown and remove the vagrant node, execute:
 
     ````
     vagrant destroy
