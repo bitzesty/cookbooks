@@ -51,19 +51,19 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
 3. Install Vagrant plugins:
 
-    3.1 (necessary) [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
+    3.1 Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
 
     ````shell
     vagrant plugin install vagrant-berkshelf
     ````
 
-    3.2 (necessary) Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
+    3.2 Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
 
     ````
     vagrant plugin install vagrant-omnibus
     ````
 
-    3.3 (optional) Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
+    3.3 Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
 
     ````
     vagrant plugin install vagrant-rackspace
@@ -191,7 +191,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
     ```
     vagrant halt
     ```
-    
+
 4. To shutdown and remove the vagrant node, execute:
 
     ````
