@@ -48,7 +48,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 ## Setup on a new project
 
 1. Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
-2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version 1.2.x` and not the version from Rubygems.
+2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
 3. Install Vagrant plugins:
 
     3.1 (necessary) [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
