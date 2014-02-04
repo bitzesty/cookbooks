@@ -134,14 +134,14 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
         config.berkshelf.enabled = true
         config.omnibus.chef_version = "11.4.2"
 
-        # Only if you are provisioning on Rackspace
-        config.vm.provider :rackspace do |rs|
-          rs.username = "API.user"
-          rs.api_key  = "1b6182d059a454a8aaf4890c914e8ba"
-          rs.flavor   = /512MB/
-          rs.image    = "Ubuntu 12.04 LTS (Precise Pangolin)"
-          rs.rackspace_region = :lon
-        end
+        # configure development via vagrant
+        vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
+        config.vm.network :private_network, ip: SETTINGS["bz-server"]["ip_address"]
+        # grant max permissions as bz-server user is not created on initial machine setup
+        config.vm.synced_folder "..",
+                                vagrant_development_path,
+                                create: true,
+                                mount_options: ['dmode=777', 'fmode=666']
 
         config.vm.provision :chef_solo do |chef|
           chef.cookbooks_path = ["site-cookbooks"]
@@ -161,6 +161,9 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
   * [Casper](https://github.com/bitzesty/casper/blob/master/chef/nodes/vagrant.json)
 
   **NOTE** these keys may change, review the changelog and recipies for more info.
+  **NOTE** please set bz-database user password as "postgr3s" for
+vagrant environment such that we use the same password for development
+on local and vagrant
 
 ### To provision a Vagrant node
 
@@ -230,6 +233,44 @@ If server is not created check out the [Create servers via knife rackspace api](
    ````
    bundle exec knife solo cook <hostname> -x <username>
    ````
+
+### Developing via vagrant
+
+#### Setup
+
+Include the following into run list:
+
+```json
+"recipe[bz-rails::development_environment]"
+```
+
+Make sure synced folders are setup in Vagrantfile
+
+#### Usage
+
+After provisioning vagrant you can develop the application.
+
+It is located at */home/<user>/<app>_dev*
+
+1. Launch web server
+
+```bash
+ssh <user>@<app>_vagrant.app
+cd <app>_dev
+bundle exec rails s
+```
+
+2. Check the browser
+
+```bash
+<app>_vagrant.app:3000
+```
+
+Once you update code on your local machine, it gets automatically synced
+to vagrant (yey).
+
+To run specs, migrations and rake tasks you must ssh to the machine and
+launch them
 
 ### Upstart and Rails job control
 
