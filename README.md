@@ -250,7 +250,7 @@ Make sure synced folders are setup in Vagrantfile
 
 After provisioning vagrant you can develop the application.
 
-It is located at */home/<user>/<app>_dev*
+It is located at ```/home/<user>/<app>_dev```
 
 1. Launch web server
 
@@ -269,8 +269,7 @@ bundle exec rails s
 Once you update code on your local machine, it gets automatically synced
 to vagrant (yey).
 
-To run specs, migrations and rake tasks you must ssh to the machine and
-launch them
+To run specs, migrations and rake tasks ssh to the machine and launch them
 
 ### Upstart and Rails job control
 
