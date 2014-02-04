@@ -138,7 +138,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
         vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
         config.vm.network :private_network, ip: SETTINGS["bz-server"]["ip_address"]
         # grant max permissions as bz-server user is not created on initial machine setup
-        config.vm.synced_folder "..",
+        config.vm.synced_folder (ENV["VM_SYNCED_FOLDER"] || ".."),
                                 vagrant_development_path,
                                 create: true,
                                 mount_options: ['dmode=777', 'fmode=666']
