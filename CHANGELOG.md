@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.16
+
+* **bz-rails** sets up development environment
+
 ## 0.1.15
 
 * **bz-rails** make dotenv support more Capistrano 3 compatible
