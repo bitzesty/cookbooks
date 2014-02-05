@@ -6,6 +6,8 @@ description      'General server configuration for any type of server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.17"
 
+depends          'apt'
+depends          'ufw'
 depends          'monit'
 depends          'ubuntu' # we can depend on the package in cent_os as long as we do not require it
 depends          'git'
@@ -18,5 +20,8 @@ depends          'line'
 depends          'imagemagick'
 depends          'firewall'
 depends          'java'
+depends          'redisio'
 depends          'elasticsearch'
 depends          'unattended_upgrades'
+depends          'newrelic-sysmond'
+depends          'cloud_monitoring'
