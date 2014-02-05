@@ -20,3 +20,7 @@ default['rbenv']['user_installs'] = [
     'gems'    => gems_config
   }
 ]
+
+# allow installing global ruby, use include_recipe "rbenv::system" to install it
+default['rbenv']['rubies'] = node['bz-rails']['rbenv']['rubies']
+default['rbenv']['global'] = node['bz-rails']['rbenv']['rubies'].first

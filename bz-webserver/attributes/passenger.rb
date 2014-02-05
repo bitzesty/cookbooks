@@ -1,10 +1,6 @@
 include_attribute "bz-rails::rbenv"
 include_attribute "bz-rails::development_environment" # for ruby version
 
-# install via source, needed to install the passenger module
-default['bz-webserver']['nginx']['install_method'] = "source"
-default['nginx']['install_method'] = node['bz-webserver']['nginx']['install_method']
-
 # init via upstart
 default['bz-webserver']['nginx']['init_style'] = "upstart"
 default['nginx']['init_style'] = node['bz-webserver']['nginx']['init_style']
@@ -26,7 +22,7 @@ default['nginx']['passenger']['version'] = node['bz-webserver']['passenger']['ve
 # /home/user/.rbenv/versions/2.0.0-p353
 default['bz-webserver']['passenger']['ruby_path'] =
   [
-    node['bz-rails']['rbenv']['path'],
+    node['rbenv']['root_path'],
     "versions",
     node['bz-rails']['development']['ruby_version'],
   ].join("/")
@@ -37,7 +33,7 @@ default['bz-webserver']['passenger']['root'] =
   [
     node['bz-webserver']['passenger']['ruby_path'],
     "lib/ruby/gems",
-    node['bz-rails']['development']['ruby_version'].split("-").first,
+    node['bz-rails']['development']['ruby_gems_version'],
     "gems",
     "passenger-#{node['bz-webserver']['passenger']['version']}"
   ].join("/")
