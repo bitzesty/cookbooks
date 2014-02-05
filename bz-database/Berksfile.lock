@@ -1,2 +1,0 @@
-cookbook 'ubuntu', :locked_version => '1.1.2'
-cookbook 'apt', :locked_version => '1.10.0'
