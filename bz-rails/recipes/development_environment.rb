@@ -19,19 +19,6 @@ file node['bz-rails']['development']['db_config_file_path'] do
   action :create_if_missing
 end
 
-# make sure we are loading rbenv when executing commands
-# this loads rbenv as well when we su to the user
-ruby_block "development env: load rbenv in .bashrc" do
-  block do
-    file = Chef::Util::FileEdit.new(node['bz-rails']['development']['bashrc_path'])
-    file.insert_line_if_no_match(
-      "/rbenv\.sh/",
-      "source /etc/profile.d/rbenv.sh #Rbenv path for remote shells"
-    )
-    file.write_file
-  end
-end
-
 rbenv_script "development env: bundle install" do
   rbenv_version node['bz-rails']['development']['ruby_version']
   code "bundle install"

@@ -14,7 +14,6 @@ dev_params['db_config_file_path'] =
 
 dev_params['db_config_example_file_path'] = "#{dev_params['db_config_file_path']}.example"
 
-dev_params['bashrc_path'] = "#{node['bz-server']['user']['home']}/.bashrc"
 dev_params['ruby_version'] = node['bz-rails']['rbenv']['rubies'].first
 
 ruby_gems_version = dev_params['ruby_version'].split("-").first

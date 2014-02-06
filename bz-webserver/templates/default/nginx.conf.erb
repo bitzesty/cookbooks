@@ -1,0 +1,37 @@
+user <%= node['bz-webserver']['passenger']['user'] %>;
+worker_processes <%= node['bz-webserver']['passenger']['worker_processes'] %>;
+
+error_log  <%= node['bz-webserver']['passenger']['error_log'] %>;
+pid        <%= node['bz-webserver']['passenger']['pid'] %>;
+
+events {
+  worker_connections  1024;
+}
+
+http {
+  passenger_root <%= node['bz-webserver']['passenger']['root'] %>;
+  passenger_ruby <%= node['bz-webserver']['passenger']['ruby'] %>;
+
+  include       mime.types;
+  default_type  application/octet-stream;
+
+  access_log    <%= node['bz-webserver']['passenger']['access_log'] %>;
+
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+
+  keepalive_timeout  65;
+
+  gzip on;
+  gzip_http_version 1.0;
+  gzip_comp_level 2;
+  gzip_proxied any;
+  gzip_vary off;
+  gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript application/json;
+  gzip_min_length  1000;
+  gzip_disable     "MSIE [1-6]\.";
+
+  include /etc/nginx/conf.d/*.conf;
+  include /etc/nginx/sites-enabled/*;
+}

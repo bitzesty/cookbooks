@@ -21,6 +21,4 @@ default['rbenv']['user_installs'] = [
   }
 ]
 
-# allow installing global ruby, use include_recipe "rbenv::system" to install it
-default['rbenv']['rubies'] = node['bz-rails']['rbenv']['rubies']
-default['rbenv']['global'] = node['bz-rails']['rbenv']['rubies'].first
+default['bz-rails']['rbenv']['bashrc_path'] = "#{node['bz-server']['user']['home']}/.bashrc"

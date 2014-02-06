@@ -1,28 +1,60 @@
 # installs and configures nginx, adds passenger module
 
-# installs system wide rbenv
-include_recipe "rbenv::system"
+# install default nginx, will reuse upstart and common web server configuration
+include_recipe "bz-webserver::nginx"
 
-# install rake and passenger for system wide ruby to compile nginx and run passenger
-rbenv_gem "rake" do
-  rbenv_version node['bz-rails']['development']['ruby_version']
-  action        :install
-end
-
+# install passenger to compile nginx and run passenger
 rbenv_gem "passenger" do
   version       node['bz-webserver']['passenger']['version']
   rbenv_version node['bz-rails']['development']['ruby_version']
+  user          node['bz-server']['user']['name']
   action        :install
 end
 
-include_recipe "nginx"
-
-execute 'install passenger on nginx' do
-  command "passenger-install-nginx-module" <<
+# install passenger nginx if not installed yet
+execute 'install passenger with nginx' do
+  command "bash -c \"source #{node['bz-rails']['rbenv']['bashrc_path']}" <<
+    " && #{node['bz-webserver']['passenger']['ruby_path']}/bin/passenger-install-nginx-module" <<
     " --auto" <<
     " --prefix=/etc/nginx" <<
-    " --extra-configure-flags='--with-http_ssl_module --with-http_gzip_static_module'"
-  not_if do
-    File.exists?("#{node['bz-webserver']['passenger']['root']}/agents/PassengerWatchdog")
-  end
+    " --auto-download" <<
+    " --extra-configure-flags='#{node['bz-webserver']['passenger']['conf_flags']}'\""
+
+  creates "#{node['bz-webserver']['passenger']['root']}/buildout/agents/PassengerWatchdog"
+  retries 2
+  timeout 36000
+end
+
+# stop passenger via service
+service "nginx" do
+  action :stop
+end
+
+# kill passenger nginx if still alive,
+# we need to update it's configuration and manage via service
+execute "kill passenger nginx" do
+  command "sudo pkill nginx || echo 0" # ensure we return 0
+end
+
+# create log dir
+directory node['bz-webserver']['passenger']['log_dir'] do
+  mode      '0755'
+  owner     node['nginx']['user']
+  action    :create
+  recursive true
+end
+
+# update service nginx configuration
+template node['bz-webserver']['passenger']['nginx_daemon_config'] do
+  source "nginx_init_d.erb"
+end
+
+# update global nginx configuration
+template "/etc/nginx/conf/nginx.conf" do
+  source "nginx.conf.erb"
+end
+
+# make sure nginx gets restarted
+service "nginx" do
+  action :reload
 end
