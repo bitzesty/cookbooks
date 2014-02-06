@@ -43,8 +43,19 @@ bz_passenger_opts['log_dir'] = "#{node['bz-server']['user']['home']}/nginx/log"
 bz_passenger_opts['nginx_daemon_config'] = "/etc/init.d/nginx"
 
 # nginx conf
-bz_passenger_opts['user'] = "www-data"
+bz_passenger_opts['user'] = node['bz-server']['user']['name']
 bz_passenger_opts['worker_processes'] = "1"
 bz_passenger_opts['error_log'] = "#{bz_passenger_opts['log_dir']}/error.log"
 bz_passenger_opts['access_log'] = "#{bz_passenger_opts['log_dir']}/access.log"
 bz_passenger_opts['pid'] = "/var/run/nginx.pid" # in order to change it need to update nginx service conf
+
+# passenger conf
+bz_passenger_opts['spawn_method'] = 'smart-lv2'
+bz_passenger_opts['buffer_response'] = 'on'
+bz_passenger_opts['max_pool_size'] = 6
+bz_passenger_opts['min_instances'] = 1
+bz_passenger_opts['max_instances_per_app'] = 0
+bz_passenger_opts['pool_idle_time'] = 300
+bz_passenger_opts['max_requests'] = 0
+bz_passenger_opts['gem_binary'] = nil
+bz_passenger_opts['default_user'] = node['bz-server']['user']['name']

@@ -54,6 +54,14 @@ template "/etc/nginx/conf/nginx.conf" do
   source "nginx.conf.erb"
 end
 
+# passenger conf
+template "#{node['bz-webserver']['passenger']['dir']}/conf.d/passenger.conf" do
+  source "passenger.conf.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+end
+
 # make sure nginx gets restarted
 service "nginx" do
   action :reload
