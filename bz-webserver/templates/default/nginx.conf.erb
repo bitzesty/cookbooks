@@ -1,34 +1,57 @@
-user <%= node['bz-webserver']['passenger']['user'] %>;
-worker_processes <%= node['bz-webserver']['passenger']['worker_processes'] %>;
-
-error_log  <%= node['bz-webserver']['passenger']['error_log'] %>;
-pid        <%= node['bz-webserver']['passenger']['pid'] %>;
+user www-data;
+worker_processes 2;
+pid /var/run/nginx.pid;
 
 events {
-  worker_connections  1024;
+  worker_connections 1024;
 }
 
 http {
-  include       mime.types;
-  default_type  application/octet-stream;
-
-  access_log    <%= node['bz-webserver']['passenger']['access_log'] %>;
-
   sendfile on;
   tcp_nopush on;
   tcp_nodelay on;
+  keepalive_timeout 65;
+  types_hash_max_size 1024;
+  variables_hash_max_size 1024;
+  # server_tokens off;
 
-  keepalive_timeout  65;
+  server_names_hash_bucket_size 64;
+  # server_name_in_redirect off;
+
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+
+  ##
+  # Logging Settings
+  ##
+
+  # access_log /var/log/nginx/access.log;
+  # error_log /var/log/nginx/error.log;
+
+  ##
+  # Gzip Settings
+  ##
 
   gzip on;
-  gzip_http_version 1.0;
-  gzip_comp_level 2;
-  gzip_proxied any;
-  gzip_vary off;
-  gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript application/json;
-  gzip_min_length  1000;
-  gzip_disable     "MSIE [1-6]\.";
+  gzip_disable "msie6";
+
+  # gzip_vary on;
+  # gzip_proxied any;
+  # gzip_comp_level 6;
+  # gzip_buffers 16 8k;
+  # gzip_http_version 1.1;
+  # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+  ##
+  # Phusion Passenger config
+  # passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
+  # passenger_ruby /usr/bin/ruby;
+
+  ##
+  # Virtual Host Configs
+  ##
 
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-enabled/*;
 }
+

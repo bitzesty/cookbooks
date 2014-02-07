@@ -25,6 +25,8 @@ default['bz-server']['_default_packages'] =
     }
   when "debian"
     %w{
+      apt-transport-https
+      ca-certificates
       git-core
       curl
       gcc
@@ -62,3 +64,4 @@ default['bz-server']['packages'] = []
 default['bz-server']['domain'] = 'example.com'
 default['bz-server']['aliases'] = []
 default['bz-server']['ip_address'] = '127.0.0.1'
+default['bz-server']['ubuntu_release'] = 'precise'

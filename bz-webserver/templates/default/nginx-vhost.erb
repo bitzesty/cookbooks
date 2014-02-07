@@ -7,6 +7,9 @@ upstream upstream_server_<%= node['bz-server']['app']['name'] %> {
 }
 <% end %>
 
+error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
+access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
+
 server {
   listen 80;
   client_max_body_size 4G;
@@ -20,6 +23,9 @@ server {
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'passenger' %>
   passenger_enabled on;
+  passenger_min_instances 5;
+  rails_env <%= node['bz-rails']['environment'] %>;
+  passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
 <% end %>
 
   location ~ ^/(assets)/ {
