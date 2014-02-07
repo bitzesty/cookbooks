@@ -11,31 +11,42 @@ error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
 access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
 
 server {
+<% case node['bz-server']['app']['rails_app_server'] %>
+<% when 'passenger' %>
+  location @passenger {
+    passenger_enabled on;
+    passenger_min_instances 5;
+    rails_env production;
+    passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+  }
+<% end %>
+
   listen 80;
   client_max_body_size 4G;
-  server_name <%= node['bz-server']['app']['domain'] %> <%= node['bz-server']['app']['aliases'].join(" ") %>;
+  server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
 
   keepalive_timeout 5;
 
   # Location of our static files
   root <%= node['bz-server']['app']['path'] %>/current/public;
-
-<% case node['bz-server']['app']['rails_app_server'] %>
-<% when 'passenger' %>
-  passenger_enabled on;
-  passenger_min_instances 5;
-  rails_env <%= node['bz-rails']['environment'] %>;
-  passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+  try_files $uri @passenger;
 <% end %>
 
   location ~ ^/(assets)/ {
     root <%= node['bz-server']['app']['path'] %>/current/public;
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+    try_files $uri @passenger;
+<% end %>
     gzip_static on; # to serve pre-gzipped version
     expires max;
     add_header  Cache-Control public;
   }
 
   location / {
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+    try_files $uri @passenger;
+<% end %>
     proxy_redirect off;
 
     proxy_set_header X-Real-IP       $remote_addr;
@@ -57,6 +68,9 @@ server {
 
   error_page 500 502 503 504 /500.html;
   location = /500.html {
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+    try_files $uri @passenger;
+<% end %>
     root <%= node['bz-server']['app']['path'] %>/current/public;
   }
 }

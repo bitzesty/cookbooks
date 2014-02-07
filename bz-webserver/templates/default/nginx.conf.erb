@@ -1,5 +1,5 @@
 user www-data;
-worker_processes 2;
+worker_processes <%= node['bz-webserver']['nginx']['worker_processes'] %>;
 pid /var/run/nginx.pid;
 
 events {
