@@ -2,6 +2,13 @@
 
 ## Master
 
+## 0.1.17
+
+* **bz-webserver** installs nginx with (optionally) passenger from debian packages.
+  The installation ensures you always have the newest nginx version
+
+* **all** use Berksfile.in to properly load dependent gems from bz cookbooks
+
 ## 0.1.16
 
 * **bz-rails** sets up development environment

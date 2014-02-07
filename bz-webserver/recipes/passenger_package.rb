@@ -20,7 +20,12 @@ template "/etc/apt/sources.list.d/passenger.list" do
 end
 
 # install packages
-%w(nginx-extras passenger).each do |package|
+nginx_packages = %w(nginx-extras)
+if node['bz-server']['app']['rails_app_server'] == "passenger"
+  nginx_packages << "passenger"
+end
+
+nginx_packages.each do |package|
   apt_package package do
     action :install
   end
