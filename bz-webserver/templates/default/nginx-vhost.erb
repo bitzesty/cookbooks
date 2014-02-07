@@ -7,15 +7,31 @@ upstream upstream_server_<%= node['bz-server']['app']['name'] %> {
 }
 <% end %>
 
+error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
+access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
+
 server {
+<% case node['bz-server']['app']['rails_app_server'] %>
+<% when 'passenger' %>
+  location @passenger {
+    passenger_enabled on;
+    passenger_min_instances 5;
+    rails_env <%= node['bz-rails']['environment'] %>;
+    passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+  }
+<% end %>
+
   listen 80;
   client_max_body_size 4G;
-  server_name <%= node['bz-server']['app']['domain'] %> <%= node['bz-server']['app']['aliases'].join(" ") %>;
+  server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
 
   keepalive_timeout 5;
 
   # Location of our static files
   root <%= node['bz-server']['app']['path'] %>/current/public;
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+  try_files $uri @passenger;
+<% end %>
 
   location ~ ^/(assets)/ {
     root <%= node['bz-server']['app']['path'] %>/current/public;
@@ -25,23 +41,33 @@ server {
   }
 
   location / {
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+    try_files $uri @passenger;
+<% end %>
     proxy_redirect off;
 
-    proxy_set_header  X-Real-IP         $remote_addr;
+    proxy_set_header X-Real-IP       $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
+    proxy_set_header Host            $http_host;
 
-    proxy_set_header  X-Sendfile-Type   X-Accel-Redirect;
+    proxy_set_header X-Sendfile-Type X-Accel-Redirect;
+
+<% case node['bz-server']['app']['rails_app_server'] %>
+<% when 'unicorn' %>
     # If you don't find the filename in the static files
     # Then request it from the unicorn server
     if (!-f $request_filename) {
       proxy_pass http://upstream_server_<%= node['bz-server']['app']['name'] %>;
       break;
     }
+<% end %>
   }
 
   error_page 500 502 503 504 /500.html;
   location = /500.html {
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+    try_files $uri @passenger;
+<% end %>
     root <%= node['bz-server']['app']['path'] %>/current/public;
   }
 }

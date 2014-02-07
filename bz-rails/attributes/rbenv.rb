@@ -20,3 +20,5 @@ default['rbenv']['user_installs'] = [
     'gems'    => gems_config
   }
 ]
+
+default['bz-rails']['rbenv']['bashrc_path'] = "#{node['bz-server']['user']['home']}/.bashrc"

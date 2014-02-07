@@ -105,15 +105,15 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
       tag: STACK_VERSION
     end
 
-    cookbook 'ufw'
-    cookbook 'ohai'
-    cookbook 'mongodb', '0.12.0', git: "https://github.com/edelight/chef-mongodb.git"
-    cookbook 'rbenv', '0.7.3', git: 'https://github.com/fnichol/chef-rbenv.git'
-    cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades" # ubuntu upgrades
+    # example
+    # cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades" # ubuntu upgrades
+
     cookbook '<project_name>', path: './site-cookbooks/<project_name>'
     ````
 
     **NOTE** The last should come project-specific cookbook from site-cookbooks.
+
+    **NOTE** Do not add the cookbooks that are already specified in bz cookbooks.
 
 8. Add Vagrantfile to your project for developing the stack:
 
@@ -161,9 +161,24 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
   * [Casper](https://github.com/bitzesty/casper/blob/master/chef/nodes/vagrant.json)
 
   **NOTE** these keys may change, review the changelog and recipies for more info.
-  **NOTE** please set bz-database user password as "postgr3s" for
+  **NOTE** please set bz-database user password as "bzesty" for
 vagrant environment such that we use the same password for development
-on local and vagrant
+on local and vagrant. To change your password follow:
+
+http://www.cyberciti.biz/faq/mysql-change-root-password/
+http://stackoverflow.com/a/14588440/1630080
+
+10. Update metadata with bz cookbooks dependencies
+
+```ruby
+# chef/site-cookbooks/tss/metadata.rb
+
+# load attributes for bz cookbooks
+depends "bz-server"
+depends "bz-rails"
+depends "bz-database"
+depends "bz-webserver"
+```
 
 ### To provision a Vagrant node
 
