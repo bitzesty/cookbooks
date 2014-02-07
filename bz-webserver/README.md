@@ -36,4 +36,11 @@ Include `bz-webserver::nginx` in your node's `run_list`:
 ```
 
 This will install passenger and add it's configuration to nginx and
-vhost configuration
+vhost configuration.
+
+**NOTE:** you need to restart nginx after deploying the code first time:
+```bash
+cd chef
+vagrant ssh
+sudo service nginx restart
+```
