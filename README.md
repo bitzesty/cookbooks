@@ -93,23 +93,46 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 7. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
-    ````ruby
-    site :opscode
+````ruby
+site :opscode
 
-    STACK_VERSION = '0.1.10' # USE THE LATEST AVAILABLE
+STACK_VERSION = '0.1.17'
+path = ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
 
-    %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
-    cookbook cookbook, "~> #{STACK_VERSION}",
-      git: "https://github.com/bitzesty/cookbooks.git",
-      rel: cookbook,
-      tag: STACK_VERSION
-    end
+def load_cookbook_dependencies(path)
+  metadata = File.join(path, "metadata.rb")
+  berks = File.join(path, "Berksfile.in")
+  if File.exists?(berks) && File.read(metadata).include?(STACK_VERSION)
+    instance_eval(File.read(berks))
+  else
+    puts "WARNING: Please pull bz cookbooks repository tag #{STACK_VERSION} and export BZ_COOKBOOKS_PATH=/path/to/cookbooks"
+    puts "This is required to allow loading cookbook descriptions from bz cookbooks"
+  end
+end
 
-    # example
-    # cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades" # ubuntu upgrades
+%w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
+  # # for local
+  # cookbook cookbook,
+  #          "~> #{STACK_VERSION}",
+  #          path: path,
+  #          rel: cookbook
 
-    cookbook '<project_name>', path: './site-cookbooks/<project_name>'
-    ````
+  # for github
+  cookbook cookbook,
+           "~> #{STACK_VERSION}",
+           git: "https://github.com/bitzesty/cookbooks.git",
+           rel: cookbook,
+           branch: "berksfile-in"
+
+  # common
+  load_cookbook_dependencies File.join(path, cookbook)
+end
+
+# example
+# cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades" # ubuntu upgrades
+
+cookbook '<project_name>', path: './site-cookbooks/<project_name>'
+````
 
     **NOTE** The last should come project-specific cookbook from site-cookbooks.
 
