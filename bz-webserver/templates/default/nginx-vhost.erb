@@ -16,7 +16,7 @@ server {
   location @passenger {
     passenger_enabled on;
     passenger_min_instances 5;
-    rails_env production;
+    rails_env <%= node['bz-rails']['environment'] %>;
     passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
   }
 <% end %>
@@ -35,9 +35,6 @@ server {
 
   location ~ ^/(assets)/ {
     root <%= node['bz-server']['app']['path'] %>/current/public;
-<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
-    try_files $uri @passenger;
-<% end %>
     gzip_static on; # to serve pre-gzipped version
     expires max;
     add_header  Cache-Control public;

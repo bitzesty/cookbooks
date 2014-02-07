@@ -4,7 +4,7 @@ case node['platform_family']
 when "rhel"
   include_recipe "nginx::package"
 when "debian"
-  include_recipe "bz-webserver::passenger_package"
+  include_recipe "bz-webserver::nginx_debian_package"
 end
 
 # update nginx confirguration
