@@ -122,7 +122,7 @@ end
            "~> #{STACK_VERSION}",
            git: "https://github.com/bitzesty/cookbooks.git",
            rel: cookbook,
-           branch: "berksfile-in"
+           branch: "master"
 
   # common
   load_cookbook_dependencies File.join(path, cookbook)
