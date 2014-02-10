@@ -149,38 +149,39 @@ Vagrant.configure("2") do |config|
 
   # define server name
   config.vm.define "<project_name>" do |server|
-    SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant.json').read)
+  end
 
-    config.vm.box = "precise64"
-    config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-    config.berkshelf.enabled = true
-    config.omnibus.chef_version = "11.4.2"
+  SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant.json').read)
 
-    # uncomment when using passenger instead of unicorn, othervise vagrant provisioning will fail
-    # config.vm.provision :shell, inline: "sudo apt-get -y install libopenssl-ruby ruby1.9.1-dev || echo 0"
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.berkshelf.enabled = true
+  config.omnibus.chef_version = "11.4.2"
 
-    config.vm.provision :shell, inline: "gem install chef --version 11.4.2 --no-rdoc --no-ri --conservative"
+  # uncomment when using passenger instead of unicorn, othervise vagrant provisioning will fail
+  # config.vm.provision :shell, inline: "sudo apt-get -y install libopenssl-ruby ruby1.9.1-dev || echo 0"
 
-    # configure development via vagrant
-    vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
-    config.vm.network :private_network, ip: SETTINGS["bz-server"]["ip_address"]
-    # grant max permissions as bz-server user is not created on initial machine setup
-    config.vm.synced_folder (ENV["VM_SYNCED_FOLDER"] || ".."),
-                            vagrant_development_path,
-                            create: true,
-                            mount_options: ['dmode=777', 'fmode=666']
+  config.vm.provision :shell, inline: "gem install chef --version 11.4.2 --no-rdoc --no-ri --conservative"
 
-    config.vm.provision :chef_solo do |chef|
-      chef.cookbooks_path = ["site-cookbooks"]
-      chef.roles_path = "roles"
-      chef.data_bags_path = "data_bags"
+  # configure development via vagrant
+  vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
+  config.vm.network :private_network, ip: SETTINGS["bz-server"]["ip_address"]
+  # grant max permissions as bz-server user is not created on initial machine setup
+  config.vm.synced_folder (ENV["VM_SYNCED_FOLDER"] || ".."),
+                          vagrant_development_path,
+                          create: true,
+                          mount_options: ['dmode=777', 'fmode=666']
 
-      # You may also specify custom JSON attributes:
-      chef.json = SETTINGS
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = ["site-cookbooks"]
+    chef.roles_path = "roles"
+    chef.data_bags_path = "data_bags"
 
-      # uncomment if defined a role in roles/
-      # chef.add_role("frontend")
-    end
+    # You may also specify custom JSON attributes:
+    chef.json = SETTINGS
+
+    # uncomment if defined a role in roles/
+    # chef.add_role("frontend")
   end
 end
 ````
