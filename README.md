@@ -144,11 +144,11 @@ cookbook '<project_name>', path: './site-cookbooks/<project_name>'
 require 'json'
 
 Vagrant.configure("2") do |config|
-  # If you provisioning on Rackspace
-  Vagrant.require_plugin "vagrant-rackspace"
+  # uncomment if provisioning on Rackspace
+  # Vagrant.require_plugin "vagrant-rackspace"
 
   # define server name
-  config.vm.define :<project_name> do |server|
+  config.vm.define "<project_name>" do |server|
     SETTINGS = JSON.load(Pathname(__FILE__).dirname.join('nodes', 'vagrant.json').read)
 
     config.vm.box = "precise64"
@@ -177,7 +177,9 @@ Vagrant.configure("2") do |config|
 
       # You may also specify custom JSON attributes:
       chef.json = SETTINGS
-      chef.add_role("frontend") # if you defined a role in roles/
+
+      # uncomment if defined a role in roles/
+      # chef.add_role("frontend")
     end
   end
 end
