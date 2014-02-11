@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.18
+
+* **bz-rails** setup spring for development environment
+
 ## 0.1.17
 
 * **chef** suggesting to use 11.6.2 version

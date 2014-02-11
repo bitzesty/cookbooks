@@ -3,6 +3,8 @@ include_attribute "bz-server::app"
 dev_params = default['bz-rails']['development']
 dev_params['path'] = "#{node['bz-server']['app']['path']}_dev"
 dev_params['db_config_path'] = "#{dev_params['path']}/config"
+dev_params['rbenv_plugins_path'] = "#{node['bz-server']['user']['home']}/.rbenv/plugins"
+dev_params['rbenv_binstubs_repo'] = "https://github.com/ianheggie/rbenv-binstubs.git"
 
 dev_params['db_config_file_path'] =
   case node['bz-rails']['database']['type']

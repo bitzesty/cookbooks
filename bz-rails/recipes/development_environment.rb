@@ -27,9 +27,36 @@ rbenv_script "development env: bundle install" do
   cwd node['bz-rails']['development']['path']
 end
 
+# create rbenv plugins directory
+directory node['bz-rails']['development']['rbenv_plugins_path'] do
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  mode 0755
+  action :create
+end
+
+# checkout the rbenv binstubs gem
+git "#{node['bz-rails']['development']['rbenv_plugins_path']}/rbenv-binstubs" do
+  repository node['bz-rails']['development']['rbenv_binstubs_repo']
+  reference "master"
+  action :checkout
+end
+
+rbenv_script "development env: create binstubs for the application" do
+  rbenv_version node['bz-rails']['development']['ruby_version']
+  code "bundle install --binstubs .bundle/bin"
+  group node['bz-server']['user']['name']
+  user  node['bz-server']['user']['name']
+  cwd node['bz-rails']['development']['path']
+end
+
+rbenv_rehash "Rehash rbenv" do
+  user  node['bz-server']['user']['name']
+end
+
 rbenv_script "development env: create development database and seed" do
   rbenv_version node['bz-rails']['development']['ruby_version']
-  code "RAILS_ENV=development bundle exec rake db:create db:migrate db:seed"
+  code "RAILS_ENV=development spring rake db:create db:migrate db:seed"
   group node['bz-server']['user']['name']
   user  node['bz-server']['user']['name']
   cwd node['bz-rails']['development']['path']
@@ -37,7 +64,7 @@ end
 
 rbenv_script "development env: create test database" do
   rbenv_version node['bz-rails']['development']['ruby_version']
-  code "RAILS_ENV=test bundle exec rake db:migrate"
+  code "RAILS_ENV=test spring rake db:migrate"
   group node['bz-server']['user']['name']
   user  node['bz-server']['user']['name']
   cwd node['bz-rails']['development']['path']
