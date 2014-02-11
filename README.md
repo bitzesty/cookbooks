@@ -114,7 +114,7 @@ end
   # # for local
   # cookbook cookbook,
   #          "~> #{STACK_VERSION}",
-  #          path: path,
+  #          path: File.join(path, cookbook),
   #          rel: cookbook
 
   # for github
@@ -158,9 +158,8 @@ Vagrant.configure("2") do |config|
   config.berkshelf.enabled = true
   config.omnibus.chef_version = "11.8.2"
 
-  # uncomment if getting compilation errors for /usr/bin/ruby1.9.1 extconf.rb
-  # config.vm.provision :shell, inline: "sudo apt-get -y install libopenssl-ruby ruby1.9.1-dev || echo 0"
-
+  # install make to not get compilation errors for chef gem installation
+  config.vm.provision :shell, inline: "sudo aptitude -y install build-essential || echo 0" # only for ubuntu
   config.vm.provision :shell, inline: "gem install chef --version 11.8.2 --no-rdoc --no-ri --conservative"
 
   # configure development via vagrant
