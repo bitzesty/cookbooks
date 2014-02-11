@@ -186,15 +186,21 @@ end
 ````
 
 9. Create 'nodes/vagrant.json' file. Check existing projects like
+
   * [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json)
+
   * [Casper](https://github.com/bitzesty/casper/blob/master/chef/nodes/vagrant.json)
 
   **NOTE** these keys may change, review the changelog and recipies for more info.
+
   **NOTE** please set bz-database user password as "bzesty" for
 vagrant environment such that we use the same password for development
-on local and vagrant. To change your password follow:
+on local and vagrant.
+
+To change your password follow:
 
 http://www.cyberciti.biz/faq/mysql-change-root-password/
+
 http://stackoverflow.com/a/14588440/1630080
 
 10. Update metadata with bz cookbooks dependencies
@@ -282,6 +288,14 @@ If server is not created check out the [Create servers via knife rackspace api](
 
 #### Setup
 
+Add agent forwarding to ssh config:
+
+```
+# vim ~/.ssh/config
+Host *
+  ForwardAgent yes
+```
+
 Include the following into run list:
 
 ```json
@@ -301,7 +315,7 @@ It is located at ```/home/<user>/<app>_dev```
 ```bash
 ssh <user>@<app>_vagrant.app
 cd <app>_dev
-bundle exec rails s
+spring rails s
 ```
 
 2. Check the browser
