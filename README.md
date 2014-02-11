@@ -114,7 +114,7 @@ end
   # # for local
   # cookbook cookbook,
   #          "~> #{STACK_VERSION}",
-  #          path: path,
+  #          path: File.join(path, cookbook),
   #          rel: cookbook
 
   # for github
@@ -156,12 +156,11 @@ Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
   config.berkshelf.enabled = true
-  config.omnibus.chef_version = "11.4.2"
+  config.omnibus.chef_version = "11.8.2"
 
-  # uncomment when using passenger instead of unicorn, othervise vagrant provisioning will fail
-  # config.vm.provision :shell, inline: "sudo apt-get -y install libopenssl-ruby ruby1.9.1-dev || echo 0"
-
-  config.vm.provision :shell, inline: "gem install chef --version 11.4.2 --no-rdoc --no-ri --conservative"
+  # install make and ruby to not get compilation errors for chef gem installation
+  config.vm.provision :shell, inline: "(sudo aptitude -y install build-essential && sudo apt-get -y install ruby1.9.1-dev) || echo 0"
+  config.vm.provision :shell, inline: "gem install chef --version 11.8.2 --no-rdoc --no-ri --conservative"
 
   # configure development via vagrant
   vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
@@ -260,7 +259,7 @@ If server is not created check out the [Create servers via knife rackspace api](
 2. Bootstrap Chef inside this server:
 
     ````
-    bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.4.2
+    bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.8.2
     ````
 
    NOTE: vagrant Chef version and real Chef version should match.

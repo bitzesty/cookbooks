@@ -30,7 +30,7 @@ template "/etc/nginx/sites-enabled/#{node['bz-server']['app']['name']}-vhost" do
   source "nginx-vhost.erb"
 end
 
-# restart nginx
+# reload configuration and restart nginx
 service "nginx" do
-  action :reload
+  action [:reload, :restart]
 end
