@@ -4,6 +4,8 @@
 
 ## 0.1.17
 
+* **chef** suggesting to use 11.6.2 version
+
 * **bz-webserver** installs nginx with (optionally) passenger from debian packages.
   The installation ensures you always have the newest nginx version
 
