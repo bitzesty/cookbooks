@@ -304,6 +304,15 @@ Include the following into run list:
 
 Make sure synced folders are setup in Vagrantfile
 
+Add the following gems to your gemfile, spring preloads your env:
+
+```
+group :development do
+  gem "spring"
+  gem "spring-commands-rspec"
+end
+```
+
 #### Usage
 
 After provisioning vagrant you can develop the application.

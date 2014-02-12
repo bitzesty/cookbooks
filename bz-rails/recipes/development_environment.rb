@@ -54,17 +54,9 @@ rbenv_rehash "Rehash rbenv" do
   user  node['bz-server']['user']['name']
 end
 
-rbenv_script "development env: create development database and seed" do
+rbenv_script "development env: create development and test database" do
   rbenv_version node['bz-rails']['development']['ruby_version']
-  code "RAILS_ENV=development spring rake db:create db:migrate db:seed"
-  group node['bz-server']['user']['name']
-  user  node['bz-server']['user']['name']
-  cwd node['bz-rails']['development']['path']
-end
-
-rbenv_script "development env: create test database" do
-  rbenv_version node['bz-rails']['development']['ruby_version']
-  code "RAILS_ENV=test spring rake db:migrate"
+  code "RAILS_ENV=development spring rake db:create"
   group node['bz-server']['user']['name']
   user  node['bz-server']['user']['name']
   cwd node['bz-rails']['development']['path']
