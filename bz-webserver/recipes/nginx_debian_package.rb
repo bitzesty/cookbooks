@@ -26,7 +26,7 @@ end
 nginx_packages.each do |package|
   apt_package package do
     action :install
-    options "-q --force-yes"
+    options "--force-yes"
   end
 end
 
