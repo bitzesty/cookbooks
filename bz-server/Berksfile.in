@@ -1,7 +1,7 @@
 cookbook 'apt', '2.0.0'
 cookbook 'ufw', '0.6.2'
 cookbook 'ohai', '1.1.10'
-cookbook 'ubuntu', '1.1.5', github: 'opscode-cookbooks/ubuntu'
+cookbook 'ubuntu', '1.1.7', github: 'opscode-cookbooks/ubuntu'
 cookbook 'line', '0.5.1'
 cookbook 'unattended-upgrades', '0.0.1', github: "phillip/chef-unattended-upgrades"
 
