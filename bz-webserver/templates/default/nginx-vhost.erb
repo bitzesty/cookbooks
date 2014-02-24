@@ -1,27 +1,56 @@
+# taken from https://github.com/kalys/capistrano-nginx-unicorn/blob/master/lib/generators/capistrano/nginx_unicorn/templates/nginx_conf.erb
+
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'unicorn' %>
-upstream upstream_server_<%= node['bz-server']['app']['name'] %> {
+upstream unicorn_<%= node['bz-server']['app']['name'] %> {
   # This is the socket we configured in unicorn.rb
   server unix:<%= node['bz-server']['app']['path'] %>/shared/sockets/unicorn.sock
   fail_timeout=0;
 }
 <% end %>
 
-error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
-access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
+<% if node['bz-webserver']['nginx']['use_ssl'] %>
+server {
+  listen 80;
+  rewrite ^(.*) https://$host$1 permanent;
+}
+<% end %>
 
 server {
+  error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
+  access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
+
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'passenger' %>
   location @passenger {
     passenger_enabled on;
     passenger_min_instances 5;
     rails_env <%= node['bz-rails']['environment'] %>;
+  <% if node['bz-webserver']['nginx']['use_ssl'] %>
     passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+  <% end %>
+  }
+<% when 'unicorn' %>
+  location @unicorn_<%= node['bz-server']['app']['name'] %> {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+  <% if node['bz-webserver']['nginx']['use_ssl'] %>
+    proxy_set_header X-Forwarded-Proto https;
+  <% end %>
+    proxy_pass http://unicorn_<%= node['bz-server']['app']['name'] %>;
+    # limit_req zone=one;
   }
 <% end %>
 
+<% if node['bz-webserver']['nginx']['use_ssl'] %>
+  listen 443;
+  ssl on;
+  ssl_certificate <%= node['bz-webserver']['nginx']['certs']['certificate'] %>;
+  ssl_certificate_key <%= node['bz-webserver']['nginx']['certs']['key'] %>;
+<% else %>
   listen 80;
+<% end %>
   client_max_body_size 4G;
   server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
 
@@ -29,45 +58,57 @@ server {
 
   # Location of our static files
   root <%= node['bz-server']['app']['path'] %>/current/public;
-<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
-  try_files $uri @passenger;
-<% end %>
-
-  location ~ ^/(assets)/ {
-    root <%= node['bz-server']['app']['path'] %>/current/public;
-    gzip_static on; # to serve pre-gzipped version
-    expires max;
-    add_header  Cache-Control public;
-  }
-
-  location / {
-<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
-    try_files $uri @passenger;
-<% end %>
-    proxy_redirect off;
-
-    proxy_set_header X-Real-IP       $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host            $http_host;
-
-    proxy_set_header X-Sendfile-Type X-Accel-Redirect;
-
 <% case node['bz-server']['app']['rails_app_server'] %>
+<% when 'passenger' %>
+  try_files $uri @passenger;
 <% when 'unicorn' %>
-    # If you don't find the filename in the static files
-    # Then request it from the unicorn server
-    if (!-f $request_filename) {
-      proxy_pass http://upstream_server_<%= node['bz-server']['app']['name'] %>;
-      break;
-    }
+  try_files $uri/index.html $uri @unicorn_<%= node['bz-server']['app']['name'] %>;
 <% end %>
+
+  location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+    add_header Last-Modified "";
+    add_header ETag "";
+
+    open_file_cache max=1000 inactive=500s;
+    open_file_cache_valid 600s;
+    open_file_cache_errors on;
+    break;
   }
 
-  error_page 500 502 503 504 /500.html;
-  location = /500.html {
-<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
-    try_files $uri @passenger;
-<% end %>
-    root <%= node['bz-server']['app']['path'] %>/current/public;
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+
+  error_page 500 502 504 /500.html;
+  error_page 503 @503;
+
+  location = /50x.html {
+    root html;
+  }
+
+  location = /404.html {
+    root html;
+  }
+
+  location @503 {
+    error_page 405 = /system/maintenance.html;
+    if (-f $document_root/system/maintenance.html) {
+      rewrite ^(.*)$ /system/maintenance.html break;
+    }
+    rewrite ^(.*)$ /503.html break;
+  }
+
+  if ($request_method !~ ^(GET|HEAD|PUT|POST|DELETE|OPTIONS)$ ){
+    return 405;
+  }
+
+  if (-f $document_root/system/maintenance.html) {
+    return 503;
+  }
+
+  location ~ \.(php|html)$ {
+    return 405;
   }
 }
