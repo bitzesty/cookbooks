@@ -17,17 +17,44 @@ file "/etc/nginx/sites-enabled/default" do
   action :delete
 end
 
-# create log dir
-directory node['bz-webserver']['nginx']['log_dir'] do
-  mode      '0755'
-  owner     node['nginx']['user']
-  action    :create
-  recursive true
+# create log and certs dirs
+[
+node['bz-webserver']['nginx']['log']['dir'],
+node['bz-webserver']['nginx']['certs']['dir']
+].each do |dir|
+  directory dir do
+    mode      '0755'
+    owner     node['bz-webserver']['nginx']['log']['user']
+    group     node['bz-webserver']['nginx']['log']['user']
+    action    :create
+    recursive true
+  end
+end
+
+# create log files
+[
+  node['bz-webserver']['nginx']['log']['access'],
+  node['bz-webserver']['nginx']['log']['error']
+].each do |file_location|
+  file file_location do
+    owner node['bz-server']['user']['name']
+    group node['bz-server']['user']['name']
+    mode 0644
+    action :create_if_missing
+  end
 end
 
 # create vhost entry
 template "/etc/nginx/sites-enabled/#{node['bz-server']['app']['name']}-vhost" do
   source "nginx-vhost.erb"
+end
+
+cookbook_file File.join(node['bz-rails']['shared_path'], 'system', 'maintenance.html.bak') do
+  source 'maintenance.html.bak'
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  mode 0644
+  action :create_if_missing
 end
 
 # reload configuration and restart nginx
