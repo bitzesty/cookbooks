@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <title>We are down for maintenance</title>
+  </head>
+  <body>
+    <h1 style="color:orange;">We are down for maintenance</h1>
+    <p>Sorry for inconvenience, we are migrating the application.</p>
+    <p>It will soon appear with improved look and security.</p>
+    <p>Best wishes, QAVS team</p>
+  </body>
+</html>

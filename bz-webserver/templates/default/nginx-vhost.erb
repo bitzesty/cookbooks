@@ -51,10 +51,8 @@ server {
 <% else %>
   listen 80;
 <% end %>
-  client_max_body_size 4G;
-  server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
 
-  keepalive_timeout 5;
+  server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
 
   # Location of our static files
   root <%= node['bz-server']['app']['path'] %>/current/public;
