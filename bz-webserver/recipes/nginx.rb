@@ -17,15 +17,21 @@ file "/etc/nginx/sites-enabled/default" do
   action :delete
 end
 
-# create log dir
-directory node['bz-webserver']['nginx']['log']['dir'] do
-  mode      '0755'
-  owner     node['bz-webserver']['nginx']['log']['user']
-  group     node['bz-webserver']['nginx']['log']['user']
-  action    :create
-  recursive true
+# create log and certs dirs
+[
+node['bz-webserver']['nginx']['log']['dir'],
+node['bz-webserver']['nginx']['certs']['dir']
+].each do |dir|
+  directory dir do
+    mode      '0755'
+    owner     node['bz-webserver']['nginx']['log']['user']
+    group     node['bz-webserver']['nginx']['log']['user']
+    action    :create
+    recursive true
+  end
 end
 
+# create log files
 [
   node['bz-webserver']['nginx']['log']['access'],
   node['bz-webserver']['nginx']['log']['error']

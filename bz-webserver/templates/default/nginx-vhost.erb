@@ -11,7 +11,7 @@ upstream unicorn_<%= node['bz-server']['app']['name'] %> {
 
 <% if node['bz-webserver']['nginx']['use_ssl'] %>
 server {
-  listen 80;
+  listen <%= node['bz-webserver']['nginx']['ports']['http'] %>;
   rewrite ^(.*) https://$host$1 permanent;
 }
 <% end %>
@@ -44,12 +44,12 @@ server {
 <% end %>
 
 <% if node['bz-webserver']['nginx']['use_ssl'] %>
-  listen 443;
+  listen <%= node['bz-webserver']['nginx']['ports']['ssl'] %>;
   ssl on;
   ssl_certificate <%= node['bz-webserver']['nginx']['certs']['certificate'] %>;
   ssl_certificate_key <%= node['bz-webserver']['nginx']['certs']['key'] %>;
 <% else %>
-  listen 80;
+  listen <%= node['bz-webserver']['nginx']['ports']['http'] %>;
 <% end %>
 
   server_name <%= [node['bz-server']['app']['domain'], node['bz-server']['app']['aliases']].flatten.join(" ") %>;
@@ -76,7 +76,7 @@ server {
     break;
   }
 
-  client_max_body_size 4G;
+  client_max_body_size <%= node['bz-webserver']['nginx']['client_max_body_size'] %>;
   keepalive_timeout 10;
 
   error_page 500 502 504 /500.html;
@@ -98,15 +98,7 @@ server {
     rewrite ^(.*)$ /503.html break;
   }
 
-  if ($request_method !~ ^(GET|HEAD|PUT|POST|DELETE|OPTIONS)$ ){
-    return 405;
-  }
-
   if (-f $document_root/system/maintenance.html) {
     return 503;
-  }
-
-  location ~ \.(php|html)$ {
-    return 405;
   }
 }
