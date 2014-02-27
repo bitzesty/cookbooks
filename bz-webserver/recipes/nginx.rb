@@ -18,11 +18,24 @@ file "/etc/nginx/sites-enabled/default" do
 end
 
 # create log dir
-directory node['bz-webserver']['nginx']['log_dir'] do
+directory node['bz-webserver']['nginx']['log']['dir'] do
   mode      '0755'
-  owner     node['nginx']['user']
+  owner     node['bz-webserver']['nginx']['log']['user']
+  group     node['bz-webserver']['nginx']['log']['user']
   action    :create
   recursive true
+end
+
+[
+  node['bz-webserver']['nginx']['log']['access'],
+  node['bz-webserver']['nginx']['log']['error']
+].each do |file_location|
+  file file_location do
+    owner node['bz-server']['user']['name']
+    group node['bz-server']['user']['name']
+    mode 0644
+    action :create_if_missing
+  end
 end
 
 # create vhost entry

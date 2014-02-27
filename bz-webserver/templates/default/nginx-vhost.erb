@@ -17,8 +17,8 @@ server {
 <% end %>
 
 server {
-  error_log  <%= node['bz-webserver']['nginx']['error_log'] %>;
-  access_log <%= node['bz-webserver']['nginx']['access_log'] %>;
+  error_log  <%= node['bz-webserver']['nginx']['log']['error'] %>;
+  access_log <%= node['bz-webserver']['nginx']['log']['access'] %>;
 
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'passenger' %>
