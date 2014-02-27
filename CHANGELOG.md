@@ -2,6 +2,11 @@
 
 ## Master
 
+## 0.1.19
+
+* **bz-webserver** update nginx configuration with passenger, ssl and
+  maintenance page support
+
 ## 0.1.18
 
 * **bz-rails** setup spring for development environment

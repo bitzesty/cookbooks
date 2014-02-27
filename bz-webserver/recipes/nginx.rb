@@ -30,6 +30,14 @@ template "/etc/nginx/sites-enabled/#{node['bz-server']['app']['name']}-vhost" do
   source "nginx-vhost.erb"
 end
 
+cookbook_file File.join(node['bz-rails']['shared_path'], 'system', 'maintenance.html.bak') do
+  source 'maintenance.html.bak'
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  mode 0644
+  action :create_if_missing
+end
+
 # reload configuration and restart nginx
 service "nginx" do
   action [:reload, :restart]
