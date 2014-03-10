@@ -5,7 +5,6 @@
 ## 0.1.20
 
 * **bz-server** define github users to allow provisioning machines
-  globally
 
 * **bz-webserver** allow user to restart nginx once using passenger
 
