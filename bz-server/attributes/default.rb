@@ -65,3 +65,6 @@ default['bz-server']['domain'] = 'example.com'
 default['bz-server']['aliases'] = []
 default['bz-server']['ip_address'] = '127.0.0.1'
 default['bz-server']['ubuntu_release'] = 'precise'
+
+# allow usage of http://docs.opscode.com/lwrp_sudo.html
+default['authorization']['sudo']['include_sudoers_d'] = true

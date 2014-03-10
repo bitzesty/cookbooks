@@ -17,3 +17,5 @@ bz_nginx_opts['log']['error'] = "#{bz_nginx_opts['log']['dir']}/nginx.error.log"
 bz_nginx_opts['log']['access'] = "#{bz_nginx_opts['log']['dir']}/nginx.access.log"
 bz_nginx_opts['log']['user'] = node['bz-server']['user']['name']
 bz_nginx_opts['pid'] = "/var/run/nginx.pid" # in order to change it need to update nginx service conf
+
+bz_nginx_opts['restart'] = "/etc/init.d/nginx restart"

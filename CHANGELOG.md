@@ -2,6 +2,12 @@
 
 ## Master
 
+## 0.1.20
+
+* **bz-server** define github users to allow provisioning machines
+
+* **bz-webserver** allow user to restart nginx once using passenger
+
 ## 0.1.19
 
 * **bz-webserver** update nginx configuration with passenger, ssl and
