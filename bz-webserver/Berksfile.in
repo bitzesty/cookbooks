@@ -1,1 +1,1 @@
-cookbook 'nginx', '2.2.3', github: 'opscode-cookbooks/nginx'
+cookbook 'nginx', '2.4.3', github: 'opscode-cookbooks/nginx'

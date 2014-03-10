@@ -35,3 +35,15 @@ service 'nginx' do
   supports :status => true, :restart => true, :reload => true
   action   :enable
 end
+
+# allow user to restart nginx for passenger
+if node['bz-server']['app']['rails_app_server'] == "passenger"
+  sudo node['bz-server']['user']['name'] do
+    user node['bz-server']['user']['name']
+    commands [
+      node['bz-webserver']['nginx']['restart']
+    ]
+    host "ALL"
+    nopasswd true
+  end
+end

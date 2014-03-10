@@ -51,12 +51,12 @@ directory "/home/#{node['bz-server']['user']['name']}/.bundle" do
   group node['bz-server']['user']['name']
 end
 
-unless node['bz-server']['user']['authorized_github_users'].empty?
+unless node['bz-server']['user']['authorized_users'].empty?
   require 'open-uri'
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
-  node['bz-server']['user']['authorized_github_users'].each do |github_user|
+  node['bz-server']['user']['authorized_users'].each do |github_user|
     user_keys = open("https://github.com/#{github_user}.keys").read
     user_keys.split("\n").each_with_index { |key, index|
       # NOTE uses Hashie::Mash
