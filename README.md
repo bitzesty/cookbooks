@@ -96,7 +96,7 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 ````ruby
 site :opscode
 
-STACK_VERSION = '0.1.17'
+STACK_VERSION = '0.1.20'
 path = ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
 
 def load_cookbook_dependencies(path)
