@@ -47,51 +47,53 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ## Setup on a new project
 
-1. Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
-2. Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
-3. Install Vagrant plugins:
+#### Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
 
-    3.1 Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
+#### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
 
-    ````shell
-    vagrant plugin install vagrant-berkshelf
-    ````
+#### Install Vagrant plugins
 
-    3.2 Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
+##### Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
 
-    ````
-    vagrant plugin install vagrant-omnibus
-    ````
+````shell
+vagrant plugin install vagrant-berkshelf
+````
 
-    3.3 Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
+##### Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
 
-    ````
-    vagrant plugin install vagrant-rackspace
-    ````
+````
+vagrant plugin install vagrant-omnibus
+````
 
-4. Create a Gemfile, we will be using local ruby gems to manage Chef project:
+##### Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
 
-    ````
-    source "https://rubygems.org"
+````
+vagrant plugin install vagrant-rackspace
+````
 
-    gem "knife-solo", '0.4.0' # try to use latest available
-    gem "knife-solo_data_bag"
-    gem "berkshelf"
-    ````
+#### Create a Gemfile, we will be using local ruby gems to manage Chef project:
 
-5. Bundle install
+````
+source "https://rubygems.org"
 
-    ````
-    bundle install
-    ````
+gem "knife-solo", '0.4.0' # try to use latest available
+gem "knife-solo_data_bag"
+gem "berkshelf"
+````
 
-6. Initialize an empty knife solo project:
+#### Bundle install
 
-    ````
-    bundle exec knife solo init .
-    ````
+````
+bundle install
+````
 
-7. Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
+#### Initialize an empty knife solo project:
+
+````
+bundle exec knife solo init .
+````
+
+#### Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
 ````ruby
 site :opscode
@@ -134,11 +136,11 @@ end
 cookbook '<project_name>', path: './site-cookbooks/<project_name>'
 ````
 
-    **NOTE** The last should come project-specific cookbook from site-cookbooks.
+**NOTE** The last should come project-specific cookbook from site-cookbooks.
 
-    **NOTE** Do not add the cookbooks that are already specified in bz cookbooks.
+**NOTE** Do not add the cookbooks that are already specified in bz cookbooks.
 
-8. Add Vagrantfile to your project for developing the stack:
+#### Add Vagrantfile to your project for developing the stack:
 
 ````ruby
 require 'json'
@@ -185,7 +187,7 @@ Vagrant.configure("2") do |config|
 end
 ````
 
-9. Create 'nodes/vagrant.json' file. Check existing projects like
+#### Create 'nodes/vagrant.json' file. Check existing projects like
 
   * [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json)
 
@@ -203,7 +205,7 @@ http://www.cyberciti.biz/faq/mysql-change-root-password/
 
 http://stackoverflow.com/a/14588440/1630080
 
-10. Update metadata with bz cookbooks dependencies
+#### Update metadata with bz cookbooks dependencies
 
 ```ruby
 # chef/site-cookbooks/tss/metadata.rb
@@ -217,72 +219,73 @@ depends "bz-webserver"
 
 ### To provision a Vagrant node
 
-1. Execute:
+#### Execute:
 
-    ````
-    vagrant up
-    ````
+````
+vagrant up
+````
 
-    This will create a virtual machine at local and start provisioning process.
+This will create a virtual machine at local and start provisioning process.
 
-    ````
-    vagrant up --provider=rackspace
-    ````
+````
+vagrant up --provider=rackspace
+````
 
-    This will create a virtual machine on rackspace and start provisioning process.
-    Keep in mind that this step does a lot of work in the background
-    (talks to Rackspace Cloud Servers API, synchronizes Chef cookbooks, etc.)
-    so it might take a while to complete.
+This will create a virtual machine on rackspace and start provisioning process.
+Keep in mind that this step does a lot of work in the background
+(talks to Rackspace Cloud Servers API, synchronizes Chef cookbooks, etc.)
+so it might take a while to complete.
 
-2. If you come on an error during provisioning you can fix it and start right were you left off with:
+#### If you come on an error during provisioning you can fix it and start right were you left off with:
 
-    ````
-    vagrant provision
-    ````
-3. To shutdown the vm
+````
+vagrant provision
+````
 
-    ```
-    vagrant halt
-    ```
+#### To shutdown the vm
 
-4. To shutdown and remove the vagrant node, execute:
+```
+vagrant halt
+```
 
-    ````
-    vagrant destroy
-    ````
+#### To shutdown and remove the vagrant node, execute:
+
+````
+vagrant destroy
+````
 
 ### To provision a real server
 
 If server is not created check out the [Create servers via knife rackspace api](https://github.com/bitzesty/cookbooks/wiki/Create-servers-via-knife-rackspace-api)
 
-1. Create `node.json` file similar to the `vagrant.json` just with the real/production values.
-2. Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
+#### Create `node.json` file similar to the `vagrant.json` just with the real/production values.
+#### Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
 
-   ````
-   ssh-copy-id <username>@<hostname>
-   ````
+````
+ssh-copy-id <username>@<hostname>
+````
 
-2. Bootstrap Chef inside this server:
+#### Bootstrap Chef inside this server:
 
-    ````
-    bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.8.2
-    ````
+````
+bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.8.2
+````
 
-   NOTE: vagrant Chef version and real Chef version should match.
+NOTE: vagrant Chef version and real Chef version should match.
 
-   NOTE: the <username> must have sudo permissions inside the server.
+NOTE: the <username> must have sudo permissions inside the server.
 
-3. Check what will happen after your cook with `--why-run` flag.
+#### Check what will happen after your cook with `--why-run` flag.
 
-   ````
-   bundle exec knife solo cook <hostname> -x <username> --why-run
-   ````
+````
+bundle exec knife solo cook <hostname> -x <username> --why-run
+````
 
-4. If changes to be made look reasonable, start actually cooking the server with:
+#### If changes to be made look reasonable, start actually cooking the server with:
 
-   ````
-   bundle exec knife solo cook <hostname> -x <username>
-   ````
+````
+bundle exec knife solo cook <hostname> -x <username>
+````
 
 ### Developing via vagrant
 
@@ -319,7 +322,7 @@ After provisioning vagrant you can develop the application.
 
 It is located at ```/home/<user>/<app>_dev```
 
-1. Launch web server
+##### Launch web server
 
 ```bash
 ssh <user>@<app>_vagrant.app
@@ -327,7 +330,7 @@ cd <app>_dev
 spring rails s
 ```
 
-2. Check the browser
+##### Check the browser
 
 ```bash
 <app>_vagrant.app:3000
