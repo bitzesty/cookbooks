@@ -47,31 +47,31 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ## Setup on a new project
 
-#### Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
+##### Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
 
-#### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
+##### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
 
-#### Install Vagrant plugins
+##### Install Vagrant plugins
 
-##### Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
+###### Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
 
 ````shell
 vagrant plugin install vagrant-berkshelf
 ````
 
-##### Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
+###### Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
 
 ````
 vagrant plugin install vagrant-omnibus
 ````
 
-##### Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
+###### Install [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace) if you going to deploy to rackspace
 
 ````
 vagrant plugin install vagrant-rackspace
 ````
 
-#### Create a Gemfile, we will be using local ruby gems to manage Chef project:
+##### Create a Gemfile, we will be using local ruby gems to manage Chef project:
 
 ````
 source "https://rubygems.org"
@@ -81,19 +81,19 @@ gem "knife-solo_data_bag"
 gem "berkshelf"
 ````
 
-#### Bundle install
+###### Bundle install
 
 ````
 bundle install
 ````
 
-#### Initialize an empty knife solo project:
+##### Initialize an empty knife solo project:
 
 ````
 bundle exec knife solo init .
 ````
 
-#### Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
+##### Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
 ````ruby
 site :opscode
@@ -140,7 +140,7 @@ cookbook '<project_name>', path: './site-cookbooks/<project_name>'
 
 **NOTE** Do not add the cookbooks that are already specified in bz cookbooks.
 
-#### Add Vagrantfile to your project for developing the stack:
+##### Add Vagrantfile to your project for developing the stack:
 
 ````ruby
 require 'json'
@@ -187,7 +187,7 @@ Vagrant.configure("2") do |config|
 end
 ````
 
-#### Create 'nodes/vagrant.json' file. Check existing projects like
+##### Create 'nodes/vagrant.json' file. Check existing projects like
 
   * [TSS](https://github.com/bitzesty/ihealth/blob/master/chef/nodes/vagrant-backend.json)
 
@@ -195,7 +195,7 @@ end
 
   **NOTE** these keys may change, review the changelog and recipies for more info.
 
-  **NOTE** please set bz-database user password as "bzesty" for
+###### Set bz-database user password as "bzesty" for
 vagrant environment such that we use the same password for development
 on local and vagrant.
 
@@ -205,7 +205,7 @@ http://www.cyberciti.biz/faq/mysql-change-root-password/
 
 http://stackoverflow.com/a/14588440/1630080
 
-#### Update metadata with bz cookbooks dependencies
+##### Update metadata with bz cookbooks dependencies
 
 ```ruby
 # chef/site-cookbooks/tss/metadata.rb
@@ -219,7 +219,7 @@ depends "bz-webserver"
 
 ### To provision a Vagrant node
 
-#### Execute:
+##### Execute the following
 
 ````
 vagrant up
@@ -236,19 +236,19 @@ Keep in mind that this step does a lot of work in the background
 (talks to Rackspace Cloud Servers API, synchronizes Chef cookbooks, etc.)
 so it might take a while to complete.
 
-#### If you come on an error during provisioning you can fix it and start right were you left off with:
+##### If you come on an error during provisioning you can fix it and start right were you left off with:
 
 ````
 vagrant provision
 ````
 
-#### To shutdown the vm
+##### To shutdown the vm
 
 ```
 vagrant halt
 ```
 
-#### To shutdown and remove the vagrant node, execute:
+##### To shutdown and remove the vagrant node, execute:
 
 ````
 vagrant destroy
@@ -258,14 +258,14 @@ vagrant destroy
 
 If server is not created check out the [Create servers via knife rackspace api](https://github.com/bitzesty/cookbooks/wiki/Create-servers-via-knife-rackspace-api)
 
-#### Create `node.json` file similar to the `vagrant.json` just with the real/production values.
-#### Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
+##### Create `node.json` file similar to the `vagrant.json` just with the real/production values.
+##### Copy your ssh key to remote server to avoid repeated password inputs while provisioning with Chef:
 
 ````
 ssh-copy-id <username>@<hostname>
 ````
 
-#### Bootstrap Chef inside this server:
+##### Bootstrap Chef inside this server:
 
 ````
 bundle exec knife solo prepare <hostname> -x <username> --bootstrap-version=11.8.2
@@ -275,13 +275,13 @@ NOTE: vagrant Chef version and real Chef version should match.
 
 NOTE: the <username> must have sudo permissions inside the server.
 
-#### Check what will happen after your cook with `--why-run` flag.
+##### Check what will happen after your cook with `--why-run` flag.
 
 ````
 bundle exec knife solo cook <hostname> -x <username> --why-run
 ````
 
-#### If changes to be made look reasonable, start actually cooking the server with:
+##### If changes to be made look reasonable, start actually cooking the server with:
 
 ````
 bundle exec knife solo cook <hostname> -x <username>
