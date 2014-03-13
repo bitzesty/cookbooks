@@ -278,13 +278,13 @@ NOTE: the <username> must have sudo permissions inside the server.
 ##### Check what will happen after your cook with `--why-run` flag.
 
 ````
-bundle exec knife solo cook <hostname> -x <username> --why-run
+bundle exec knife solo cook --ssh-keepalive 1200 <hostname> -x <username> --why-run
 ````
 
 ##### If changes to be made look reasonable, start actually cooking the server with:
 
 ````
-bundle exec knife solo cook <hostname> -x <username>
+bundle exec knife solo cook --ssh-keepalive 1200 <hostname> -x <username>
 ````
 
 ### Developing via vagrant
