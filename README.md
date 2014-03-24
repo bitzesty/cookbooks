@@ -96,17 +96,36 @@ bundle exec knife solo init .
 ##### Create a Berksfile for your project and specify Bit Zesty cookbooks as well as other ones you are using:
 
 ````ruby
+require 'open-uri'
+
 site :opscode
 
-STACK_VERSION = '0.1.20'
-path = ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
+STACK_VERSION = '0.1.21'
+
+def read_file(full_path)
+  # from web or local
+  begin
+    if full_path.starts_with?("http")
+      open(full_path).read
+    else
+      File.read(full_path)
+    end
+  rescue OpenURI::HTTPError, Errno::ENOENT
+    nil
+  end
+end
 
 def load_cookbook_dependencies(path)
   metadata = File.join(path, "metadata.rb")
   berks = File.join(path, "Berksfile.in")
-  if File.exists?(berks) && File.read(metadata).include?(STACK_VERSION)
-    instance_eval(File.read(berks))
+
+  metadata_contents = read_file metadata
+  berks_contents = read_file berks
+
+  if metadata_contents && metadata_contents.include?(STACK_VERSION)
+    instance_eval(berks_contents)
   else
+    puts "Could not open metadata or berks file on #{path}"
     puts "WARNING: Please pull bz cookbooks repository tag #{STACK_VERSION} and export BZ_COOKBOOKS_PATH=/path/to/cookbooks"
     puts "This is required to allow loading cookbook descriptions from bz cookbooks"
   end
@@ -114,12 +133,14 @@ end
 
 %w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
   # # for local
+  # path = ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
   # cookbook cookbook,
   #          "~> #{STACK_VERSION}",
   #          path: File.join(path, cookbook),
   #          rel: cookbook
 
   # for github
+  path = "https://raw.githubusercontent.com/bitzesty/cookbooks/#{STACK_VERSION}"
   cookbook cookbook,
            "~> #{STACK_VERSION}",
            git: "https://github.com/bitzesty/cookbooks.git",

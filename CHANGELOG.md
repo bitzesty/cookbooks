@@ -2,6 +2,13 @@
 
 ## Master
 
+## 0.1.21
+
+* **all** fetch metadata and Berksfile.in from github
+* **all** added more guys to default loaded github users that will auth
+  on server
+* **bz-webserver** update nginx cookbook version
+
 ## 0.1.20
 
 * **bz-server** define github users to allow provisioning machines

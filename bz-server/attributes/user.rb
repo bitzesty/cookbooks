@@ -39,8 +39,9 @@ bz_user['authorized_keys'] = {}
 bz_user['bitzesty_members'] = [
   "astrauka",
   "hammerfunk",
-  "Aaron2Ti",
-  "matthewford"
+  "matthewford",
+  "RuslanHamidullin",
+  "macool"
 ]
 bz_user['authorized_github_users'] = []
 bz_user['authorized_users'] = (
