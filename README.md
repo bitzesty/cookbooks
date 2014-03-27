@@ -308,9 +308,8 @@ bundle exec knife solo cook --ssh-keepalive 1200 <hostname> -x <username> --why-
 bundle exec knife solo cook --ssh-keepalive 1200 <hostname> -x <username>
 ````
 
-NOTE: if --ssh-keepalive give you an error then you are using older
-knife version. As a workaround try adding the following to your
-```chef/.chef/knife.rb```
+NOTE: ```--ssh-keepalive``` might give you an error then you are using older
+knife version. As a workaround try adding the following to your ```chef/.chef/knife.rb```
 
 ```
 require 'excon'

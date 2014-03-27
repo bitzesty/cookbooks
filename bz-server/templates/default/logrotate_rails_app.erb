@@ -1,0 +1,7 @@
+<%= node['bz-rails']['shared_path'] %>/log/*.log {
+  weekly
+  missingok
+  rotate 5
+  notifempty
+  copytruncate
+}

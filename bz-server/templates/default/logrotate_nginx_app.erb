@@ -1,0 +1,7 @@
+<%= node['bz-webserver']['nginx']['log']['dir'] %>/*.log {
+  weekly
+  missingok
+  rotate 5
+  notifempty
+  copytruncate
+}
