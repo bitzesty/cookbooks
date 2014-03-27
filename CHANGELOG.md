@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.22
+
+* **bz-server** add logrotate, enable by default
+
 ## 0.1.21
 
 * **all** fetch metadata and Berksfile.in from github
