@@ -1,20 +1,20 @@
 # install nginx and optionally passenger from repository
 
-# following http://www.modrails.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
-# add apt-key, apt cookbook does not support --recv-keys option
-execute "passenger: add apt-key" do
-  command "sudo apt-key adv" <<
-          " --keyserver hkp://keyserver.ubuntu.com:80" <<
-          " --recv-keys #{node['bz-webserver']['passenger']['apt_key']}"
-  not_if "apt-key list | grep #{node['bz-webserver']['passenger']['apt_key']}"
-end
-
 # add repository
 apt_repository 'nginx_passenger' do
   uri       "https://oss-binaries.phusionpassenger.com/apt/passenger"
   key       node['bz-webserver']['nginx']['apt_key']
   distribution node['bz-server']['ubuntu_release']
   components ["main"]
+end
+
+# following http://www.modrails.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
+# add apt-key, apt cookbook does not support --recv-keys option
+execute "passenger: add apt-key" do
+  command "sudo apt-key adv" <<
+          " --keyserver keyserver.ubuntu.com:80" <<
+          " --recv-keys #{node['bz-webserver']['passenger']['apt_key']}"
+  not_if "apt-key list | grep #{node['bz-webserver']['passenger']['apt_key']}"
 end
 
 # install packages

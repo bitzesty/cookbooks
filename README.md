@@ -194,6 +194,11 @@ Vagrant.configure("2") do |config|
                           create: true,
                           mount_options: ['dmode=777', 'fmode=666']
 
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ["site-cookbooks"]
     chef.roles_path = "roles"
