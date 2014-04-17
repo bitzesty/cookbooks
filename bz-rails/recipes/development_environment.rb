@@ -21,7 +21,7 @@ end
 
 rbenv_script "development env: bundle install" do
   rbenv_version node['bz-rails']['development']['ruby_version']
-  code "bundle install"
+  code "bundle install --quiet"
   group node['bz-server']['user']['name']
   user  node['bz-server']['user']['name']
   cwd node['bz-rails']['development']['path']
