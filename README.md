@@ -51,6 +51,18 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ##### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
 
+##### Update project
+
+* User upstart jobs are managed by chef but those have to be linked via
+  capistrano on each deploy, so please add the following to the linked_dirs:
+
+  ```
+  config/deploy/templates
+
+  # example of full linked_dirs setting
+  set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/backend/uploads config/deploy/templates}
+  ```
+
 ##### Install Vagrant plugins
 
 ###### Install [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf).
