@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.24
+
+* **bz-server** upstart templates are managed by chef
+
 ## 0.1.23
 
 * **bz-webserver** update nginx cookbook version

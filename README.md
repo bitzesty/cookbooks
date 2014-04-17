@@ -100,7 +100,7 @@ require 'open-uri'
 
 site :opscode
 
-STACK_VERSION = '0.1.23'
+STACK_VERSION = '0.1.24'
 
 def read_file(full_path)
   # from web or local
@@ -181,12 +181,18 @@ Vagrant.configure("2") do |config|
   config.berkshelf.enabled = true
   config.omnibus.chef_version = "11.8.2"
 
+  # add nginx repo public key to properly update packages
+  config.vm.provision :shell, inline: "(sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7) || echo 0"
   # install make and ruby to not get compilation errors for chef gem installation
   config.vm.provision :shell, inline: "(sudo apt-get update && sudo aptitude -y install build-essential && sudo apt-get -y install ruby1.9.1-dev) || echo 0"
   config.vm.provision :shell, inline: "gem install chef --version 11.8.2 --no-rdoc --no-ri --conservative"
 
   # configure development via vagrant
   vagrant_development_path = "/home/#{SETTINGS["bz-server"]["user"]["name"]}/#{SETTINGS["bz-server"]["app"]["name"]}_dev"
+  # forward ssh
+  config.ssh.forward_agent = true
+  # if you have issues with ssh not forwarded for private repositories uncomment the following, destroy and recreate VM
+  # config.ssh.private_key_path = "~/.ssh/id_rsa"
   config.vm.network :private_network, ip: SETTINGS["bz-server"]["ip_address"]
   # grant max permissions as bz-server user is not created on initial machine setup
   config.vm.synced_folder (ENV["VM_SYNCED_FOLDER"] || ".."),
