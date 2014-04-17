@@ -54,11 +54,9 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 ##### Update project
 
 * User upstart jobs are managed by chef but those have to be linked via
-  capistrano on each deploy, so please add the following to the linked_dirs:
+  capistrano on each deploy, so please add the following to the linked_dirs: ```config/deploy/templates```
 
   ```
-  config/deploy/templates
-
   # example of full linked_dirs setting
   set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/backend/uploads config/deploy/templates}
   ```
