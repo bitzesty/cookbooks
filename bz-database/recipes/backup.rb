@@ -1,7 +1,8 @@
 # install backup gem
 # uses rbenv
 execute "install backup gem" do
-  command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && gem install backup && rbenv rehash}
+  # ensure other backup versions are uninstalled
+  command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && gem uninstall -a -x backup && gem install backup -v 3.10.0 && rbenv rehash}
   creates File.join(node['bz-rails']['rbenv']['path'], "shims", "backup")
   user node['bz-server']['user']['name']
   group node['bz-server']['user']['name']

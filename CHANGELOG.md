@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.25
+
+* **bz-database** lock backup gem version to ~> 3, update backup configuration generation
+
 ## 0.1.24
 
 * **bz-server** upstart templates are managed by chef
