@@ -171,6 +171,18 @@ Mongo
 }
 ```
 
+Restore data from backups
+------------
+
+* Check ```/home/<app_user>/Backup/models/<app_name>/config.rb``` for backup location.
+* Download the backup if needed. They are stored by date.
+* Extract it: ```tar xvzf <app_name>.tar```
+* ```cd <app_name>/databases```
+* ```gunzip <file>.gz```
+* restore as per database:
+  * postgres
+  ```psql dbname < file```
+
 Requirements
 ------------
 TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
