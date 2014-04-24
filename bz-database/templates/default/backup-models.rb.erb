@@ -5,7 +5,7 @@
 # Once configured, you can run the backup with the following command:
 # $ backup perform -t bz-database [-c <path_to_configuration_file>]
 
-Backup::Model.new(:<%= node['bz-server']['app']['name'] %>, "Backup <%= node['bz-server']['app']['name'] %>") do
+Backup::Model.new("<%= node['bz-server']['app']['name'] %>", "Backup <%= node['bz-server']['app']['name'] %>") do
   # Split the backup file in to chunks of 250 megabytes
   # if the backup file size exceeds 250 megabytes
   <% if node['bz-database']['backup']['split_into_chunks'] %>
