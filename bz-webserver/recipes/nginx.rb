@@ -1,5 +1,9 @@
 include_recipe "bz-webserver::common"
 
+if node['bz-webserver']['nginx']['use_ssl'] && node['bz-webserver']['nginx']['default_ssl_setup']
+  include_recipe "bz-webserver::ssl"
+end
+
 case node['platform_family']
 when "rhel"
   include_recipe "nginx::package"
@@ -47,6 +51,9 @@ end
 # create vhost entry
 template "/etc/nginx/sites-enabled/#{node['bz-server']['app']['name']}-vhost" do
   source "nginx-vhost.erb"
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  cookbook node['bz-webserver']['nginx']['app_configuration_cookbook']
 end
 
 cookbook_file File.join(node['bz-rails']['shared_path'], 'system', 'maintenance.html.bak') do

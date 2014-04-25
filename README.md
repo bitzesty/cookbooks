@@ -110,7 +110,7 @@ require 'open-uri'
 
 site :opscode
 
-STACK_VERSION = '0.1.25'
+STACK_VERSION = '0.1.26'
 
 def read_file(full_path)
   # from web or local
