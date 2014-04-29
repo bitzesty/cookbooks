@@ -112,6 +112,12 @@ site :opscode
 
 STACK_VERSION = '0.1.26'
 
+# FETCH_FROM_LOCAL is false by default, so fetching cookbooks from github
+FETCH_FROM_LOCAL = false
+
+# uncomment to fetch from local
+# FETCH_FROM_LOCAL = true
+
 def read_file(full_path)
   # from web or local
   begin
@@ -141,24 +147,38 @@ def load_cookbook_dependencies(path)
   end
 end
 
-%w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
-  # # for local
-  # path = ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
-  # cookbook cookbook,
-  #          "~> #{STACK_VERSION}",
-  #          path: File.join(path, cookbook),
-  #          rel: cookbook
+def cookbooks_path
+  if FETCH_FROM_LOCAL
+    ENV['BZ_COOKBOOKS_PATH'] || File.join(File.dirname(__FILE__), "../../cookbooks")
+  else
+    "https://raw.githubusercontent.com/bitzesty/cookbooks/#{STACK_VERSION}"
+  end
+end
 
-  # for github
-  path = "https://raw.githubusercontent.com/bitzesty/cookbooks/#{STACK_VERSION}"
+def fetch_cookbooks_from_local(cookbook)
+  cookbook cookbook,
+           "~> #{STACK_VERSION}",
+           path: File.join(cookbooks_path, cookbook),
+           rel: cookbook
+end
+
+def fetch_cookbooks_from_github(cookbook)
   cookbook cookbook,
            "~> #{STACK_VERSION}",
            git: "https://github.com/bitzesty/cookbooks.git",
            rel: cookbook,
            branch: "master"
+end
+
+%w[bz-server bz-webserver bz-database bz-rails].each do |cookbook|
+  if FETCH_FROM_LOCAL
+    fetch_cookbooks_from_local(cookbook)
+  else
+    fetch_cookbooks_from_github(cookbook)
+  end
 
   # common
-  load_cookbook_dependencies File.join(path, cookbook)
+  load_cookbook_dependencies File.join(cookbooks_path, cookbook)
 end
 
 # example
