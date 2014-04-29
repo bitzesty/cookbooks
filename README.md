@@ -135,9 +135,7 @@ def load_cookbook_dependencies(path)
   if metadata_contents && metadata_contents.include?(STACK_VERSION)
     instance_eval(berks_contents)
   else
-    puts "Could not open metadata or berks file on #{path}"
-    puts "WARNING: Please pull bz cookbooks repository tag #{STACK_VERSION} and export BZ_COOKBOOKS_PATH=/path/to/cookbooks"
-    puts "This is required to allow loading cookbook descriptions from bz cookbooks"
+    puts "WARNING: Could not open metadata or berks file on #{path}"
   end
 end
 
