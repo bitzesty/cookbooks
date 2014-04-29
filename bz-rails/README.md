@@ -10,7 +10,7 @@ Usage
 -----
 #### bz-rails::rails
 
-Include `bz-rails::rails` and `bz-rails::rbenv` in your node's `run_list`:
+##### into run list
 
 ```json
 {
@@ -18,6 +18,18 @@ Include `bz-rails::rails` and `bz-rails::rbenv` in your node's `run_list`:
     "recipe[bz-rails::rails]",
     "recipe[bz-rails::rbenv]"
   ]
+}
+```
+
+##### into node configuration
+
+```json
+"bz-rails": {
+
+  # to configure ENV variables
+  "env": {
+    "KEY": "VALUE"
+  },
 }
 ```
 

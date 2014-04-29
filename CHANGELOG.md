@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.26
+
+* **bz-webserver** allow more automatic ssl setup
+
 ## 0.1.25
 
 * **bz-database** lock backup gem version to ~> 3, update backup configuration generation
