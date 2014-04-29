@@ -1,3 +1,11 @@
+# directory for certs
+directory node['bz-webserver']['nginx']['certs']['dir'] do
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  mode 0755
+  recursive true
+end
+
 # add certs
 [
   node['bz-webserver']['nginx']['certs']['certificate'],

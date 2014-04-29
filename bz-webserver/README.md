@@ -45,7 +45,17 @@ vagrant ssh
 sudo service nginx restart
 ```
 
-### SSL setup
+## SSL setup
+
+### Application configuration
+
+In environment.rb file uncomment:
+
+```
+config.force_ssl = true
+```
+
+### Server configuration
 
 In order to configure ssl you need to:
 
@@ -90,7 +100,7 @@ node['bz-webserver']['nginx']['certs']['key'] (key)
 "bz-webserver": {
   "nginx": {
     "use_ssl": true,
-    "ssl_certs_cookbook": "online-therapy"
+    "ssl_certs_cookbook": "<app-cookbook>"
   }
 }
 ```

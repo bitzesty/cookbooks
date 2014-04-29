@@ -11,7 +11,7 @@ Usage
 -----
 #### bz-server::default
 
-Include `bz-server` in your node's `run_list`:
+##### into run list
 
 ```json
 {
@@ -20,6 +20,19 @@ Include `bz-server` in your node's `run_list`:
   ]
 }
 ```
+
+##### into node configuration
+
+```json
+"bz-server": {
+
+  # to install additional packages
+  "packages": [
+    "libmagickwand-dev"
+  ],
+}
+```
+
 #### Elastic Search
 To add elastic search please include:
 
