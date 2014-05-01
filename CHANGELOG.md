@@ -5,6 +5,8 @@
 ## 0.1.26
 
 * **bz-webserver** allow more automatic ssl setup
+* **bz-database** do not add socket to database configuration if that's
+  not defined as blank socket makes the dump to not get the host properly
 
 ## 0.1.25
 

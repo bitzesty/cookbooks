@@ -57,7 +57,9 @@ Backup::Model.new("<%= node['bz-server']['app']['name'] %>", "Backup <%= node['b
     db.password           = "<%= node['bz-database']['backup']['datastore_config']['postgres']['password'] %>"
     db.host               = "<%= node['bz-database']['backup']['datastore_config']['postgres']['host'] %>"
     db.port               = <%= node['bz-database']['backup']['datastore_config']['postgres']['port'] %>
+  <% if node['bz-database']['backup']['datastore_config']['postgres']['socket'] %>
     db.socket             = "<%= node['bz-database']['backup']['datastore_config']['postgres']['socket'] %>"
+  <% end %>
     db.skip_tables        = [<%= node['bz-database']['backup']['datastore_config']['postgres']['skip_tables'].map(&:inspect).join(",") %>]
     db.only_tables        = [<%= node['bz-database']['backup']['datastore_config']['postgres']['only_tables'].map(&:inspect).join(",") %>]
     db.additional_options = [<%= node['bz-database']['backup']['datastore_config']['postgres']['additional_options'].map(&:inspect).join(",") %>]
