@@ -101,6 +101,7 @@ node['bz-webserver']['nginx']['certs']['key'] (key)
   "nginx": {
     "use_ssl": true,
     "ssl_certs_cookbook": "<app-cookbook>"
+    "app_configuration_cookbook": <app-cookbook>" # nginx vhost config - defaults to bz-webserver
   }
 }
 ```
@@ -113,6 +114,23 @@ node['bz-webserver']['nginx']['certs']['key'] (key)
     "certs": {
       "certificate_file_name": "online-therapy-vagrant.crt",
       "key_file_name": "online-therapy-vagrant.key"
+    }
+  }
+}
+```
+
+##### For custom list of certificate files
+
+```json
+"bz-webserver": {
+  "nginx": {
+    "certs": {
+        "custom_list": true,
+        "custom": [
+          "schemer-vagrant.crt",
+          "schemer-vagrant.pem",
+          "schemer-vagrant.key"
+        ]
     }
   }
 }

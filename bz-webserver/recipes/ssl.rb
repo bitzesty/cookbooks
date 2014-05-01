@@ -7,10 +7,21 @@ directory node['bz-webserver']['nginx']['certs']['dir'] do
 end
 
 # add certs
-[
-  node['bz-webserver']['nginx']['certs']['certificate'],
-  node['bz-webserver']['nginx']['certs']['key']
-].each do |cert_file|
+#   for user defined list of certs
+cert_files =
+  if node['bz-webserver']['nginx']['certs']['custom_list']
+    node['bz-webserver']['nginx']['certs']['custom'].map do |name|
+      File.join(node['bz-webserver']['nginx']['certs']['dir'], name)
+    end
+  else
+    [
+      node['bz-webserver']['nginx']['certs']['certificate'],
+      node['bz-webserver']['nginx']['certs']['key']
+    ]
+  end
+
+#   for default certificate and key
+cert_files.each do |cert_file|
   if cert_file.empty? || node['bz-webserver']['nginx']['ssl_certs_cookbook'].empty?
     raise "Please define the following in ['bz-webserver']['nginx']: ['certs']['certificate'], ['certs']['key'], ['ssl_certs_cookbook']"
   else
