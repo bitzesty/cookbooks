@@ -12,6 +12,11 @@ node.default['mysql']['server_debian_password'] = node['bz-database']['mysql']['
 
 include_recipe "mysql::server"
 
+# must start the service after initial setup, also will update on config change if any
+service "mysql" do
+  action :restart
+end
+
 mysql_connection_info = {
   :host => node['bz-database']['mysql']['root_host'],
   :username => node['bz-database']['mysql']['root_user_name'],

@@ -17,10 +17,16 @@ execute "passenger: add apt-key" do
   not_if "apt-key list | grep #{node['bz-webserver']['passenger']['apt_key']}"
 end
 
+execute "update apt to have passenger among packages" do
+  command "apt-get -y update"
+  not_if "dpkg -s passenger"
+end
+
 # install packages
 nginx_packages = %w(nginx-extras)
 if node['bz-server']['app']['rails_app_server'] == "passenger"
-  nginx_packages << "passenger"
+  # passenger must be installed before nginx
+  nginx_packages.unshift "passenger"
 end
 
 nginx_packages.each do |package|
