@@ -395,6 +395,9 @@ It is located at ```/home/<user>/<app>_dev```
 ```bash
 ssh <user>@<app>_vagrant.app
 cd <app>_dev
+bundle # will take a while
+rbenv rehash # update shims
+bundle exec rake db:create db:migrate db:seed
 spring rails s
 ```
 
