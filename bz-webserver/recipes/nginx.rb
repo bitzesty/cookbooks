@@ -4,11 +4,15 @@ if node['bz-webserver']['nginx']['use_ssl'] && node['bz-webserver']['nginx']['de
   include_recipe "bz-webserver::ssl"
 end
 
-case node['platform_family']
-when "rhel"
+if node['bz-webserver']['nginx']['force_install_of_nginx_package']
   include_recipe "nginx::package"
-when "debian"
-  include_recipe "bz-webserver::nginx_debian_package"
+else
+  case node['platform_family']
+  when "rhel"
+    include_recipe "nginx::package"
+  when "debian"
+    include_recipe "bz-webserver::nginx_debian_package"
+  end
 end
 
 # update nginx confirguration

@@ -45,6 +45,11 @@ vagrant ssh
 sudo service nginx restart
 ```
 
+#### issues
+
+If you have server with nginx installed the old way and do not want to
+reinstall that set node['bz-webserver']['nginx']['force_install_of_nginx_package'] to true
+
 ## SSL setup
 
 ### Application configuration

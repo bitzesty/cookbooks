@@ -3,6 +3,7 @@ default['bz-webserver']['open-80-port'] = true
 
 bz_nginx_opts = default['bz-webserver']['nginx']
 
+bz_nginx_opts['force_install_of_nginx_package'] = false
 bz_nginx_opts['use_ssl'] = false
 bz_nginx_opts['default_ssl_setup'] = true
 bz_nginx_opts['ports']['http'] = 80
