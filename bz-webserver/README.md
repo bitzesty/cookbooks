@@ -32,7 +32,6 @@ Include `bz-webserver::nginx` in your node's `run_list`:
     }
   }
 }
-"recipe[bz-rails::development_environment]"
 ```
 
 This will install passenger and add it's configuration to nginx and
