@@ -12,9 +12,19 @@ node.default['mysql']['server_debian_password'] = node['bz-database']['mysql']['
 
 include_recipe "mysql::server"
 
-# must start the service after initial setup, also will update on config change if any
+# must start the service after initial setup
 service "mysql" do
-  action :restart
+  action [:enable, :start]
+  not_if do FileTest.exist?(node['bz-database']['mysql']['socket']) end
+end
+
+# reload configuration in case that changed
+# restarting via service command fails, need to use execute
+execute "restart mysql" do
+  command "service mysql restart"
+  user "root"
+  group "root"
+  action :run
 end
 
 mysql_connection_info = {
