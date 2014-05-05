@@ -49,7 +49,9 @@ NOTE: **all cookbooks should have the same version**. Consider this to be a stac
 
 ##### Download and install [VirtualBox](https://www.virtualbox.org) if you do not have it.
 
-##### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it. NOTE `use version >= 1.2` and not the version from Rubygems.
+##### Download and install [Vagrant](http://www.vagrantup.com) if you do not have it.
+
+**IMPORTANT!!! Vagrant version to download from the site: 1.4.3**
 
 ##### Update project
 
