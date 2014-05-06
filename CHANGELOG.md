@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.27
+
+* **all** update cookbook versions to newest ones
+
 ## 0.1.26
 
 * **bz-webserver** allow more automatic ssl setup
