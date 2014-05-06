@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.28
+
+* **bz-server** add server density monitoring
+
 ## 0.1.27
 
 * **all** update cookbook versions to newest ones

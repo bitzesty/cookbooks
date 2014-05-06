@@ -17,3 +17,6 @@ cookbook 'java', '1.22.0'
 
 cookbook 'redisio', '1.7.1', github: 'brianbianco/redisio'
 cookbook 'elasticsearch', '0.3.8'
+
+# monitoring
+cookbook 'serverdensity', '2.0.0', github: 'serverdensity/chef-serverdensity'
