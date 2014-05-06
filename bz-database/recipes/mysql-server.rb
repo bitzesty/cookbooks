@@ -18,13 +18,8 @@ service "mysql" do
   not_if do FileTest.exist?(node['bz-database']['mysql']['socket']) end
 end
 
-# reload configuration in case that changed
-# restarting via service command fails, need to use execute
-execute "restart mysql" do
-  command "service mysql restart"
-  user "root"
-  group "root"
-  action :run
+service "mysql" do
+  action [:restart]
 end
 
 mysql_connection_info = {

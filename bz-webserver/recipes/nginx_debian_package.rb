@@ -6,6 +6,7 @@ apt_repository 'nginx_passenger' do
   key       node['bz-webserver']['nginx']['apt_key']
   distribution node['bz-server']['ubuntu_release']
   components ["main"]
+  retries 2
 end
 
 # following http://www.modrails.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
