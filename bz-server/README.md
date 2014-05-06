@@ -64,6 +64,32 @@ cookbook 'elasticsearch', '<version>'
 cookbook 'monit', "~>0.7.1", github: "OGIS-RI-EOS/monit", tag: "ogis-v0.1"
 ```
 
+### Monitoring
+
+#### ServerDensity
+
+##### into node configuration
+```json
+"bz-server": {
+  "serverdensity": {
+    "account": "",
+    "agent_key": "",
+    "token": "",
+    "device_group": ""
+  }
+}
+
+// ONLY if using mysql server
+"bz-server": {
+  "serverdensity": {
+    "mysql_server": "",
+    "mysql_user": "",
+    "mysql_pass": ""
+  }
+}
+
+```
+
 Attributes
 ----------
 TODO: List you cookbook attributes here.
