@@ -7,7 +7,7 @@ sd_attrs['device_group'] = nil
 sd_attrs['mysql_server'] = nil
 
 sd_attrs['mysql_user'] = 'root'
-sd_attrs['mysql_pass'] = node['bz-database']['mysql']['root_password']
+sd_attrs['mysql_pass'] = node['bz-database'].fetch('mysql', {})['root_password']
 
 # forward all attributes to serverdensity
 default['serverdensity'] = default['serverdensity'].merge(node['bz-server']['serverdensity'])

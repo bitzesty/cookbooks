@@ -29,6 +29,11 @@ Include `bz-webserver::nginx` in your node's `run_list`:
   "bz-server": {
     "app": {
       "rails_app_server": "passenger"
+    },
+    "bz-webserver": {
+      "passenger": {
+        "min_instances": 2 # default
+      }
     }
   }
 }
