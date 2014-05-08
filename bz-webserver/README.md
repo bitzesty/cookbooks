@@ -156,3 +156,27 @@ node['bz-webserver']['nginx']['certs']['key'] (key)
 ```
 
 This will not load the ssl copying and port opening
+
+### Caching with varnish
+
+```
+{
+  "bz-webserver": {
+    "varnish": {
+      "vcl_source": "varnish-default.vcl.erb",
+      "vcl_cookbook": "schemer"
+    }
+  },
+  "run_list": [
+    "recipe[bz-webserver::varnish]"
+  ]
+}
+```
+
+#### Varnish configuration file example
+
+https://gist.github.com/astrauka/10599cb4d5d83e4177c4
+
+#### Nginx configuration update
+
+Varnish should listen on port 80, thus nginx should serve content on port 8080.

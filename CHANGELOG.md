@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.29
+
+* **bz-webserver** add varnish
+
 ## 0.1.28
 
 * **bz-server** add server density monitoring
