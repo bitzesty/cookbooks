@@ -180,3 +180,15 @@ https://gist.github.com/astrauka/10599cb4d5d83e4177c4
 #### Nginx configuration update
 
 Varnish should listen on port 80, thus nginx should serve content on port 8080.
+
+#### Rails application update
+
+Rails should set cache headers:
+
+```
+before_action :set_cache_headers, only: [:show, :index]
+
+def set_cache_headers
+  expires_in 1.hour, public: true
+end
+```
