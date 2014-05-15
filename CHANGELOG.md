@@ -2,6 +2,11 @@
 
 ## Master
 
+## 0.1.30
+
+* **bz-webserver** update nginx configuration
+* **bz-database** always reinstall backup gem
+
 ## 0.1.29
 
 * **bz-webserver** add varnish

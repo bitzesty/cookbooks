@@ -1,4 +1,11 @@
 # taken from https://github.com/kalys/capistrano-nginx-unicorn/blob/master/lib/generators/capistrano/nginx_unicorn/templates/nginx_conf.erb
+<% if node['bz-server']['app']['rails_app_server'] == "passenger" %>
+passenger_root <%= node['bz-webserver']['passenger']['root'] %>;
+passenger_ruby <%= node['bz-webserver']['passenger']['ruby'] %>;
+<% end %>
+
+error_log  <%= node['bz-webserver']['nginx']['log']['error'] %>;
+access_log <%= node['bz-webserver']['nginx']['log']['access'] %>;
 
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'unicorn' %>
@@ -17,9 +24,6 @@ server {
 <% end %>
 
 server {
-  error_log  <%= node['bz-webserver']['nginx']['log']['error'] %>;
-  access_log <%= node['bz-webserver']['nginx']['log']['access'] %>;
-
 <% case node['bz-server']['app']['rails_app_server'] %>
 <% when 'passenger' %>
   location @passenger {
