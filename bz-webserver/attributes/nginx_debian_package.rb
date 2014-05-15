@@ -5,5 +5,5 @@ bz_passenger_node_opts = node['bz-webserver']['passenger']
 
 # taken from passenger package installation
 bz_passenger_opts['root'] = "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"
-bz_passenger_opts['ruby'] = "/home/schemer/.rbenv/shims/ruby"
+bz_passenger_opts['ruby'] = "#{node['bz-server']['home']}/.rbenv/shims/ruby"
 bz_passenger_opts['min_instances'] = 2
