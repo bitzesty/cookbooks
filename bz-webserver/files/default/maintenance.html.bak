@@ -1,11 +1,144 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>We are down for maintenance</title>
-  </head>
-  <body>
-    <h1 style="color:orange;">We are down for maintenance</h1>
-    <p>Sorry for inconvenience.</p>
-    <p>We will get back soon.</p>
-    <p>Best wishes</p>
-  </body>
+<head>
+  <title>Undergoing maintenance</title>
+  <meta content="minimal-ui, width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <style>
+    body {
+      min-height: 400px;
+      margin: 0;
+      color: #444;
+      font-family: 'Lato', Helvetica, Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    .dialog {
+      position: absolute;
+      width: 24em;
+      top: 20%;
+      left: 50%;
+      margin: 0;
+      margin-left: -16.55em;
+      padding: 2em 4em 3em;
+      border: 1px solid #eee;
+      border-bottom-color: #e8e8e8;
+      background-color: white;
+    }
+
+    h1 {
+      margin: 0 auto;
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+
+    p {
+      width: 71%;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    @media screen and (max-height: 400px) {
+      .dialog {
+        top: 50px;
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      .dialog {
+        width: 22em;
+        margin-left: -13.55em;
+        padding: 2em 2.5em 1.5em;
+      }
+
+      h1 {
+        width: 90%;
+        margin-bottom: 25px;
+        font-size: 26px;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .dialog {
+        width: 20em;
+        margin-left: -11em;
+        padding: 1.8em 1em 1em;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    /* iPad */
+    @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape), only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+      .dialog {
+        margin-left: -14.55em;
+        padding: 2em 2.5em 1.5em;
+      }
+    }
+
+    /* iPad portrait */
+    @media only screen and (min-device-height : 768px) and (max-device-height : 1024px) and (orientation : portrait) {
+      .dialog {
+        margin-left: -13.55em;
+      }
+    }
+
+    /* Small Screens like mobile*/
+    @media only screen and (min-device-height : 320px) and (max-device-height : 480px) and (orientation : landscape), only screen and (min-device-height : 320px) and (max-device-height : 480px) and (orientation : portrait), only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : landscape), only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait), only screen and (max-width: 479px) {
+      body {
+        min-height: 0;
+        background-color: #fff;
+      }
+
+      .dialog {
+        width: 100%;
+        left: 0;
+        top: 0;
+        margin-left: 0;
+        padding: 4em 0 0;
+        border: none;
+        background-color: transparent;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    /* iPhone older portrait */
+    @media only screen and (min-device-height : 320px) and (max-device-height : 480px) and (orientation : portrait) {
+      .dialog {
+        padding: 8em 0 0;
+      }
+    }
+
+    /* iPhone 5 portrait */
+    @media only screen and (min-device-height : 320px) and (max-device-height : 568px) and (orientation : portrait), only screen and (min-device-height : 320px) and (max-device-height : 480px) and (orientation : portrait) {
+      .dialog {
+        padding: 10em 0 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dialog">
+    <h1>We're sorry, we're undergoing maintenance.</h1>
+    <p>We are busy updating the site for you and will be back shortly.</p>
+    <p>Thanks for your patience!</p>
+  </div>
+</body>
 </html>
