@@ -60,7 +60,7 @@ template "/etc/nginx/sites-enabled/#{node['bz-server']['app']['name']}-vhost" do
   cookbook node['bz-webserver']['nginx']['app_configuration_cookbook']
 end
 
-cookbook_file File.join(node['bz-rails']['shared_path'], 'system', 'maintenance.html.bak') do
+cookbook_file File.join(node['bz-rails']['shared_path'], 'public', 'system', 'maintenance.html.bak') do
   source 'maintenance.html.bak'
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']

@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.1.31
+
+* **bz-webserver** maintenance page update
+
 ## 0.1.30
 
 * **bz-webserver** update nginx configuration
