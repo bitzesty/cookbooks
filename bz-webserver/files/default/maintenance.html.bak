@@ -136,7 +136,7 @@
 
 <body>
   <div class="dialog">
-    <h1>We're sorry, we're undergoing maintenance.</h1>
+    <h1>Undergoing maintenance</h1>
     <p>We are busy updating the site for you and will be back shortly.</p>
     <p>Thanks for your patience!</p>
   </div>
