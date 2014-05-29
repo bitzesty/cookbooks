@@ -1,0 +1,166 @@
+# CHEF TUTORIAL
+
+## What is it?
+
+http://docs.opscode.com/
+
+A tool to provision machines with environment that your projects can be
+run from.
+
+## Tools
+
+### Vagrant
+
+To develop recipies it is convenient to setup vagrant, it launches virtual
+box VMs and executes your chef recipies on them.
+
+### Knife solo
+
+There are two ways to manage servers - via chef server or via knife
+solo. We use knife, it prepares server for chef recipes run and launches
+the run itself.
+
+### Berks
+
+It is like a bundler but for chef. Ensures that you work with the
+correct versions of cookbooks (they are like gems)
+
+### How does it work?
+
+#### For each project
+
+There is one project specific cookbook which contains the deviations
+from standard configuration (e.g. project is using two servers instead
+of one)
+
+##### For each server (node)
+
+Each server (so called *node*) has it's own json configuration which
+stores the attribute list that defines server ip, user names, passwords,
+etc.
+
+_It is very important to keep unique passwords for each node_
+
+##### How many servers do we need?
+
+If application is using one server setup, then one server per
+environment:
+
+* staging
+* demo
+* production
+* development
+
+Node configuration name usually is `<env>_<application>.json`
+
+Development environment is unique as it is used both for the chef
+scripts development and for the application development once that is
+setup. To make things easier development environment server is managed
+via vagrant instead of knife, it's node name is
+`vagrant_<application>.json`.
+
+### Chef resources
+
+#### Cookbooks
+
+Cookbooks are like gems, they know how to do something - e.g. setup
+mysql server. The cookbooks that we wrote and use in every project are:
+
+* *bz-server* - configures server: packages, ssh, users, directories, firewall, etc.
+* *bz-database* - configures database and backups
+* *bz-webserver* - configures nginx, passenger, varden
+* *bz-rails* - installs and configures rbenv, dotenv, database
+  configuration file, sets up development environment
+
+#### Node configuration
+
+Tells chef what are the attribute values - ips, passwords, user names,
+webserver used, ruby version, etc. If you need to change something it
+would be great if you could do that just specifying attributes, if not -
+you'll have to write a recipe.
+
+##### Run list
+
+How does chef know that development environment should be configured for
+vagrant machine only and the backups for production only?
+
+Run list tells which recipes and in which order to execute. Order is
+important, you cannot configure firewall while it is not installed yet.
+
+#### Recipes
+
+They tell exactly what to do: copy rsa.pub key, install packages, create
+directories, etc. You can provision server executing bash commands in recipies
+but chef has a lot of nice wrappers around those, we'll get back to them
+later.
+
+#### Attributes
+
+How do we know what database should the recipe setup?
+
+Via attributes, they define the server configuration - ips, environment
+configuration, user names, nginx configuration details.
+
+There are many things which stay constant among most of the projects
+(e.g. we usually run two passenger instances per web server) so those
+can be set via default values.
+
+Default values can be overriden by node configuration.
+
+#### Files
+
+How do copy a certificate via chef?
+
+Use file resource, place the file to `cookbook/files/default/<file_name>` and
+tell chef to copy it.
+
+#### Templates
+
+For nginx configuration we could write one for each project and each
+environment and copy that via file. But the configuration change is
+small per environment and per project so we use a template
+(e.g. nginx-vhost.erb) to generate the configuration file.
+
+### Chef supplied wrappers - so called resources
+
+As previously mentioned chef has a lot of nice wrappers for common
+tasks.
+
+All about them: http://docs.opscode.com/chef/resources.html
+
+The list of available resources: http://docs.opscode.com/chef/resources.html#resources
+
+Take time to read this, it will save you a lot of effort and help to
+learn the chef way.
+
+#### Cookbook file example
+
+```
+cookbook_file cert_file do
+  backup 5
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  mode 0644
+  cookbook node['bz-webserver']['nginx']['ssl_certs_cookbook']
+end
+```
+
+## Done?
+
+Seems like that's all you need to know about the chef basics.
+
+If you want to find out how BitZesty uses chef please read:
+
+https://github.com/bitzesty/cookbooks
+
+https://github.com/bitzesty/cookbooks/tree/master/bz-database
+
+https://github.com/bitzesty/cookbooks/tree/master/bz-webserver
+
+https://github.com/bitzesty/cookbooks/tree/master/bz-rails
+
+https://github.com/bitzesty/cookbooks/tree/master/bz-server
+
+Once you get into issue and do not understand why something fails, read
+the cookbooks - they are easy to understand and knowing the internal
+logic you will find ways how to force it into the way you need.
