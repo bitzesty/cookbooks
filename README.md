@@ -73,7 +73,7 @@ vagrant plugin install vagrant-berkshelf
 If you are using Vagrant 1.4.3 use this:
 
 ````shell
-vagrant plugin install vagrant-berkshelf --plugin-version 1.4.3
+vagrant plugin install vagrant-berkshelf --plugin-version 1.3.7
 ````
 
 ###### Install [vagrant-omnibus](https://github.com/schisamo/vagrant-omnibus).
