@@ -187,7 +187,8 @@ export BZ_COOKBOOKS_PATH=/<path_to_cookbooks>/cookbooks
 Go to chef directory
 
 ```
-cd chef
+cd <project>/chef
+bundle
 ```
 
 #### Update Berksfile
