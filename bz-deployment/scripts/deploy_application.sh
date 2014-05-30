@@ -17,3 +17,13 @@ git pull
 bundle
 
 HIPCHAT_TOKEN=94fcb0db90a76e9e61f4965a1f2f83 bundle exec cap vagrant deploy
+
+
+### start MAINTENANCE
+
+cd /home/sxt_hiv/sxt_hiv/shared/public/system/
+cp maintenance.html.bak maintenance.html
+
+### stop maintenance
+
+rm /home/sxt_hiv/sxt_hiv/shared/public/system/maintenance.html
