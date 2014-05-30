@@ -295,6 +295,12 @@ Update Berksfile with new version
 # FETCH_FROM_LOCAL = true
 ```
 
+Update project with new cookbooks
+
+```
+berks update
+```
+
 Yey, now you can cook :)
 
 ### Release has a tiny error, how do I update it?
