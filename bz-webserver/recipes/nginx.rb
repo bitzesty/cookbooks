@@ -73,7 +73,7 @@ cookbook_file File.join(node['bz-rails']['shared_path'], 'public', 'system', 'ma
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   mode 0644
-  action :create_if_missing
+  action :create
 end
 
 # reload configuration and restart nginx
