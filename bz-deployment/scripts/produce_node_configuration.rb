@@ -5,22 +5,22 @@ def parse_file(file_name)
 end
 
 def node_configuration_file_name
-  ARGS[1]
+  ARGV[0]
 end
 
 def run_list_file_name
-  ARGS[2]
+  ARGV[1]
 end
 
 def merged_configuration
-  parse_file(node_configuration_file_name).zip(parse_file(run_list_file_name))
+  parse_file(node_configuration_file_name).merge(parse_file(run_list_file_name))
 end
 
 def configuration_file_name
   [
     node_configuration_file_name.gsub(".json", ""),
     run_list_file_name
-  ].join("")
+  ].join("_")
 end
 
 def write_to_file(configuration)
