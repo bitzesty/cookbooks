@@ -128,7 +128,7 @@ FETCH_FROM_LOCAL = false
 def read_file(full_path)
   # from web or local
   begin
-    if full_path.starts_with?("http")
+    if full_path.match("^http")
       open(full_path).read
     else
       File.read(full_path)
