@@ -17,10 +17,12 @@ def merged_configuration
 end
 
 def configuration_file_name
-  [
+  file_name = [
     node_configuration_file_name.gsub(".json", ""),
     run_list_file_name
   ].join("_")
+
+  ["nodes", file_name].join("/")
 end
 
 def write_to_file(configuration)
