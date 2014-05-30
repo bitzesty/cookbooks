@@ -164,3 +164,146 @@ https://github.com/bitzesty/cookbooks/tree/master/bz-server
 Once you get into issue and do not understand why something fails, read
 the cookbooks - they are easy to understand and knowing the internal
 logic you will find ways how to force it into the way you need.
+
+## Cookbook development
+
+### For cookbooks repository
+
+#### Clone cookbooks project
+
+```
+git clone git@github.com:bitzesty/cookbooks.git
+cd cookbooks
+```
+
+#### Add cookbooks path to env variables, can update .bashrc
+
+```
+export BZ_COOKBOOKS_PATH=/<path_to_cookbooks>/cookbooks
+```
+
+### In your project
+
+Go to chef directory
+
+```
+cd chef
+```
+
+#### Update Berksfile
+
+Uncomment line to fetch cookbooks from local
+
+```
+vim Berksfile
+
+# uncomment
+# FETCH_FROM_LOCAL = true
+```
+
+#### Update cookbooks
+
+```
+berks update
+
+# if that fails, then:
+rm Berksfile.lock && berks
+```
+
+### Edit cookbooks and test
+
+Testing on vagrant
+
+```
+# in project /chef directory
+vagrant up
+vagrant provision
+
+# edit cookbooks
+vagrant provision
+```
+
+#### Try out commands
+
+Before writing chef recipes you should try out command on local to know
+exactly what you need to execute and ensure that it works
+
+```
+# sign in as vagrant user
+vagrant ssh
+
+# get root access
+sudo su
+
+# test out commands
+```
+
+Sadly the commands do not directly map to chef recipe resources but you
+still should not write recipe when you do not know what is the outcome
+of it.
+
+### Prepare a release
+
+Each new cookbook version must have it's own release.
+
+#### Update cookbooks version
+
+I use regexxer to update multiple files, need to update version number
+for:
+
+https://github.com/bitzesty/cookbooks/blob/master/bz-database/metadata.rb#L7
+
+https://github.com/bitzesty/cookbooks/blob/master/bz-rails/metadata.rb#L7
+
+https://github.com/bitzesty/cookbooks/blob/master/bz-server/metadata.rb#L7
+
+https://github.com/bitzesty/cookbooks/blob/master/bz-webserver/metadata.rb#L7
+
+#### Document change in CHANGELOG.md
+
+https://github.com/bitzesty/cookbooks/blob/master/CHANGELOG.md
+
+#### Update Berksfile example
+
+The example should always point to newest version
+
+https://github.com/bitzesty/cookbooks/blob/master/README.md#create-a-berksfile-for-your-project-and-specify-bit-zesty-cookbooks-as-well-as-other-ones-you-are-using
+
+#### Make a pull request
+
+Cookbooks are owned by BitZesty and we should all know what they do, so
+it is important to review the pull requests.
+
+Once the pull request is merged to master there is one more thing to do
+before the cookbook can be used
+
+#### Draft a new release
+
+Go to https://github.com/bitzesty/cookbooks/releases
+
+Click "Draft a new release"
+
+### Use a new release in your project
+
+Update Berksfile with new version
+
+```
+# change STACK_VERSION = '0.x.xx' to newest version
+
+# comment out fetching from local as now we use a release from github
+# FETCH_FROM_LOCAL = true
+```
+
+Yey, now you can cook :)
+
+### Release has a tiny error, how do I update it?
+
+Update the code, push to master.
+
+Delete a realease:
+
+```
+git push origin :refs/tags/0.x.xx
+```
+
+Draft a new release
