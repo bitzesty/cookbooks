@@ -1,6 +1,6 @@
 # will try to avoid by adding the key to ansible server
 # deploy key to be able to fetch repositories
-scp .ssh/id_rsa sxt_hiv@sxt_hiv.app:/home/sxt_hiv/.ssh/id_rsa_deploy
+# scp .ssh/id_rsa sxt_hiv@sxt_hiv.app:/home/sxt_hiv/.ssh/id_rsa_deploy
 
 # fetch repository, we will deploy via capistrano from it
 mkdir -p /home/sxt_hiv/deployment
