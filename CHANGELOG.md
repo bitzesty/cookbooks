@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.33
+* Nginx maintenance page creation update (use create instead of create_if_missing)
+
 ## 0.1.32
 * Add `bzcibot` to `bitzesty_members`
 
