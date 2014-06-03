@@ -2,18 +2,29 @@
 # deploy key to be able to fetch repositories
 # scp .ssh/id_rsa sxt_hiv@sxt_hiv.app:/home/sxt_hiv/.ssh/id_rsa_deploy
 
-ssh_cert_source_path = "#{node['bz-rails']['development']['path']}/chef/site-cookbooks/#{node['bz-server']['app']['name']}/files/default/id_rsa.pub"
+# ssh_cert_source_path = "#{node['bz-rails']['development']['path']}/chef/site-cookbooks/#{node['bz-server']['app']['name']}/files/default/id_rsa.pub"
 ssh_cert_dir = "/home/#{node['bz-server']['user']['name']}/.ssh"
 
 directory ssh_cert_dir do
   mode "700"
   owner node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
-  action :create
+  recursive true
 end
 
-cookbook_file ssh_cert_source_path do
-  path "#{ssh_cert_dir}/id_rsa_deploy.pub"
+# directory ssh_cert_dir do
+#   mode "700"
+#   owner node['bz-server']['user']['name']
+#   group node['bz-server']['user']['name']
+#   action :create
+# end
+
+cookbook_file "id_rsa" do
+  path "#{ssh_cert_dir}/id_rsa_deploy"
+  mode "600"
+  owner node['bz-server']['user']['name']
+  group node['bz-server']['user']['name']
+  cookbook node['bz-deployment']['app_configuration_cookbook']
   action :create_if_missing
 end
 
