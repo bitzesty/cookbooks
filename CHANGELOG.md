@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.33
+* **bz-deployment** create cookbook
+
 ## 0.1.32
 * Add `bzcibot` to `bitzesty_members`
 

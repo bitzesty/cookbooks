@@ -1,1 +1,2 @@
 # cookbook dependencies
+cookbook 'ssh', '~> 0.6.6', github: 'markolson/chef-ssh'
