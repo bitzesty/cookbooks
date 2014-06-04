@@ -1,6 +1,5 @@
 # deploys application via capistrano
 
-# remove commented out code if forwarding ssh keys works
 # # ssh certs directory
 # directory node['bz-deployment']['ssh_cert_dir'] do
 #   mode "700"
@@ -34,11 +33,11 @@ directory node['bz-deployment']['deploy_directory'] do
 end
 
 # running via bash forwards ssh key properly
-bash "clone project" do
+bash "git clone" do
   user node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   cwd node['bz-deployment']['deploy_directory']
-  command %Q{git clone #{node['bz-deployment']['repository']}}
+  command "git clone #{node['bz-deployment']['repository']}"
   not_if { ::File.exists?("#{node['bz-deployment']['deploy_app_path']}/Rakefile") }
 end
 
