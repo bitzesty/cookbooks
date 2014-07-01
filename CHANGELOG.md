@@ -2,6 +2,9 @@
 
 ## Master
 
+## 0.1.33
+* Add `jaleszek` to `bitzesty_members`
+
 ## 0.1.32
 * Add `bzcibot` to `bitzesty_members`
 
