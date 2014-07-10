@@ -115,9 +115,9 @@ bundle exec knife solo init .
 ````ruby
 require 'open-uri'
 
-site :opscode
+source "https://api.berkshelf.com"
 
-STACK_VERSION = '0.2.1'
+STACK_VERSION = '0.2.2'
 
 # FETCH_FROM_LOCAL is false by default, so fetching cookbooks from github
 FETCH_FROM_LOCAL = false
