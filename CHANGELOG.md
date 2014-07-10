@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.1
+
+* removed bzcibot
+
 ## 0.2.0
 
 * Added jaleszek and removed astrauka
