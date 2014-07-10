@@ -117,7 +117,7 @@ require 'open-uri'
 
 site :opscode
 
-STACK_VERSION = '0.2.0'
+STACK_VERSION = '0.2.1'
 
 # FETCH_FROM_LOCAL is false by default, so fetching cookbooks from github
 FETCH_FROM_LOCAL = false
