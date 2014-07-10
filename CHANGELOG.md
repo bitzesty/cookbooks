@@ -2,7 +2,12 @@
 
 ## Master
 
+## 0.2.0
+
+* Added jaleszek and removed astrauka
+
 ## 0.1.32
+
 * Add `bzcibot` to `bitzesty_members`
 
 ## 0.1.31
