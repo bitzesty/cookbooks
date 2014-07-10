@@ -1,2 +1,2 @@
-cookbook 'nginx', '~> 2.6', github: 'opscode-cookbooks/nginx'
+cookbook 'nginx', '~> 2.7', github: 'opscode-cookbooks/nginx'
 cookbook 'varnish', '~> 0.9.13', github: 'opscode-cookbooks/varnish'
