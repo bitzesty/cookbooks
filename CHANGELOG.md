@@ -2,6 +2,12 @@
 
 ## Master
 
+## 0.2.5
+
+* NGINX: fixed issue with user www-data option in nginx.conf.erb, which caused on Centos
+  Original issue description: https://tickets.opscode.com/browse/COOK-3397?page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel
+* Updated 'ubuntu' cookbook from "1.1.7" to "1.1.8"
+
 ## 0.2.1
 
 * removed bzcibot
