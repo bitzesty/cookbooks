@@ -2,6 +2,17 @@
 
 ## Master
 
+## 0.2.6
+
+* NGINX: fixed issue with displaying "Welcome NGINX" page for some non ubuntu platforms.
+  For example: Centos use Nginx on EPEL, which populates /etc/nginx/conf.d/default.conf
+  So, it will be loaded at first, because in bz-webserver/templates/default/nginx.conf.erb
+  we have following lines:
+  ```
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+  ```
+
 ## 0.2.5
 
 * NGINX: fixed issue with user www-data option in nginx.conf.erb, which caused on Centos
