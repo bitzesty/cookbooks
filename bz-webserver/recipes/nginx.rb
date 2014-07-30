@@ -25,6 +25,12 @@ file "/etc/nginx/sites-enabled/default" do
   action :delete
 end
 
+# For Centos and remove default site configuration
+file "/etc/nginx/conf.d/default.conf" do
+  action :delete
+  only_if do FileTest.exist?("/etc/nginx/conf.d/default.conf") end
+end
+
 # create log and certs dirs
 [
 node['bz-webserver']['nginx']['log']['dir'],
