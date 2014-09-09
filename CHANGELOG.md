@@ -2,6 +2,11 @@
 
 ## Master
 
+## 0.2.7
+
+* Updated 'database' from '2.2.1' to '2.3.0'
+* Updated 'mysql' from '5.3.6' to '5.4.4'
+
 ## 0.2.6
 
 * NGINX: fixed issue with displaying "Welcome NGINX" page for some non ubuntu platforms.
