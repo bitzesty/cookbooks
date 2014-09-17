@@ -16,7 +16,7 @@ cookbook 'newrelic-sysmond', '1.4.0'
 cookbook 'cloud_monitoring', '1.0.4', github: 'racker/cookbook-cloudmonitoring'
 cookbook 'java', '1.22.0'
 
-cookbook 'redisio', '1.7.1', github: 'brianbianco/redisio'
+cookbook 'redisio', '2.2.3', github: 'brianbianco/redisio'
 cookbook 'elasticsearch', '0.3.10'
 
 # monitoring
