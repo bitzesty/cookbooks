@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.8
+
+* Updated 'mysql' from '5.4.4' to '5.5.2'
+
 ## 0.2.7
 
 * Updated 'database' from '2.2.1' to '2.3.0'
