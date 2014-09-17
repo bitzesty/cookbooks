@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.9
+
+* Updated 'redisio' from '1.7.1' to '2.2.3'
+
 ## 0.2.8
 
 * Updated 'mysql' from '5.4.4' to '5.5.2'
