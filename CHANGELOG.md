@@ -2,6 +2,15 @@
 
 ## Master
 
+## 0.2.10
+    
+* Updated 'redisio' from '2.2.3' to '2.2.4'
+* Updated 'apt' from '2.4.0' to '2.6.0'
+* Updated 'nginx' from '2.7.0' to '2.7.4'
+* Replaced 'nginx-extra' with 'nginx-full' (as it causes 'shared memory' issue in some envs)
+* Set 'varnish' cookbook to use bitzesty's fork
+* Disabled using of custom 'storage_file' in bz-webserver/attributes/varnish.rb for time being (see https://github.com/rackspace-cookbooks/varnish/issues/39)
+
 ## 0.2.9
 
 * Updated 'redisio' from '1.7.1' to '2.2.3'

@@ -1,5 +1,5 @@
 # package via their repository
-include_recipe "varnish::apt_repo"
+include_recipe "varnish::repo"
 
 # install varnish
 include_recipe "varnish::default"
