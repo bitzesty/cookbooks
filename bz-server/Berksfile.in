@@ -1,5 +1,5 @@
 cookbook 'hostsfile', '2.4.5'
-cookbook 'apt', '2.4.0'
+cookbook 'apt', '2.6.0'
 cookbook 'ufw', '0.7.4'
 cookbook 'ohai', '2.0.1'
 cookbook 'ubuntu', '1.1.8', github: 'opscode-cookbooks/ubuntu'
@@ -16,7 +16,7 @@ cookbook 'newrelic-sysmond', '1.4.0'
 cookbook 'cloud_monitoring', '1.0.4', github: 'racker/cookbook-cloudmonitoring'
 cookbook 'java', '1.22.0'
 
-cookbook 'redisio', '2.2.3', github: 'brianbianco/redisio'
+cookbook 'redisio', '2.2.4', github: 'brianbianco/redisio'
 cookbook 'elasticsearch', '0.3.10'
 
 # monitoring

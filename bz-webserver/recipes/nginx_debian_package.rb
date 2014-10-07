@@ -24,7 +24,7 @@ execute "update apt to have passenger among packages" do
 end
 
 # install packages
-nginx_packages = %w(nginx-extras)
+nginx_packages = %w(nginx-full)
 if node['bz-server']['app']['rails_app_server'] == "passenger"
   # passenger must be installed before nginx
   nginx_packages.unshift "passenger"
