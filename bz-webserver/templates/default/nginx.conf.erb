@@ -14,6 +14,9 @@ http {
   types_hash_max_size 1024;
   variables_hash_max_size 1024;
   server_tokens off;
+  more_clear_headers 'Server';
+  more_clear_headers 'X-Powered-By';
+  more_clear_headers 'X-Runtime';
 
   server_names_hash_bucket_size 64;
   # server_name_in_redirect off;
