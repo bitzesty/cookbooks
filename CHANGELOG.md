@@ -2,6 +2,24 @@
 
 ## Master
 
+## 0.2.11
+
+* Added security options to nginx.conf.erb:
+
+```
+more_clear_headers 'Server';
+more_clear_headers 'X-Powered-By';
+more_clear_headers 'X-Runtime';
+```
+
+* Updated 'mysql' from '5.5.2' to '5.6.1'
+
+* Removed setting of the version for cookbook 'serverdensity'
+  as it raises error while running "berks update"
+```
+The cookbook downloaded for serverdensity (= 2.0.0) did not satisfy the constraint.
+```
+
 ## 0.2.10
     
 * Updated 'redisio' from '2.2.3' to '2.2.4'
