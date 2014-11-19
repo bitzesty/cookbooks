@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.12
+
+  * `bz-server::logrotate`: set max file size to 100MB by default for logrotate
+
 ## 0.2.11
 
 * Added security options to nginx.conf.erb:
@@ -21,7 +25,7 @@ The cookbook downloaded for serverdensity (= 2.0.0) did not satisfy the constrai
 ```
 
 ## 0.2.10
-    
+
 * Updated 'redisio' from '2.2.3' to '2.2.4'
 * Updated 'apt' from '2.4.0' to '2.6.0'
 * Updated 'nginx' from '2.7.0' to '2.7.4'
