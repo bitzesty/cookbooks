@@ -4,4 +4,5 @@
   rotate 5
   notifempty
   copytruncate
+  size <%= node['bz-server']['logrotate']['max_size'] %>
 }
