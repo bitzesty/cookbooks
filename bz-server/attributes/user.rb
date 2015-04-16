@@ -42,28 +42,11 @@ bz_user['bitzesty_members'] = [
   "RuslanHamidullin",
   "macool",
   "mauricioac",
-  "rodzyn",
-  "jaleszek"
+  "jaleszek",
+  "dreamfall"
 ]
 bz_user['authorized_github_users'] = []
 bz_user['authorized_users'] = (
   node['bz-server']['user']['bitzesty_members'] +
   node['bz-server']['user']['authorized_github_users']
 ).uniq
-
-
-# # fetch bitzesty organization members from github
-# bz_user['members']['path'] = "https://api.github.com/orgs/bitzesty/members"
-# bz_user['members']['params'] = "access_token=<access token>"
-# bz_user['members']['url'] = [
-#   node['bz-server']['user']['members']['path'],
-#   node['bz-server']['user']['members']['params']
-# ].join("?")
-
-# to implement users from github:
-# require 'net/http'
-# require 'json'
-# uri = URI(node['bz-server']['user']['members']['url'])
-# users = JSON.parse(Net::HTTP.get(uri))
-# user_names = user.map{ |user| user["login"] }
-# To do that we need to ensure to not expose access token publically
