@@ -6,6 +6,7 @@ if platform_family?("rhel") && node['bz-webserver']['open-80-port']
 end
 
 if platform_family?("debian")
+  include_recipe 'firewall'
   firewall_rule "http" do
     port 80
     action :allow

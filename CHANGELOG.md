@@ -2,6 +2,12 @@
 
 ## Master
 
+## 0.2.13
+
+* Added support for newer version of berkshelf, by removing `github` option from some of the cookbook paths
+* Added firewall cookbook dependency for the webserver cookbook, so it works on newer versions of Berkshelf
+* Upgrading postgresql cookbook to work better with the database cookbook
+
 ## 0.2.12
 
   * `bz-server::logrotate`: set max file size to 100MB by default for logrotate
