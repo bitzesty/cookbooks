@@ -2,6 +2,14 @@
 
 ## Master
 
+## 0.2.15
+
+* Bump new version
+
+## 0.2.14
+
+* Updated users
+
 ## 0.2.13
 
 * Added support for newer version of berkshelf, by removing `github` option from some of the cookbook paths
