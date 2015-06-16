@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.17
+
+* Firewall: added SSH opened port by default
+
 ## 0.2.16
 
 Fixing various issues with new dependencies and conflicts
