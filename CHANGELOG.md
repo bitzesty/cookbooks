@@ -16,7 +16,7 @@ Fixing various issues with new dependencies and conflicts
 * Set 'firewall' coobooks to "~1.3.0"
 * Corrected 'firewall' related condition in bz-webserver/recipes/common.rb
 
-## 0.2.16
+## 0.2.15
 
 * Bump new version
 
