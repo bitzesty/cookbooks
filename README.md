@@ -428,3 +428,17 @@ The project should use foreman for its process management, refer to [TSS](https:
 * If you want to use different Chef version, here are the links to modify it for Vagrant and the real server:
   * [for Vagrant](http://stackoverflow.com/questions/11325479/how-to-control-the-version-of-chef-that-vagrant-uses-to-provision-vms)
   * [for knife solo](https://github.com/matschaffer/knife-solo/issues/184)
+
+#### Upgrade from CHEF 11.8.2 to 12.3 on already provisioned server
+
+1) Drop installed CHEF
+```
+sudo rm -rf chef-solo/
+sudo rm -rf /opt/chef
+sudo apt-get remove chef
+```
+
+2) Install new CHEF
+```
+bundle exec knife solo prepare IPADDRESS -x ubuntu --bootstrap-version=12
+```
