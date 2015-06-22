@@ -4,7 +4,7 @@ maintainer_email 'info@bitzesty.com'
 license          'All rights reserved'
 description      'General server configuration for any type of server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.15"
+version          "0.2.17"
 
 depends          'apt'
 depends          'ufw'
@@ -24,6 +24,6 @@ depends          'redisio'
 depends          'elasticsearch'
 depends          'unattended_upgrades'
 depends          'newrelic-sysmond'
-depends          'cloud_monitoring'
+depends          'rackspace_cloudmonitoring'
 depends          'sudo'
 depends          'serverdensity'

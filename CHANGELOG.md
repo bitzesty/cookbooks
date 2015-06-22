@@ -2,6 +2,21 @@
 
 ## Master
 
+## 0.2.17
+
+* Firewall: added SSH opened port by default
+* Switched from 'fnichol/chef-rbenv' to our fork in order to fix https://github.com/fnichol/chef-rbenv/issues/110
+
+## 0.2.16
+
+Fixing various issues with new dependencies and conflicts
+
+* Switched from 'cloud_monitoring' to 'rackspace_cloudmonitoring'
+* Updated 'apt' from '2.6.0' to '2.7.0'
+* Updated 'database' from '2.3.0' to '3.0.0'
+* Set 'firewall' coobooks to "~1.3.0"
+* Corrected 'firewall' related condition in bz-webserver/recipes/common.rb
+
 ## 0.2.15
 
 * Bump new version

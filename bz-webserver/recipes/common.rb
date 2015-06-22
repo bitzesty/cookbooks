@@ -5,10 +5,16 @@ if platform_family?("rhel") && node['bz-webserver']['open-80-port']
   end
 end
 
-if platform_family?("debian")
+if platform_family?("debian") && node['bz-webserver']['open-80-port']
   include_recipe 'firewall'
+
   firewall_rule "http" do
     port 80
+    action :allow
+  end
+
+  firewall_rule "ssh" do
+    port 22
     action :allow
   end
 end

@@ -1,11 +1,11 @@
 cookbook 'hostsfile', '2.4.5'
-cookbook 'apt', '2.6.0'
+cookbook 'apt', '2.7.0'
 cookbook 'ufw', '0.7.4'
 cookbook 'ohai', '2.0.1'
 cookbook 'ubuntu', '1.1.8', github: 'opscode-cookbooks/ubuntu'
 cookbook 'line', '0.5.1'
 cookbook 'unattended-upgrades', '0.0.1', github: "bitzesty/chef-unattended-upgrades"
-cookbook 'database', '~> 2.3.0'#, github: 'opscode-cookbooks/database'
+cookbook 'database', '3.0.0'#, github: 'opscode-cookbooks/database'
 cookbook 'mysql', '~> 5.6.1'#, github: 'opscode-cookbooks/mysql'
 
 # does not notify via emails
@@ -13,7 +13,7 @@ cookbook 'mysql', '~> 5.6.1'#, github: 'opscode-cookbooks/mysql'
 #cookbook 'monit', '0.7.1', github: "OGIS-RI-EOS/monit", tag: "ogis-v0.1"
 cookbook 'newrelic-sysmond', '1.4.0'
 
-cookbook 'cloud_monitoring', '1.0.4', github: 'racker/cookbook-cloudmonitoring'
+cookbook 'rackspace_cloudmonitoring', github: 'rackspace-cookbooks/rackspace_cloudmonitoring'
 cookbook 'java', '1.22.0'
 
 cookbook 'redisio', '2.2.4'#, github: 'brianbianco/redisio'
