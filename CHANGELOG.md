@@ -5,6 +5,7 @@
 ## 0.2.17
 
 * Firewall: added SSH opened port by default
+* Switched from 'fnichol/chef-rbenv' to our fork in order to fix https://github.com/fnichol/chef-rbenv/issues/110
 
 ## 0.2.16
 
