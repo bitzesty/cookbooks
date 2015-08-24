@@ -39,7 +39,7 @@ bz_user['authorized_keys'] = {}
 bz_user['bitzesty_members'] = [
   "matthewford",
   "hammerfunk",
-  "RuslanHamidullin",
+  "rusllonrails",
   "macool",
   "mauricioac",
   "dreamfall",
