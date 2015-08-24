@@ -2,6 +2,11 @@
 
 ## Master
 
+## 0.2.18
+
+Logrotate fix.
+File size in megabytes should be set in M not in MB
+
 ## 0.2.17
 
 * Firewall: added SSH opened port by default
