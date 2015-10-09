@@ -99,17 +99,4 @@ Backup::Model.new("<%= node['bz-server']['app']['name'] %>", "Backup <%= node['b
   compress_with Gzip
   <% end %>
 
-  # Notifications
-  notify_by Hipchat do |hipchat|
-    hipchat.on_success = true
-    hipchat.on_warning = true
-    hipchat.on_failure = true
-
-    hipchat.token          = "<%= node['bz-database']['backup']['hipchat']['token'] %>"
-    hipchat.from           = "<%= node['bz-rails']['environment'][0..14] %>"
-    hipchat.rooms_notified = [<%= node['bz-database']['backup']['hipchat']['rooms_notified'].map(&:inspect).join(",") %>]
-    hipchat.success_color  = "green"
-    hipchat.warning_color  = "yellow"
-    hipchat.failure_color  = "red"
-  end
 end
