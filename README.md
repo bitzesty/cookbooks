@@ -43,7 +43,7 @@
 4. Merge into master
 5. Tag a new release
 
-NOTE: **all cookbooks should have the same version**. Consider this to be a stack version. If you find a Bit Zesty project using Chef you can then tell that its server were developed using `0.1.2` version of Bit Zesty server stack.
+NOTE: **all cookbooks should have the same version**. Consider this to be a stack version. If you find a Bit Zesty project using Chef you can then tell that its server were developed using `0.2.14` version of Bit Zesty server stack.
 
 ## Setup on a new project
 
@@ -117,7 +117,7 @@ require 'open-uri'
 
 source "https://api.berkshelf.com"
 
-STACK_VERSION = '0.2.2'
+STACK_VERSION = '0.2.19'
 
 # FETCH_FROM_LOCAL is false by default, so fetching cookbooks from github
 FETCH_FROM_LOCAL = false

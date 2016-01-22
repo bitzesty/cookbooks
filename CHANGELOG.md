@@ -2,6 +2,11 @@
 
 ## Master
 
+
+## 0.2.19
+
+* Updated 'ubuntu' cookbook from "1.1.8" to "1.2.0"
+
 ## 0.2.18
 
 Logrotate fix.
