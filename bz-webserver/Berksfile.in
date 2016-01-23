@@ -1,3 +1,3 @@
-cookbook 'firewall', '~> 1.3.0'
+cookbook 'firewall', '~> 2.3.1'
 cookbook 'nginx', '~> 2.7.4'
 cookbook 'varnish', github: 'bitzesty/varnish'
