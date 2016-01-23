@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.21
+
+* Remove rackspace monitoring 
+
 ## 0.2.20
 
 * Update firewall to 2.3.1
