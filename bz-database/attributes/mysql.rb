@@ -22,7 +22,7 @@ default['bz-database']['mysql']['users'] = {
 default['bz-database']['mysql']['version'] = '5.5'
 
 default['bz-database']['mysql']['root_user_name'] = 'root'
-default['bz-database']['mysql']['root_host'] = 'localhost'
+default['bz-database']['mysql']['root_host'] = '127.0.0.1'
 default['bz-database']['mysql']['root_password'] = 'thisissomerandompassword1'
 default['bz-database']['mysql']['server_repl_password'] = 'thisissomerandompassword2'
 default['bz-database']['mysql']['server_debian_password'] = 'thisissomerandompassword3'

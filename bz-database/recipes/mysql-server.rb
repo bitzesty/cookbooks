@@ -25,16 +25,6 @@ mysql_service 'default' do
   action [:create, :start]
 end
 
-# must start the service after initial setup
-service "mysql" do
-  action [:enable, :start]
-  not_if do FileTest.exist?(node['bz-database']['mysql']['socket']) end
-end
-
-service "mysql" do
-  action [:restart]
-end
-
 mysql_connection_info = {
   :host => node['bz-database']['mysql']['root_host'],
   :username => node['bz-database']['mysql']['root_user_name'],
