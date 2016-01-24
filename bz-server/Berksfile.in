@@ -1,6 +1,6 @@
 cookbook 'hostsfile', '2.4.5'
 cookbook 'apt', '2.7.0'
-cookbook 'ufw', '0.7.4'
+cookbook 'ufw', '1.0.0'
 cookbook 'ohai', '2.0.1'
 cookbook 'ubuntu', '1.2.0', github: 'opscode-cookbooks/ubuntu'
 cookbook 'line', '0.5.1'
