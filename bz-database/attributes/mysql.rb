@@ -26,4 +26,3 @@ default['bz-database']['mysql']['root_host'] = 'localhost'
 default['bz-database']['mysql']['root_password'] = 'thisissomerandompassword1'
 default['bz-database']['mysql']['server_repl_password'] = 'thisissomerandompassword2'
 default['bz-database']['mysql']['server_debian_password'] = 'thisissomerandompassword3'
-default['bz-database']['mysql']['socket'] = "/var/run/mysqld/mysqld.sock"
