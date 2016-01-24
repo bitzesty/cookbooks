@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.26
+
+* Remove mysql version locks
+
 ## 0.2.25
 
 * Remove postgresql version restriction
