@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.23
+
+* Update ufw
+
 ## 0.2.22
 
 * Remove serverdensity
