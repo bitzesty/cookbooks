@@ -6,7 +6,7 @@ description      'Database configurationr recipe'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.2.25"
 
-depends          'database', '4.0.9'
+depends          'database'
 depends          'mongodb', '0.16.1'
 depends          'postgresql'
 depends          'redisio', '2.2.4'
