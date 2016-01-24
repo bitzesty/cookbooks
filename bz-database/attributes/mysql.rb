@@ -19,6 +19,8 @@ default['bz-database']['mysql']['users'] = {
 
 # general info
 
+default['bz-database']['mysql']['version'] = '5.5'
+
 default['bz-database']['mysql']['root_user_name'] = 'root'
 default['bz-database']['mysql']['root_host'] = 'localhost'
 default['bz-database']['mysql']['root_password'] = 'thisissomerandompassword1'
