@@ -2,7 +2,11 @@
 
 ## Master
 
-## 0.2.31
+## 0.2.33
+
+* include mysql2 gem
+
+## 0.2.32
 
 * remove ufw
 
