@@ -16,9 +16,5 @@ if node['bz-server']['upstart_templates']['enabled']
 end
 include_recipe "bz-server::openssh"
 include_recipe "bz-server::logrotate"
-# only include if we are monitoring via serverdensity
-if node['bz-server']['serverdensity']['account']
-  include_recipe "bz-server::server_density"
-end
 include_recipe "imagemagick"
 include_recipe "unattended_upgrades" if platform_family?("debian")

@@ -2,9 +2,13 @@
 
 ## Master
 
+## 0.2.22
+
+* Remove serverdensity
+
 ## 0.2.21
 
-* Remove rackspace monitoring 
+* Remove rackspace monitoring
 
 ## 0.2.20
 
