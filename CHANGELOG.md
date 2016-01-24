@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.30
+
+* use a fork of ufw
+
 ## 0.2.29
 
 * rbenv switch to chef-rbenv and fix require
