@@ -2,7 +2,15 @@
 
 ## Master
 
+## 0.2.29
+
+* rbenv switch to chef-rbenv
+
 ## 0.2.28
+
+* mysql update
+
+## 0.2.27
 
 * database version > 3
 

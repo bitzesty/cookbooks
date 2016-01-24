@@ -1,5 +1,1 @@
-# cookbook 'rbenv', '0.7.3', github: 'fnichol/chef-rbenv'
-# So CHEF 12.3 conflicts with current chef-rbenv cookbook
-# Issue is known but still not fixed in master https://github.com/fnichol/chef-rbenv/issues/110
-# So that's we use our fork for now with fixed error
-cookbook 'rbenv', github: 'bitzesty/chef-rbenv'
+cookbook 'ruby_rbenv'
