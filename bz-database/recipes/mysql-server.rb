@@ -10,9 +10,13 @@ node.default['mysql']['server_root_password'] = node['bz-database']['mysql']['ro
 node.default['mysql']['server_repl_password'] = node['bz-database']['mysql']['server_repl_password'] # Set the replication user 'repl' password
 node.default['mysql']['server_debian_password'] = node['bz-database']['mysql']['server_debian_password'] # Set the debian-sys-maint user password
 
+node.default['mysql']['version'] = '5.6.1'
+
 mysql2_chef_gem 'default' do
+  client_version node['mysql']['version'] if node['mysql'] && node['mysql']['version']
   action :install
 end
+
 
 # must start the service after initial setup
 service "mysql" do
