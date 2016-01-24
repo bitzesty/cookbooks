@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.31
+
+* remove ufw
+
 ## 0.2.30
 
 * use a fork of ufw
