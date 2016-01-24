@@ -4,9 +4,10 @@ maintainer_email 'info@bitzesty.com'
 license          'All rights reserved'
 description      'Database configurationr recipe'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.27"
+version          "0.2.28"
 
 depends          'database'
+depends          'mysql'
 depends          'mongodb', '0.16.1'
 depends          'postgresql'
 depends          'redisio', '2.2.4'

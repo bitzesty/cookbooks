@@ -47,6 +47,5 @@ end
 if platform_family?("debian")
   firewall_rule "https" do
     port node['bz-webserver']['nginx']['ports']['ssl']
-    action :allow
   end
 end
