@@ -20,7 +20,7 @@ end
 mysql_service 'default' do
   version node['mysql']['version'] if node['mysql'] && node['mysql']['version']
   port '3306'
-  initial_root_password node.default['mysql']['server_root_password']
+  initial_root_password node['mysql']['server_root_password']
   action [:create, :start]
 end
 
