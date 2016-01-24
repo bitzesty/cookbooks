@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.25
+
+* Remove postgresql version restriction
+
 ## 0.2.24
 
 * Update database
