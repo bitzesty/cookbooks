@@ -17,6 +17,12 @@ mysql2_chef_gem 'default' do
   action :install
 end
 
+mysql_service 'default' do
+  version node['mysql']['version'] if node['mysql'] && node['mysql']['version']
+  port '3306'
+  initial_root_password node.default['mysql']['server_root_password']
+  action [:create, :start]
+end
 
 # must start the service after initial setup
 service "mysql" do
