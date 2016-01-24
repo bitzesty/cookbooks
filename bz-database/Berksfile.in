@@ -1,0 +1,1 @@
+cookbook 'mysql2_chef_gem', github: 's33m4nn/mysql2_chef_gem'
