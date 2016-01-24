@@ -5,7 +5,7 @@ cookbook 'ubuntu', '1.2.0', github: 'opscode-cookbooks/ubuntu'
 cookbook 'line', '0.5.1'
 cookbook 'unattended-upgrades', '0.0.1', github: "bitzesty/chef-unattended-upgrades"
 cookbook 'database', '> 3.0.0'#, github: 'opscode-cookbooks/database'
-cookbook 'mysql', '~> 5.6.1'#, github: 'opscode-cookbooks/mysql'
+cookbook 'mysql', '~> 6.0'#, github: 'opscode-cookbooks/mysql'
 
 # does not notify via emails
 # monit uses too old yum cookbook

@@ -1,5 +1,6 @@
-include_recipe "mysql::client"
-include_recipe "mysql::server"
+mysql_client 'default' do
+  action :create
+end
 
 node.default['mysql']['remove_anonymous_users'] = true # Remove anonymous users
 node.default['mysql']['allow_remote_root'] = false # Root can only login from localhost

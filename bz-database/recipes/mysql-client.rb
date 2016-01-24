@@ -1,2 +1,3 @@
-include_recipe "mysql::client"
-include_recipe "mysql::server"
+mysql_client 'default' do
+  action :create
+end
