@@ -4,7 +4,7 @@
 
 ## 0.2.29
 
-* rbenv switch to chef-rbenv
+* rbenv switch to chef-rbenv and fix require
 
 ## 0.2.28
 

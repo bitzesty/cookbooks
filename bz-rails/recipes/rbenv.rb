@@ -9,7 +9,7 @@ if platform_family? "debian"
 end
 
 include_recipe "ruby_build"
-include_recipe "rbenv::user"
+include_recipe "ruby_rbenv::system"
 
 # make sure we are loading rbenv when executing commands
 # this loads rbenv as well when we su to the user
@@ -23,4 +23,3 @@ ruby_block "rbenv: load rbenv in .bashrc" do
     file.write_file
   end
 end
-
