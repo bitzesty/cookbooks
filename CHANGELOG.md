@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.27
+
+* database version > 3
+
 ## 0.2.26
 
 * Remove mysql version locks
