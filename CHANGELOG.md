@@ -2,6 +2,10 @@
 
 ## Master
 
+## 0.2.24
+
+* Update database
+
 ## 0.2.23
 
 * Update ufw
