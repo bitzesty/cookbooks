@@ -8,5 +8,5 @@ version          "0.2.24"
 
 depends          'database', '4.0.9'
 depends          'mongodb', '0.16.1'
-depends          'postgresql', '3.4.18'
+depends          'postgresql'
 depends          'redisio', '2.2.4'
