@@ -3,7 +3,8 @@
 log "[Backup] installing backup gem"
 execute "install backup gem" do
   # ensure other backup versions are uninstalled
-  command %Q{gem uninstall -a -x backup && gem install backup -v 3.10.0}
+  # install manually for now
+  # command %Q{export PATH=#{node['bz-rails']['rbenv']['path']}/bin:$PATH && eval "$(rbenv init -)" && gem uninstall -a -x backup && gem install backup -v 3.10.0 && rbenv rehash}
   user node['bz-server']['user']['name']
   group node['bz-server']['user']['name']
   environment ({'HOME' => "/home/#{node['bz-server']['user']['name']}"})
